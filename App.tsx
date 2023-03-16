@@ -1,18 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { AppNavigator } from './src/AppNavigator';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>GoalTracker</Text>
-    </View>
+    <AppNavigator></AppNavigator>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+};
