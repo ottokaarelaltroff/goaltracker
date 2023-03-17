@@ -1,16 +1,17 @@
 import { StyleSheet, Text, View } from "react-native";
 import { ScreenContainer } from "./ScreenContainer";
+import { Colors } from "../util/Colors";
 
-export const SettingsScreen = ({navigation}) => (
+export const SettingsScreen = ({ navigation }) => (
     <ScreenContainer>
         <View>
-            <Text>SettingsScreen</Text>
+            <Text style={styles.text}>SettingsScreen</Text>
         </View>
     </ScreenContainer>
-    );
+);
 
-    const styles = StyleSheet.create({
-        container: {
-            flex: 1
-        },
-    });
+const styles = StyleSheet.create({
+    text: {
+        color: Colors.white
+    },
+});
