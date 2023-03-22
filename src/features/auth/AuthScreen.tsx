@@ -1,5 +1,5 @@
 import { Button, StyleSheet, Text, View } from "react-native";
-import { ScreenContainer } from "../ScreenContainer";
+import { ScreenContainer } from "../../shared/ScreenContainer";
 import { Colors } from "../../util/Colors";
 
 export const AuthScreen = ({ navigation }) => (

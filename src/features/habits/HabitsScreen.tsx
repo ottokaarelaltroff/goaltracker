@@ -1,12 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
-import { ScreenContainer } from "../ScreenContainer";
+import { ScreenContainer } from "../../shared/ScreenContainer";
 import { Colors } from "../../util/Colors";
 
-
-export const SignIn = ({ navigation }) => (
+export const HabitsScreen = ({ navigation }) => (
     <ScreenContainer>
         <View>
-            <Text style={styles.text}>SignIn</Text>
+            <Text style={styles.text}>HabitsScreen</Text>
         </View>
     </ScreenContainer>
 );

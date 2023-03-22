@@ -1,11 +1,11 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { Colors } from "../util/Colors";
-import { AuthScreen } from "../screens/auth/AuthScreen";
-import { SignIn } from "../screens/auth/SignIn";
-import { CreateAccount } from "../screens/auth/CreateAccount";
-import { HabitsScreen } from "../screens/HabitsScreen";
-import { GoalsScreen } from "../screens/GoalsScreen";
-import { SettingsScreen } from "../screens/SettingsScreen";
+import { AuthScreen } from "../features/auth/AuthScreen";
+import { LoginScreen } from "../features/auth/LoginScreen";
+import { CreateAccountScreen } from "../features/auth/CreateAccountScreen";
+import { HabitsScreen } from "../features/habits/HabitsScreen";
+import { GoalsScreen } from "../features/goals/GoalsScreen";
+import { SettingsScreen } from "../features/settings/SettingsScreen";
 
 const AuthStack = createStackNavigator();
 const HabitsStack = createStackNavigator();
@@ -22,8 +22,8 @@ const authStackOptions = {
 export const AuthStackScreen = () => (
   <AuthStack.Navigator screenOptions={authStackOptions}>
     <AuthStack.Screen name="Welcome" component={AuthScreen} options={{ title: "GoalTracker", headerShown: false }} />
-    <AuthStack.Screen name="SignIn" component={SignIn} options={{ title: "Sign In" }} />
-    <AuthStack.Screen name="CreateAccount" component={CreateAccount} options={{ title: "Create an Account" }} />
+    <AuthStack.Screen name="SignIn" component={LoginScreen} options={{ title: "Sign In" }} />
+    <AuthStack.Screen name="CreateAccount" component={CreateAccountScreen} options={{ title: "Create an Account" }} />
   </AuthStack.Navigator>
 )
 
