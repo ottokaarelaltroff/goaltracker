@@ -5,9 +5,15 @@ import * as React from 'react';
 import { Colors } from '../util/Colors';
 import { AuthStackScreen } from './AppStacks';
 import { Tabs } from './AppTabs';
+import useUser from '../context/user/useUser';
+import { User } from '../model/types';
 
 const RootStack = createStackNavigator();
 const DrawerStack = createDrawerNavigator();
+
+interface RootProps {
+  user: User
+}
 
 const drawerOptions = {
   headerShown: false,
@@ -21,9 +27,9 @@ const Drawer = () => (
   </DrawerStack.Navigator>
 )
 
-const Root = ({ userToken }) => (
+const Root = ({ user }: RootProps) => (
   <RootStack.Navigator screenOptions={{ headerShown: false }}>
-    {userToken
+    {user && user.id
       ? <RootStack.Screen name="App" component={Drawer} />
       : <RootStack.Screen name="Auth" component={AuthStackScreen} />}
   </RootStack.Navigator>
@@ -31,10 +37,10 @@ const Root = ({ userToken }) => (
 
 export const AppNavigator = () => {
 
-  const [userToken, setUserToken] = React.useState("asdf")
+  const { user } = useUser();
   return (
     <NavigationContainer>
-      <Root userToken={userToken}></Root>
+      <Root user={user}></Root>
     </NavigationContainer>
   );
 };
