@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
-import { ScreenContainer } from "../../shared/ScreenContainer";
-import { Colors } from "../../util/Colors";
+import { ScreenContainer } from "../shared/ScreenContainer";
+import { Colors } from "../util/Colors";
 
 
 export const CreateAccountScreen = ({ navigation }) => (

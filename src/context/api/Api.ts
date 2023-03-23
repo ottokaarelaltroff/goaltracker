@@ -15,7 +15,7 @@ function fetch(method: HttpMethod, path: string, body: any) {
 }
 
 
-export const login = async (loginParams: LoginRequest) => {
+export const apiLogin = async (loginParams: LoginRequest) => {
     return await fetch('GET', '/account/login', loginParams)
 }
 

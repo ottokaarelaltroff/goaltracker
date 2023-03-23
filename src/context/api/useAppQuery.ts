@@ -1,4 +1,4 @@
-import { QueryKey, useQuery, UseQueryOptions, UseQueryResult } from 'react-query';
+import { QueryKey, useQuery, UseQueryOptions, UseQueryResult } from '@tanstack/react-query';
 
 export default function useAppQuery<TData, Error>(
     queryKey: QueryKey,

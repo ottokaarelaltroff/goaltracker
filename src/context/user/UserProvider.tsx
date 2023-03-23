@@ -1,7 +1,5 @@
 import { Dispatch, SetStateAction, createContext, useState } from 'react';
-import { LoginResponse, User } from '../../model/types';
-import useAppQuery from '../api/useAppQuery';
-import api from '../api/Api';
+import { User } from '../../model/types';
 
 
 interface UserContext {

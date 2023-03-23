@@ -1,8 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { Colors } from "../util/Colors";
-import { AuthScreen } from "../features/auth/AuthScreen";
-import { LoginScreen } from "../features/auth/LoginScreen";
-import { CreateAccountScreen } from "../features/auth/CreateAccountScreen";
+import { AuthScreen } from "../auth/AuthScreen";
+import { LoginScreen } from "../auth/LoginScreen";
+import { CreateAccountScreen } from "../auth/CreateAccountScreen";
 import { HabitsScreen } from "../features/habits/HabitsScreen";
 import { GoalsScreen } from "../features/goals/GoalsScreen";
 import { SettingsScreen } from "../features/settings/SettingsScreen";
