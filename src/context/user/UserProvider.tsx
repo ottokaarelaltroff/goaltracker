@@ -18,7 +18,7 @@ const UserProvider = ({ children }: UserProviderProps) => {
 
     const value = {
         user,
-        setUser
+        setUser,
     };
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

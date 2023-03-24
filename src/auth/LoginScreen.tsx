@@ -3,9 +3,6 @@ import { ScreenContainer } from "../shared/ScreenContainer";
 import { Colors } from "../util/Colors";
 import LoginForm from "./LoginForm";
 
-
-
-
 export const LoginScreen = ({ navigation }) => (
     <ScreenContainer>
         <View>

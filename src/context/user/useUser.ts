@@ -9,6 +9,6 @@ export default function useUser() {
 
     return {
         user: value.user,
-        setUser: value.setUser
+        setUser: value.setUser,
     };
 }

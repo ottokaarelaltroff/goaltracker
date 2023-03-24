@@ -1,28 +1,36 @@
 import { useMutation } from '@tanstack/react-query';
+import { api } from '../context/api';
 import { LoginRequest, User } from '../model/types';
-import { apiLogin } from '../context/api/Api';
 import useUser from '../context/user/useUser';
+import { useEffect } from 'react';
 
-export default function useLogin() {
-    // const { user, setUser } = useUser();
+const useLogin = () => {
+
+    const { setUser } = useUser();
 
     const onLoginSuccess = () => {
-        // setUser({
-        //     id: login.data.token,
-        //     userName: login.data.firstName
-        // } as User)
-        // alert("halloo " + user.userName)
-        alert("halloo ")
+        // alert("halloo " + login.data)
     }
+
     const doLogin = async (loginParams: LoginRequest) => {
-        return await apiLogin(loginParams);
+        return await api.login(loginParams);
     }
 
     const login = useMutation(doLogin, {
         onSuccess: onLoginSuccess,
     });
 
+    useEffect(() => {
+        if (login.data) {
+            setUser({
+                id: login.data.token,
+                userName: login.data.firstName
+            } as User)
+        }
+    }, [login.data])
     return {
         login
     };
 }
+
+export default useLogin;

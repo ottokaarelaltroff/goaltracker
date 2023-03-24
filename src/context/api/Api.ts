@@ -1,27 +1,24 @@
+import axios from "axios";
 import { API_URL } from "../../model/Constants";
 import { LoginRequest } from "../../model/types";
-import useFetch, { FetchProps, HttpMethod } from "./useFetch"
+import { HttpMethod } from "./useFetch";
 
-// const api = () => {
+export default class Api {
 
-function fetch(method: HttpMethod, path: string, body: any) {
-    const query = {
-        method: method,
-        url: API_URL + path,
-        body: body
-    } as FetchProps;
-    const { isLoading, data, error } = useFetch(query);
-    return data;
+    async fetchApi(method: HttpMethod, path: string, body: any) {
+        console.log("OTTO fetch", API_URL + path)
+        const response = await axios({
+            method: method,
+            url: API_URL + path,
+            data: body
+        });
+        console.log("OTTO response", response?.data)
+        return await response?.data;
+    }
+
+
+    async login(loginParams: LoginRequest) {
+        return await this.fetchApi('POST', '/account/login', loginParams)
+    }
+
 }
-
-
-export const apiLogin = async (loginParams: LoginRequest) => {
-    return await fetch('GET', '/account/login', loginParams)
-}
-
-//     return {
-//         login: login
-//     }
-// }
-
-// export default api;

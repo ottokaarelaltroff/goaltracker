@@ -10,11 +10,11 @@ const queryClient = new QueryClient();
 
 const GlobalProvider = ({ children }: Props) => {
     return (
-        <UserProvider>
-            <QueryClientProvider client={queryClient}>
+        <QueryClientProvider client={queryClient} >
+            <UserProvider>
                 {children}
-            </QueryClientProvider>
-        </UserProvider>
+            </UserProvider>
+        </QueryClientProvider>
     );
 };
 
