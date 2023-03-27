@@ -1,11 +1,10 @@
 import axios from "axios";
 import { API_URL } from "../../model/Constants";
 import { LoginRequest } from "../../model/types";
-import { HttpMethod } from "./useFetch";
 
 export default class Api {
 
-    async fetchApi(method: HttpMethod, path: string, body: any) {
+    async fetchApi(method: string, path: string, body: any) {
         console.log("OTTO fetch", API_URL + path)
         const response = await axios({
             method: method,
