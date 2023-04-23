@@ -4,7 +4,7 @@ import { api } from '../context/api';
 import useUser from '../context/user/useUser';
 import { LoginRequest, User } from '../model/types';
 
-const useLogin = () => {
+const useAuth = () => {
 
     const { setUser } = useUser();
 
@@ -22,8 +22,10 @@ const useLogin = () => {
 
     const login = useMutation(fetchLogin, {
         onSuccess: onLoginSuccess,
-        onError: onLoginError
+        onError: onLoginError,
     });
+
+    const logOut = () => setUser(undefined);
 
     useEffect(() => {
         if (login.data) {
@@ -33,9 +35,11 @@ const useLogin = () => {
             } as User)
         }
     }, [login.data])
+
     return {
-        login
+        login,
+        logOut
     };
 }
 
-export default useLogin;
+export default useAuth;

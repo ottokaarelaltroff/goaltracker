@@ -1,7 +1,7 @@
 import { Controller, useForm } from "react-hook-form";
 import { Button, Dimensions, Text, TextInput, View } from "react-native";
 import { Colors } from "../util/Colors";
-import useLogin from "./useLogin";
+import useAuth from "./useAuth";
 
 
 type FormData = {
@@ -12,7 +12,7 @@ type FormData = {
 const { width } = Dimensions.get("window");
 
 const LoginForm = () => {
-    const { login } = useLogin();
+    const { login } = useAuth();
 
     const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
         defaultValues: {

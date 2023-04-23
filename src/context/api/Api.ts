@@ -5,7 +5,7 @@ import { LoginRequest } from "../../model/types";
 export default class Api {
 
     async fetchApi(method: string, path: string, body: any) {
-        console.log("OTTO fetch", API_URL + path)
+        console.log("OTTO request", method, path, body)
         const response = await axios({
             method: method,
             url: API_URL + path,

@@ -9,7 +9,7 @@ export interface FetchProps {
     body: any;
 }
 
-const useFetch = ({method, url, body}: FetchProps) => {
+const useAxios = ({method, url, body}: FetchProps) => {
   const [isLoading, setIsLoading] = useState<boolean | undefined>(false);
   const [data, setData] = useState<any>();
   const [error, setError] = useState<Error | undefined>();
@@ -38,4 +38,4 @@ const useFetch = ({method, url, body}: FetchProps) => {
   return { isLoading, data, error };
 };
 
-export default useFetch;
+export default useAxios;

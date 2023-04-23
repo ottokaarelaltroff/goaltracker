@@ -1,2 +1,2 @@
-const BACKEND_URL = "https://ad72-91-131-57-96.eu.ngrok.io"
-export const API_URL = BACKEND_URL + "/api";
+const SERVER_URL = "https://aa2d-83-191-199-228.ngrok-free.app"
+export const API_URL = SERVER_URL + "/api";
