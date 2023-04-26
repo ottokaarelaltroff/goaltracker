@@ -1,8 +1,5 @@
-import { StyleSheet, Text, TextInput, View, Button, Image, Touchable, Insets, Dimensions } from "react-native";
-import { ScreenContainer } from "../shared/ScreenContainer";
+import { StyleSheet, View } from "react-native";
 import { Colors } from "../util/Colors";
-import { ImageSourcePropType } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 interface ProgressBarProps {
     width: number,
@@ -15,11 +12,15 @@ export const ProgressBar = ({ width, percentage }: ProgressBarProps) => {
     const color = percentage > 50 ? Colors.green : Colors.orange;
 
     const barStyle = () => ({
-        width: width - 20,
+        width: width,
     })
 
+    const fillWidth = () => (
+        percentage > 0 ? percentage / 100 * width : 0
+    )
+
     const fillStyle = () => ({
-        width: percentage / 100 * width - 20,
+        width: fillWidth(),
         backgroundColor: color,
     })
     return (

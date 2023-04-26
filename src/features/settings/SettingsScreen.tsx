@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
-import { ScreenContainer } from "../../shared/ScreenContainer";
+import { ScreenContainer } from "../../components/ScreenContainer";
 import { Colors } from "../../util/Colors";
 import { Button } from "react-native";
-import useAuth from "../../auth/useAuth";
+import useAuth from "../auth/useAuth";
 import { GButton } from "../../components/GButton";
 import { GText } from "../../components/GText";
 import { HeaderText } from "../../components/HeaderText";

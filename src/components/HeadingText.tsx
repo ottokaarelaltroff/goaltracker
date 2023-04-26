@@ -22,6 +22,6 @@ export const HeadingText = ({ style, children }: HeadingTextProps) => {
 
 const styles = StyleSheet.create({
     heading: {
-        fontSize: 28,
+        fontSize: 24,
     }
 });

@@ -3,36 +3,46 @@ import { GText } from "../../components/GText";
 import { HeadingText } from "../../components/HeadingText";
 import { ProgressBar } from "../../components/ProgressBar";
 import { Colors } from "../../util/Colors";
-import { GoalTags } from "./GoalTags";
+import { CategoryTags } from "./CategoryTags";
+import useGoal from "./useGoal";
 
 
 const { width } = Dimensions.get("window");
 
-export const GoalPreview = ({ goal }) => {
+type GoalPreviewProps = {
+    goalId: string;
+};
 
-    const percentage = goal.currentValue / goal.targetValue * 100;
+export const GoalPreview = ({ goalId }: GoalPreviewProps) => {
 
-    return (<View style={styles.container}>
-        <View style={styles.row}>
-            <GoalTags categories={goal.categories} />
-            <GText bold style={styles.currentValue}>{goal.currentValue + ' ' + goal.unit}</GText>
-        </View>
-        <View style={styles.row}>
-            <HeadingText >{goal.title}</HeadingText>
-            <GText >{"/ " + goal.targetValue + ' ' + goal.unit}</GText>
-        </View>
-        <View style={styles.row}>
-            <ProgressBar width={width - 30} percentage={percentage}></ProgressBar>
-            {/* <HeadingText >{"Buy a New Car"}</HeadingText> */}
-        </View>
+    const { goal } = useGoal(goalId);
 
-    </View>)
+    const percentage = () => {
+        if (goal && goal.currentValue && goal.targetValue) {
+            return goal.currentValue / goal.targetValue * 100;
+        }
+        return 0;
+    }
+    return (
+        <View style={styles.container}>
+            <View style={styles.row}>
+                <CategoryTags categories={goal.categories} />
+                <GText bold style={styles.currentValue}>{goal.currentValue + ' ' + goal.unit.name}</GText>
+            </View>
+            <View style={styles.row}>
+                <HeadingText >{goal.title}</HeadingText>
+                <GText >{"/ " + goal.targetValue + ' ' + goal.unit.name}</GText>
+            </View>
+            <View style={styles.row}>
+                <ProgressBar width={width - 70} percentage={percentage()}></ProgressBar>
+            </View>
+        </View>)
 }
     ;
 
 const styles = StyleSheet.create({
     container: {
-        width: width - 20,
+        width: width - 40,
         height: 120,
         backgroundColor: Colors.secondary,
         borderRadius: 20,

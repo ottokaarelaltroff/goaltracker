@@ -5,7 +5,7 @@ import * as React from 'react';
 import { Colors } from '../util/Colors';
 import { AuthStackScreen } from './AppStacks';
 import { Tabs } from './AppTabs';
-import useUser from '../context/user/useUser';
+import useUser from '../features/auth/useUser';
 import { User } from '../model/types';
 
 const RootStack = createStackNavigator();

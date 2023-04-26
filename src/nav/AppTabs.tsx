@@ -12,7 +12,7 @@ const TabStack = createBottomTabNavigator();
 
 export const Tabs = () => (
   <TabStack.Navigator screenOptions={options} initialRouteName='Goals'>
-    <TabStack.Screen name="Habits" component={HabitsStackScreen} options={getOptions('Habits', calendarIcon)} />
+    <TabStack.Screen name="Habits" component={HabitsStackScreen} options={getOptions('My Habits', calendarIcon)} />
     <TabStack.Screen name="Goals" component={GoalStackScreen} options={getOptions('My Goals', goalIcon)} />
     <TabStack.Screen name="Settings" component={SettingsStackScreen} options={getOptions('Settings', settingIcon)} />
   </TabStack.Navigator>
@@ -30,8 +30,6 @@ const options = {
     height: 150,
     borderBottomWidth: 0,
     borderBottomColor: 'transparent',
-
-
   },
   headerTitleAlign: 'left',
   headerTitleStyle: {

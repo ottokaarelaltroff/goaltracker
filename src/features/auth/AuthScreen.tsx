@@ -1,6 +1,6 @@
 import { Button, StyleSheet, Text, View } from "react-native";
-import { ScreenContainer } from "../shared/ScreenContainer";
-import { Colors } from "../util/Colors";
+import { ScreenContainer } from "../../components/ScreenContainer";
+import { Colors } from "../../util/Colors";
 
 export const AuthScreen = ({ navigation }) => (
     <ScreenContainer>

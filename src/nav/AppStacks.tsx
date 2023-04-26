@@ -1,11 +1,12 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { Colors } from "../util/Colors";
-import { AuthScreen } from "../auth/AuthScreen";
-import { LoginScreen } from "../auth/LoginScreen";
-import { CreateAccountScreen } from "../auth/CreateAccountScreen";
+import { AuthScreen } from "../features/auth/AuthScreen";
+import { LoginScreen } from "../features/auth/LoginScreen";
+import { CreateAccountScreen } from "../features/auth/CreateAccountScreen";
 import { HabitsScreen } from "../features/habits/HabitsScreen";
-import { GoalsScreen } from "../features/goals/GoalsScreen";
+import { AllGoalsScreen } from "../features/goals/AllGoalsScreen";
 import { SettingsScreen } from "../features/settings/SettingsScreen";
+import { GoalScreen } from "../features/goals/GoalScreen";
 
 const AuthStack = createStackNavigator();
 const HabitsStack = createStackNavigator();
@@ -39,7 +40,8 @@ export const GoalStackScreen = () => (
   <GoalsStack.Navigator screenOptions={{
     headerShown: false
   }}>
-    <GoalsStack.Screen name="GoalsScreen" component={GoalsScreen} />
+    <GoalsStack.Screen name="GoalsScreen" component={AllGoalsScreen} />
+    <GoalsStack.Screen name="GoalScreen" component={GoalScreen} options={{ headerTitle: 'Screen 2 Title' }} />
   </GoalsStack.Navigator>
 )
 

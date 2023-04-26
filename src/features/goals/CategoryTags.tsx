@@ -1,10 +1,15 @@
 import { StyleSheet, View } from "react-native";
 import { Tag } from "../../components/Tag";
+import { Category } from "../../model/types";
+import { getColor } from "../../util/Colors";
 
-export const GoalTags = ({ categories }) => (
+type CategoryTagsProps = {
+    categories: Category[]
+}
+export const CategoryTags = ({ categories }: CategoryTagsProps) => (
     <View style={styles.container}>
         {categories && categories.map((category, index) => (
-            <Tag title={category.title} color={category.color} key={index}></Tag>
+            <Tag title={category.name} color={getColor(category.color)} key={index}></Tag>
         ))}
     </View>
 );

@@ -10,3 +10,16 @@ export const Colors = {
     lightBlue: '#2DB1E1',
     lightRed: '#CF6357'
 }
+
+export const getColor = (name: string) => {
+    switch (name.toLowerCase()) {
+        case 'red':
+            return Colors.lightRed;
+        case 'blue':
+            return Colors.lightBlue;
+        case 'gray':
+            return Colors.darkGray;
+        default:
+            return Colors.secondary
+    }
+}

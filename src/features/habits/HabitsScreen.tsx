@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import { ScreenContainer } from "../../shared/ScreenContainer";
+import { ScreenContainer } from "../../components/ScreenContainer";
 import { Colors } from "../../util/Colors";
 
 export const HabitsScreen = ({ navigation }) => (

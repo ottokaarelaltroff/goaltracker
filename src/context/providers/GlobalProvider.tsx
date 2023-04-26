@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import UserProvider from "./user/UserProvider";
+import UserProvider from "./UserProvider";
+import GoalProvider from './GoalProvider';
 
 type Props = {
     children: React.ReactNode;
@@ -12,7 +13,9 @@ const GlobalProvider = ({ children }: Props) => {
     return (
         <QueryClientProvider client={queryClient} >
             <UserProvider>
-                {children}
+                <GoalProvider>
+                    {children}
+                </GoalProvider>
             </UserProvider>
         </QueryClientProvider>
     );

@@ -1,15 +1,16 @@
 import { useMutation } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import { api } from '../context/api';
-import useUser from '../context/user/useUser';
-import { LoginRequest, User } from '../model/types';
+
+import useUser from './useUser';
+import { LoginRequest, User } from '../../model/types';
+import { api } from '../../context/api';
 
 const useAuth = () => {
 
     const { setUser } = useUser();
 
     const onLoginSuccess = () => {
-        alert("login successful " + login.data)
+        // alert("login successful " + login.data)
     }
 
     const onLoginError = () => {

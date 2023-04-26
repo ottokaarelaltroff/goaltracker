@@ -1,6 +1,6 @@
 import { Controller, useForm } from "react-hook-form";
 import { Button, Dimensions, Text, TextInput, View } from "react-native";
-import { Colors } from "../util/Colors";
+import { Colors } from "../../util/Colors";
 import useAuth from "./useAuth";
 
 

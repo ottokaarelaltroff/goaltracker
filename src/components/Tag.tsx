@@ -1,15 +1,10 @@
-import { StyleSheet, Text, TextInput, View, Button, Image, Touchable, Insets, Dimensions } from "react-native";
-import { ScreenContainer } from "../shared/ScreenContainer";
-import { Colors } from "../util/Colors";
-import { ImageSourcePropType } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { StyleSheet, View } from "react-native";
 import { GText } from "./GText";
 
 interface TagProps {
     title: string,
     color: string;
 };
-
 
 export const Tag = ({ title, color }: TagProps) => {
 
@@ -22,10 +17,6 @@ export const Tag = ({ title, color }: TagProps) => {
 
 const styles = StyleSheet.create({
     container: {
-        // display: 'flex',
-        // flexDirection: 'row',
-        // justifyContent: 'flex-start',
-        // alignItems: 'flex-start'
         paddingVertical: 5,
         paddingHorizontal: 10,
         borderRadius: 10,

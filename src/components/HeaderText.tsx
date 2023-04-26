@@ -1,8 +1,5 @@
-import { StyleSheet, Text, TextInput, View, Button, Image, Touchable, Insets } from "react-native";
-import { ScreenContainer } from "../shared/ScreenContainer";
+import { StyleSheet, View } from "react-native";
 import { Colors } from "../util/Colors";
-import { ImageSourcePropType } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { GText } from "./GText";
 
 interface HeaderTextProps {

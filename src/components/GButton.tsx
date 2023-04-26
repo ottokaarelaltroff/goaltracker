@@ -1,8 +1,6 @@
-import { StyleSheet, Text, TextInput, View, Button, Image, Touchable, Insets } from "react-native";
-import { ScreenContainer } from "../shared/ScreenContainer";
-import { Colors } from "../util/Colors";
-import { ImageSourcePropType } from "react-native";
+import { Image, ImageSourcePropType, Insets, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { Colors } from "../util/Colors";
 
 interface GButtonProps {
     title: string;
