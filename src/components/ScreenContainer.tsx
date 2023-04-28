@@ -1,8 +1,15 @@
-import { StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { Colors } from "../util/Colors";
 
-export const ScreenContainer = ({ children }) => (
-    <View style={styles.container}>{children}</View>
+
+const { width } = Dimensions.get("window");
+
+type ScreenContainerProps = {
+    children: any,
+    backgroundColor?: string,
+}
+export const ScreenContainer = ({ children, backgroundColor = Colors.primary }: ScreenContainerProps) => (
+    <View style={[styles.container, { backgroundColor: backgroundColor }]}>{children}</View>
 );
 
 const styles = StyleSheet.create({
@@ -10,8 +17,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: Colors.primary,
-        paddingHorizontal: 20,
-        paddingTop: 20,
+        // paddingTop: 20,
+        width: width,
     },
 });

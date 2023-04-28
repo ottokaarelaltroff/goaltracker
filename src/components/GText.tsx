@@ -3,32 +3,34 @@ import { Colors } from "../util/Colors";
 
 interface GTextProps {
     bold?: boolean,
+    italic?: boolean,
+    size?: number,
     numberOfLines?: number,
     style?: any,
     children: any
 };
 
-const defaultStyle = () => ({
+const defaultStyle = (size) => ({
     // fontFamily: Fonts.getRegular(),
-    fontSize: 16,
+    fontSize: size ? size : 16,
     color: Colors.lightGray,
     backgroundColor: 'transparent',
 });
 
-const defaultBoldStyle = () => ({
+const defaultBoldStyle = (size) => ({
     // fontFamily: Fonts.getBold(),
-    fontSize: 16,
+    fontSize: size ? size : 16,
     fontWeight: "600",
     color: Colors.lightGray,
 });
 
-export const GText = ({ bold = false, numberOfLines = 2, style, children }: GTextProps) => {
+export const GText = ({ bold = false, italic = false, size, numberOfLines = 2, style, children }: GTextProps) => {
 
     return (
         <Text
             allowFontScaling={false}
             numberOfLines={numberOfLines}
-            style={[defaultStyle(), bold ? defaultBoldStyle() : defaultStyle(), style]}>
+            style={[defaultStyle(size), bold ? defaultBoldStyle(size) : defaultStyle(size), style, italic ? { fontStyle: 'italic' } : null]}>
             {children}
         </Text>
     );

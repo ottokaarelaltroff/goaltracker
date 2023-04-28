@@ -8,7 +8,7 @@ import useStorage from '../../storage/useStorage';
 
 const useAuth = () => {
 
-    const { user, setUser } = useUser();
+    const { setUser } = useUser();
     const { getItem, storeItem } = useStorage();
 
     const onLoginSuccess = () => {
@@ -17,16 +17,6 @@ const useAuth = () => {
 
     const onLoginError = () => {
         alert("login error " + login.error)
-    }
-
-    const autoLogin = async () => {
-        const jwt = await getItem('token');
-        if (jwt) {
-            setUser({
-                id: jwt,
-                userName: "user"
-            } as User);
-        }
     }
 
     const fetchLogin = async (loginParams: LoginRequest) => {
@@ -39,6 +29,16 @@ const useAuth = () => {
     });
 
     const logOut = () => setUser(undefined);
+
+    const autoLogin = async () => {
+        const jwt = await getItem('token');
+        if (jwt) {
+            setUser({
+                id: jwt,
+                userName: "user"
+            } as User);
+        }
+    }
 
     useEffect(() => {
         if (login.data && login.data.token) {

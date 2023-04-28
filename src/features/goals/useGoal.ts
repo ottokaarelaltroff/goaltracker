@@ -18,7 +18,6 @@ export default function useGoal(goalId: string) {
         }
     }
 
-
     return {
         goal: goal,
     };

@@ -44,7 +44,8 @@ const styles = StyleSheet.create({
     container: {
         display: 'flex',
         flex: 1,
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        marginVertical: 20,
     },
     spinner: {
         marginTop: 50,

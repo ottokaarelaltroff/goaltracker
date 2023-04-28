@@ -17,13 +17,18 @@ export const GoalPreview = ({ goalId }: GoalPreviewProps) => {
 
     const { goal } = useGoal(goalId);
 
-    const percentage = () => {
+    const getPercentage = () => {
         if (goal && goal.currentValue && goal.targetValue) {
             return goal.currentValue / goal.targetValue * 100;
         }
         return 0;
     }
+
+    if (!goal) {
+        return null;
+    }
     return (
+
         <View style={styles.container}>
             <View style={styles.row}>
                 <CategoryTags categories={goal.categories} />
@@ -34,7 +39,7 @@ export const GoalPreview = ({ goalId }: GoalPreviewProps) => {
                 <GText >{"/ " + goal.targetValue + ' ' + goal.unit.name}</GText>
             </View>
             <View style={styles.row}>
-                <ProgressBar width={width - 70} percentage={percentage()}></ProgressBar>
+                <ProgressBar width={width - 70} percentage={getPercentage()}></ProgressBar>
             </View>
         </View>)
 }

@@ -4,15 +4,18 @@ import { Colors } from "../util/Colors";
 interface ProgressBarProps {
     width: number,
     percentage: number;
+    backgroundColor?: string;
+    isGoal?: boolean
 };
 
 
-export const ProgressBar = ({ width, percentage }: ProgressBarProps) => {
+export const ProgressBar = ({ width, percentage, backgroundColor = Colors.primary, isGoal = true }: ProgressBarProps) => {
 
-    const color = percentage > 50 ? Colors.green : Colors.orange;
+    const fillColor = percentage > 50 ? isGoal ? Colors.green : Colors.lightRed : isGoal ? Colors.orange : Colors.lightBlue;
 
     const barStyle = () => ({
         width: width,
+        backgroundColor: backgroundColor,
     })
 
     const fillWidth = () => (
@@ -21,7 +24,7 @@ export const ProgressBar = ({ width, percentage }: ProgressBarProps) => {
 
     const fillStyle = () => ({
         width: fillWidth(),
-        backgroundColor: color,
+        backgroundColor: fillColor,
     })
     return (
         <View style={styles.container}>
