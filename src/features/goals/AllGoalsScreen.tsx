@@ -1,15 +1,15 @@
 import { StyleSheet, View } from "react-native";
 import { FlatList, RefreshControl, TouchableOpacity } from "react-native-gesture-handler";
 import { GText } from "../../components/GText";
-import useAllGoals from "./useAllGoals";
 import { ScreenContainer } from "../../components/ScreenContainer";
+import Spinner from "../../components/Spinner";
+import { Colors } from "../../util/Colors";
 import { GoalPreview } from "./GoalPreview";
-import useStorage from "../../storage/useStorage";
+import useAllGoals from "./useAllGoals";
 
 export const AllGoalsScreen = ({ navigation }) => {
 
     const { allGoals, fetchAllGoals, isLoading, isError } = useAllGoals();
-    const { getItem } = useStorage();
 
     const renderItem = ({ item, index }) => {
         return (
@@ -19,23 +19,21 @@ export const AllGoalsScreen = ({ navigation }) => {
         );
     };
 
-    const token = async () => {
-        const tok = await getItem('token')
-        console.log("OTTO token", tok)
-    }
-
-    token()
     return (
         <ScreenContainer>
             <View style={styles.container} >
+                {isLoading ? <Spinner style={styles.spinner} /> : null}
                 {allGoals && <FlatList
                     data={allGoals}
                     renderItem={renderItem}
                     showsVerticalScrollIndicator={false}
                     refreshControl={
-                        <RefreshControl refreshing={isLoading} onRefresh={fetchAllGoals} />
+                        <RefreshControl
+                            refreshing={isLoading}
+                            onRefresh={fetchAllGoals}
+                            progressViewOffset={10}
+                            tintColor={Colors.lightGray} />
                     } />}
-                {isLoading ? <GText>{"Loading..."}</GText> : null}
                 {isError ? <GText>{"Error loading My Goals!"}</GText> : null}
             </View>
         </ScreenContainer>
@@ -48,4 +46,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start'
     },
+    spinner: {
+        marginTop: 50,
+    }
 });
