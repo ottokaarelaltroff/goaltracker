@@ -7,6 +7,8 @@ import { AuthStackScreen } from './AppStacks';
 import { Tabs } from './AppTabs';
 import useUser from '../features/auth/useUser';
 import { User } from '../model/types';
+import useStorage from '../storage/useStorage';
+import useAuth from '../features/auth/useAuth';
 
 const RootStack = createStackNavigator();
 const DrawerStack = createDrawerNavigator();
@@ -38,6 +40,10 @@ const Root = ({ user }: RootProps) => (
 export const AppNavigator = () => {
 
   const { user } = useUser();
+  const { autoLogin } = useAuth();
+
+  autoLogin();
+
   return (
     <NavigationContainer>
       <Root user={user}></Root>

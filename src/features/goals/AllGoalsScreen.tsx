@@ -4,10 +4,12 @@ import { GText } from "../../components/GText";
 import useAllGoals from "./useAllGoals";
 import { ScreenContainer } from "../../components/ScreenContainer";
 import { GoalPreview } from "./GoalPreview";
+import useStorage from "../../storage/useStorage";
 
 export const AllGoalsScreen = ({ navigation }) => {
 
     const { allGoals, fetchAllGoals, isLoading, isError } = useAllGoals();
+    const { getItem } = useStorage();
 
     const renderItem = ({ item, index }) => {
         return (
@@ -17,6 +19,12 @@ export const AllGoalsScreen = ({ navigation }) => {
         );
     };
 
+    const token = async () => {
+        const tok = await getItem('token')
+        console.log("OTTO token", tok)
+    }
+
+    token()
     return (
         <ScreenContainer>
             <View style={styles.container} >

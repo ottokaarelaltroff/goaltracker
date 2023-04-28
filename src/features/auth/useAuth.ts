@@ -4,17 +4,29 @@ import { useEffect } from 'react';
 import useUser from './useUser';
 import { LoginRequest, User } from '../../model/types';
 import { api } from '../../context/api';
+import useStorage from '../../storage/useStorage';
 
 const useAuth = () => {
 
-    const { setUser } = useUser();
+    const { user, setUser } = useUser();
+    const { getItem, storeItem } = useStorage();
 
     const onLoginSuccess = () => {
-        // alert("login successful " + login.data)
+        alert("login successful " + login.data)
     }
 
     const onLoginError = () => {
         alert("login error " + login.error)
+    }
+
+    const autoLogin = async () => {
+        const jwt = await getItem('token');
+        if (jwt) {
+            setUser({
+                id: jwt,
+                userName: "user"
+            } as User);
+        }
     }
 
     const fetchLogin = async (loginParams: LoginRequest) => {
@@ -29,17 +41,19 @@ const useAuth = () => {
     const logOut = () => setUser(undefined);
 
     useEffect(() => {
-        if (login.data) {
+        if (login.data && login.data.token) {
             setUser({
                 id: login.data.token,
                 userName: login.data.firstName
             } as User)
+            storeItem('token', login.data.token)
         }
     }, [login.data])
 
     return {
         login,
-        logOut
+        logOut,
+        autoLogin
     };
 }
 

@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, createContext, useState } from 'react';
 import { User } from '../../model/types';
+import useStorage from '../../storage/useStorage';
 
 
 interface UserContext {
@@ -15,7 +16,6 @@ export const UserContext = createContext<UserContext | undefined>(undefined);
 
 const UserProvider = ({ children }: UserProviderProps) => {
     const [user, setUser] = useState<User | undefined>();
-
     const value = {
         user,
         setUser,
