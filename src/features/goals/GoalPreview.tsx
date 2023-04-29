@@ -1,13 +1,10 @@
-import { Dimensions, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { GText } from "../../components/GText";
 import { HeadingText } from "../../components/HeadingText";
 import { ProgressBar } from "../../components/ProgressBar";
 import { Colors } from "../../util/Colors";
 import { CategoryTags } from "./CategoryTags";
 import useGoal from "./useGoal";
-
-
-const { width } = Dimensions.get("window");
 
 type GoalPreviewProps = {
     goalId: string;
@@ -27,6 +24,7 @@ export const GoalPreview = ({ goalId }: GoalPreviewProps) => {
     if (!goal) {
         return null;
     }
+
     return (
 
         <View style={styles.container}>
@@ -39,7 +37,7 @@ export const GoalPreview = ({ goalId }: GoalPreviewProps) => {
                 <GText >{"/ " + goal.targetValue + ' ' + goal.unit.name}</GText>
             </View>
             <View style={styles.row}>
-                <ProgressBar width={width - 70} percentage={getPercentage()}></ProgressBar>
+                <ProgressBar percentage={getPercentage()}></ProgressBar>
             </View>
         </View>)
 }
@@ -47,11 +45,11 @@ export const GoalPreview = ({ goalId }: GoalPreviewProps) => {
 
 const styles = StyleSheet.create({
     container: {
-        width: width - 40,
         height: 120,
         backgroundColor: Colors.secondary,
         borderRadius: 20,
         marginBottom: 20,
+        marginHorizontal: 12,
         paddingHorizontal: 15,
         paddingVertical: 5,
         display: 'flex',

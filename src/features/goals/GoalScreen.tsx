@@ -1,16 +1,15 @@
-import { Dimensions, Image, StyleSheet, View } from "react-native";
-import { ScreenContainer } from "../../components/ScreenContainer";
-import { GoalPreview } from "./GoalPreview";
-import { CategoryTags } from "./CategoryTags";
-import { GText } from "../../components/GText";
-import { HeadingText } from "../../components/HeadingText";
-import { ProgressBar } from "../../components/ProgressBar";
-import { Colors } from "../../util/Colors";
+import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { Collapse } from "../../components/Collapse";
+import { DiaryList } from "../../components/DiaryList";
 import Divider from "../../components/Divider";
-import { Goal } from "../../model/types";
-
-const { width } = Dimensions.get("window");
+import { HabitsList } from "../../components/HabitsList";
+import { ProgressSection } from "../../components/ProgressSection";
+import { ScreenContainer } from "../../components/ScreenContainer";
+import { StepsList } from "../../components/StepsList";
+import { mockData } from "../../unused/mockData";
+import { Colors } from "../../util/Colors";
+import { CategoryTags } from "./CategoryTags";
 
 export const GoalScreen = ({ route }) => {
 
@@ -55,37 +54,32 @@ export const GoalScreen = ({ route }) => {
                     <View style={styles.categories}>
                         <CategoryTags categories={goal.categories} />
                     </View>
-                    <View style={styles.row}>
-                        <View style={styles.iconRow}>
-                            <Image
-                                source={require("../../assets/goal.png")}
-                                resizeMode="contain"
-                                style={styles.icon} />
-                            <HeadingText >{goal.currentValue + " / " + goal.targetValue + ' ' + goal.unit.name}</HeadingText>
-                        </View>
-
-                        <GText italic size={12}>{getRemaining() + " " + goal.unit.name + ' to go!'}</GText>
-                    </View>
-                    <View style={styles.row}>
-                        <ProgressBar width={width - 110} percentage={getPercentage()} backgroundColor={Colors.darkGray}></ProgressBar>
-                        <GText italic size={12}>{getPercentage() + '%'}</GText>
-                    </View>
+                    <ProgressSection
+                        title={goal.currentValue + " / " + goal.targetValue + ' ' + goal.unit.name}
+                        altText={getRemaining() + " " + goal.unit.name + ' to go!'}
+                        icon={require("../../assets/goal.png")}
+                        backgroundColor={Colors.darkGray}
+                        percentage={getPercentage()}
+                    />
                     <Divider />
-                    <View style={styles.row}>
-                        <View style={styles.iconRow}>
-                            <Image
-                                source={require("../../assets/calendar.png")}
-                                resizeMode="contain"
-                                style={styles.icon} />
-                            <HeadingText >{getTargetDateFormatted()}</HeadingText>
-                        </View>
-                        <GText italic size={12}>{getRemainingDays() + ' days left!'}</GText>
-                    </View>
-                    <View style={styles.row}>
-                        <ProgressBar width={width - 110} percentage={getPercentage()} backgroundColor={Colors.darkGray} isGoal={false}></ProgressBar>
-                        <GText italic size={12}>{getPercentage() + '%'}</GText>
-                    </View>
+                    <ProgressSection
+                        title={getTargetDateFormatted()}
+                        altText={getRemainingDays() + ' days left!'}
+                        icon={require("../../assets/calendar.png")}
+                        backgroundColor={Colors.darkGray}
+                        percentage={getPercentage()}
+                        isGoal={false}
+                    />
                     <Divider />
+                    <Collapse title={"Steps I need to take"}>
+                        <StepsList items={mockData.steps} />
+                    </Collapse>
+                    <Collapse title={"Habits I need to follow"}>
+                        <HabitsList items={mockData.habits} />
+                    </Collapse>
+                    <Collapse title={"Dear Diary..."}>
+                        <DiaryList items={mockData.diaryEntries} />
+                    </Collapse>
                 </View>
             </ScrollView>
         </ScreenContainer>
@@ -95,40 +89,18 @@ export const GoalScreen = ({ route }) => {
 
 const styles = StyleSheet.create({
     container: {
+        display: 'flex',
+        flexDirection: 'column',
         flex: 1,
         backgroundColor: Colors.primary,
         borderRadius: 20,
-        paddingHorizontal: 15,
+        paddingHorizontal: 12,
         paddingVertical: 10,
         marginVertical: 20,
-        display: 'flex',
-        flexDirection: 'column'
-    },
-    row: {
-        display: 'flex',
-        flexDirection: 'row',
-        flex: 1,
-        justifyContent: 'space-between', alignItems: 'center',
-        // borderWidth: 2
-        marginBottom: 10,
-    },
-    currentValue: {
-        fontSize: 24
+        marginHorizontal: 10,
     },
     categories: {
         alignItems: 'center',
-        marginTop: 10,
-        marginBottom: 20,
+        marginVertical: 10,
     },
-    icon: {
-        width: 40,
-        height: 40,
-        tintColor: Colors.lightGray,
-    },
-    iconRow: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-
-    }
 });

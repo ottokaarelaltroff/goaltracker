@@ -37,3 +37,27 @@ export type Category = {
     goalId?: string,
     categoryId?: string,
 }
+
+export type Step = {
+    id: string,
+    title: string,
+    isCompleted: boolean,
+}
+
+export type Habit = {
+    id: string,
+    title: string,
+    reminderTime: string,
+    monday: boolean,
+    tuesday: boolean,
+    wednesday: boolean,
+    thursday: boolean,
+    friday: boolean,
+    saturday: boolean,
+    sunday: boolean,
+}
+
+export type DiaryEntry = {
+    id: string,
+    content: string,
+}

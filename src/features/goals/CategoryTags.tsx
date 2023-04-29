@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { Tag } from "../../components/Tag";
 import { Category } from "../../model/types";
-import { getColor } from "../../util/Colors";
+import { getColorByName } from "../../util/Colors";
 
 type CategoryTagsProps = {
     categories: Category[]
@@ -9,7 +9,7 @@ type CategoryTagsProps = {
 export const CategoryTags = ({ categories }: CategoryTagsProps) => (
     <View style={styles.container}>
         {categories && categories.map((category, index) => (
-            <Tag title={category.name} color={getColor(category.color)} key={index}></Tag>
+            <Tag title={category.name} color={getColorByName(category.color)} key={index}></Tag>
         ))}
     </View>
 );
