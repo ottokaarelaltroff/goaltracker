@@ -13,7 +13,7 @@ export const AllGoalsScreen = ({ navigation }) => {
 
     const renderItem = ({ item, index }) => {
         return (
-            <TouchableOpacity onPress={() => navigation.push("GoalScreen", { goal: item })}>
+            <TouchableOpacity onPress={() => navigation.navigate("GoalScreen", { goal: item, title: item.title })}>
                 <GoalPreview goalId={item.id} key={index}></GoalPreview>
             </TouchableOpacity>
         );

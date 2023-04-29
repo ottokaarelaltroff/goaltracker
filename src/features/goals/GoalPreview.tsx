@@ -26,7 +26,6 @@ export const GoalPreview = ({ goalId }: GoalPreviewProps) => {
     }
 
     return (
-
         <View style={styles.container}>
             <View style={styles.row}>
                 <CategoryTags categories={goal.categories} />

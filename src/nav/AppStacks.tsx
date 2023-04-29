@@ -7,6 +7,7 @@ import { HabitsScreen } from "../features/habits/HabitsScreen";
 import { AllGoalsScreen } from "../features/goals/AllGoalsScreen";
 import { SettingsScreen } from "../features/settings/SettingsScreen";
 import { GoalScreen } from "../features/goals/GoalScreen";
+import useGoal from "../features/goals/useGoal";
 
 const AuthStack = createStackNavigator();
 const HabitsStack = createStackNavigator();
@@ -36,14 +37,32 @@ export const HabitsStackScreen = () => (
   </HabitsStack.Navigator>
 )
 
-export const GoalStackScreen = () => (
-  <GoalsStack.Navigator screenOptions={{
-    headerShown: false
-  }}>
-    <GoalsStack.Screen name="GoalsScreen" component={AllGoalsScreen} />
-    <GoalsStack.Screen name="GoalScreen" component={GoalScreen} options={{ headerTitle: 'Screen 2 Title' }} />
-  </GoalsStack.Navigator>
-)
+export const GoalStackScreen = ({ route }) => {
+  // const { title } = route.params;
+  console.log("OTTO params", route)
+  return (
+    <GoalsStack.Navigator screenOptions={{
+      headerShown: true,
+      headerStyle: {
+        backgroundColor: Colors.primary,
+        height: 120,
+        borderBottomWidth: 0,
+        borderBottomColor: 'transparent',
+      },
+      headerTitleAlign: 'left',
+      headerTitleStyle: {
+        fontSize: 32,
+        color: Colors.lightGray
+      },
+      headerTitleContainerStyle: {
+        marginLeft: 30,
+      },
+    }}>
+      <GoalsStack.Screen name="GoalsScreen" component={AllGoalsScreen} options={{ headerTitle: 'My Goals' }} />
+      <GoalsStack.Screen name="GoalScreen" component={GoalScreen} options={(route) => ({ headerTitle: 'title' })} />
+    </GoalsStack.Navigator>
+  )
+}
 
 export const SettingsStackScreen = () => (
   <SettingsStack.Navigator screenOptions={{

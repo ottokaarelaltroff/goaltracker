@@ -22,7 +22,7 @@ export const HabitsList = ({ items }: HabitsListProps) => {
 
     return (
         <View>
-            {getHabitListItems().map((item, index) => (
+            {items && getHabitListItems().map((item, index) => (
                 <TouchableOpacity onPress={() => { }} key={index}>
                     <View style={styles.listItem}>
                         {item.icon}

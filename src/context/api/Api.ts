@@ -35,10 +35,20 @@ const Api = () => {
         return await fetchApi('GET', `/goalcategories/goalId=${goalId}`)
     };
 
+    const findGoalHabits = async (goalId: string) => {
+        return await fetchApi('GET', `/goalhabits/goalId=${goalId}`)
+    };
+
+    const findGoalSteps = async (goalId: string) => {
+        return await fetchApi('GET', `/goalsteps/goalId=${goalId}`)
+    };
+
     return {
         login,
         findAllGoals,
         findGoalCategories,
+        findGoalHabits,
+        findGoalSteps,
     };
 };
 

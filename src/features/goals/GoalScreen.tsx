@@ -10,8 +10,21 @@ import { StepsList } from "../../components/StepsList";
 import { mockData } from "../../unused/mockData";
 import { Colors } from "../../util/Colors";
 import { CategoryTags } from "./CategoryTags";
+import { Goal } from "../../model/types";
 
-export const GoalScreen = ({ route }) => {
+interface Params {
+    goal: Goal;
+};
+
+interface RouteProps {
+    params: Params;
+};
+
+interface GoalScreenProps {
+    route: RouteProps;
+};
+
+export const GoalScreen = ({ route }: GoalScreenProps) => {
 
     const { goal } = route.params;
 
@@ -43,7 +56,7 @@ export const GoalScreen = ({ route }) => {
         return Math.ceil(differenceInMilliseconds / (1000 * 60 * 60 * 24));
     }
 
-    if (!goal) {
+    if (!goal || !goal.habits || !goal.steps) {
         return null;
     }
 
@@ -72,10 +85,10 @@ export const GoalScreen = ({ route }) => {
                     />
                     <Divider />
                     <Collapse title={"Steps I need to take"}>
-                        <StepsList items={mockData.steps} />
+                        <StepsList items={goal.steps} />
                     </Collapse>
                     <Collapse title={"Habits I need to follow"}>
-                        <HabitsList items={mockData.habits} />
+                        <HabitsList items={goal.habits} />
                     </Collapse>
                     <Collapse title={"Dear Diary..."}>
                         <DiaryList items={mockData.diaryEntries} />

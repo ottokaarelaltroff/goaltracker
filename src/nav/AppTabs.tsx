@@ -25,20 +25,21 @@ const options = {
     backgroundColor: Colors.secondary,
     height: 80,
   },
-  headerStyle: {
-    backgroundColor: Colors.primary,
-    height: 150,
-    borderBottomWidth: 0,
-    borderBottomColor: 'transparent',
-  },
-  headerTitleAlign: 'left',
-  headerTitleStyle: {
-    fontSize: 32,
-    color: Colors.lightGray
-  },
-  headerTitleContainerStyle: {
-    marginLeft: 30,
-  },
+  headerShown: false
+  // headerStyle: {
+  //   backgroundColor: Colors.primary,
+  //   height: 150,
+  //   borderBottomWidth: 0,
+  //   borderBottomColor: 'transparent',
+  // },
+  // headerTitleAlign: 'left',
+  // headerTitleStyle: {
+  //   fontSize: 32,
+  //   color: Colors.lightGray
+  // },
+  // headerTitleContainerStyle: {
+  //   marginLeft: 30,
+  // },
 };
 
 

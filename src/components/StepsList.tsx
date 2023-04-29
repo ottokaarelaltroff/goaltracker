@@ -22,7 +22,7 @@ export const StepsList = ({ items }: StepsListProps) => {
 
     return (
         <View>
-            {getCheckListItems().map((item, index) => (
+            {items && getCheckListItems().map((item, index) => (
                 <TouchableOpacity onPress={() => { }} key={index}>
                     <View style={styles.listItem}>
                         {item.icon}

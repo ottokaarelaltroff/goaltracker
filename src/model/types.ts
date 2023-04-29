@@ -22,7 +22,10 @@ export type Goal = {
     currentValue: number,
     targetValue: number,
     unit: Unit
-    categories: Category[]
+    categories?: Category[]
+    habits?: Habit[]
+    steps?: Step[]
+    diaryEntries?: DiaryEntry[]
 }
 
 export type Unit = {
@@ -40,12 +43,16 @@ export type Category = {
 
 export type Step = {
     id: string,
+    goalId?: string,
+    stepId?: string,
     title: string,
     isCompleted: boolean,
 }
 
 export type Habit = {
     id: string,
+    goalId?: string,
+    habitId?: string,
     title: string,
     reminderTime: string,
     monday: boolean,
