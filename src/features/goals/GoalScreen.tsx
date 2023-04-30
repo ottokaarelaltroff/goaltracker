@@ -19,6 +19,7 @@ import { CategoryTags } from "./CategoryTags";
 import useAllGoals from "./useAllGoals";
 import useEditGoalModal from "./useEditGoalModal";
 import useGoal from "./useGoal";
+import { getRemainingDays, getTargetDateFormatted } from "../../util/Util";
 
 interface Params {
     goal: Goal;
@@ -35,14 +36,13 @@ interface GoalScreenProps {
 
 UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
-export const GoalScreen = ({ route, navigation }: GoalScreenProps) => {
+export const GoalScreen = ({ navigation }: GoalScreenProps) => {
 
-    // const { goal } = route.params;
     const { selectedGoal, setSelectedGoal } = useAllGoals();
     const { goal, setGoalData } = useGoal(selectedGoal?.id);
     const scrollViewRef = useRef<ScrollView>(null);
 
-    const { EditGoalModal, openModal } = useEditGoalModal({ goal: goal });
+    const { EditGoalModal, openModal } = useEditGoalModal({ goal: goal, title: 'Edit Goal' });
 
     const handleScrollTo = () => {
         if (scrollViewRef.current) {
@@ -54,39 +54,24 @@ export const GoalScreen = ({ route, navigation }: GoalScreenProps) => {
     useFocusEffect(
         useCallback(() => {
             const unsubscribe = navigation.addListener('blur', () => {
-                console.log('GoalScreen is exited');
                 setSelectedGoal(undefined);
             });
             return unsubscribe;
         }, [navigation])
     );
 
-    const getRemaining = () => {
+    const getRemainingValue = () => {
         if (goal && goal.currentValue && goal.targetValue) {
             return goal.targetValue - goal.currentValue;
         }
         return 0;
     }
 
-    const getPercentage = () => {
+    const getCompletionPercentage = () => {
         if (goal && goal.currentValue && goal.targetValue) {
             return Math.round(goal.currentValue / goal.targetValue * 100);
         }
         return 0;
-    }
-
-    const getTargetDateFormatted = () => {
-        if (goal.targetDate) {
-            const dateString = goal.targetDate;
-            const date = new Date(dateString);
-            return date.toLocaleDateString("en-GB");
-        }
-        return '';
-    }
-
-    const getRemainingDays = () => {
-        const differenceInMilliseconds = Math.abs(new Date().getMilliseconds() - new Date(goal.targetDate).getMilliseconds());
-        return Math.ceil(differenceInMilliseconds / (1000 * 60 * 60 * 24));
     }
 
     if (!goal) {
@@ -105,24 +90,23 @@ export const GoalScreen = ({ route, navigation }: GoalScreenProps) => {
             {EditGoalModal}
             <ScrollView ref={scrollViewRef}>
                 <View style={styles.container}>
-                    {/* <GButton title={'Edit'} onPress={openModal}></GButton> */}
                     <View style={styles.categories}>
                         <CategoryTags categories={goal.categories} />
                     </View>
                     <ProgressSection
                         title={goal.currentValue + " / " + goal.targetValue + ' ' + goal.unit.name}
-                        altText={getRemaining() + " " + goal.unit.name + ' to go!'}
+                        altText={getRemainingValue() + " " + goal.unit.name + ' to go!'}
                         icon={require("../../assets/goal.png")}
                         backgroundColor={Colors.darkGray}
-                        percentage={getPercentage()}
+                        percentage={getCompletionPercentage()}
                     />
                     <Divider />
                     <ProgressSection
-                        title={getTargetDateFormatted()}
-                        altText={getRemainingDays() + ' days left!'}
+                        title={getTargetDateFormatted(goal?.targetDate)}
+                        altText={getRemainingDays(goal.targetDate) + ' days left!'}
                         icon={require("../../assets/calendar.png")}
                         backgroundColor={Colors.darkGray}
-                        percentage={getPercentage()}
+                        percentage={34}
                         isGoal={false}
                     />
                     <Divider />

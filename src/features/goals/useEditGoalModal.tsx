@@ -9,12 +9,14 @@ import { GText } from '../../components/GText';
 import { Colors } from '../../util/Colors';
 import { CategoryTags } from './CategoryTags';
 import { EditCategories } from './EditCategories';
+import { getTargetDateFormatted as getDateFormatted } from '../../util/Util';
 
 interface EditGoalModalProps {
     goal: Goal;
+    title: string;
 };
 
-export default function useEditGoalModal({ goal }: EditGoalModalProps) {
+export default function useEditGoalModal({ goal, title }: EditGoalModalProps) {
 
     const [selectedValue, setSelectedValue] = useState(null);
 
@@ -55,14 +57,14 @@ export default function useEditGoalModal({ goal }: EditGoalModalProps) {
                 label={"Unit"}
                 placeholder={"Insert or Select"}
                 options={options}
-                selectedValue={selectedValue}
+                selectedValue={{ label: goal?.unit?.name, value: goal?.unit }}
                 onValueChange={setSelectedValue}
             />
             <DropdownInput
                 label={"Due Date"}
                 placeholder={"Select"}
                 options={options}
-                selectedValue={selectedValue}
+                selectedValue={{ label: getDateFormatted(goal?.targetDate), value: goal?.unit }}
                 onValueChange={setSelectedValue}
                 icon={require("../../assets/calendar.png")}
             />
@@ -70,7 +72,7 @@ export default function useEditGoalModal({ goal }: EditGoalModalProps) {
         </View>
     )
 
-    const { Modal, openModal, closeModal } = useModal({ headerText: 'Edit Goal', content: editGoalForm, onDelete: () => { } });
+    const { Modal, openModal, closeModal } = useModal({ headerText: title, content: editGoalForm, onDelete: () => { } });
 
     return {
         EditGoalModal: Modal,

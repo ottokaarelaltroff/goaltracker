@@ -9,7 +9,7 @@ export const SettingsScreen = ({ navigation }) => {
     const { logOut } = useAuth();
 
     return (
-        <ScreenContainer>
+        <ScreenContainer center>
             <ScreenHeader title={"Settings"} fontSize={32} navigation={navigation}></ScreenHeader>
             <View style={styles.buttons}>
                 <GButton title={'Account'} onPress={() => { }} icon={require('../../assets/settings.png')}></GButton>

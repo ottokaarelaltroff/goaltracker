@@ -7,7 +7,7 @@ import { Icon } from './Icon';
 
 type OptionType = {
   label: string;
-  value: string;
+  value: any;
 };
 
 type Props = {
@@ -28,7 +28,7 @@ const DropdownInput: React.FC<Props> = ({
   icon
 }) => {
   const [isOpened, setIsOpened] = useState(false);
-  const [value, setValue] = useState(selectedValue?.value);
+  const [value, setValue] = useState(selectedValue?.label);
 
   const handleToggleModal = () => {
     setIsOpened(!isOpened);

@@ -13,7 +13,7 @@ export const TextButton = ({ title, onPress, style }: TextButtonProps) => {
 
     return (
         <TouchableOpacity onPress={onPress} hitSlop={defaultHitSlop}>
-            <GText style={style}>{title}</GText>
+            <GText size={18} style={style}>{title}</GText>
         </TouchableOpacity>
     );
 };

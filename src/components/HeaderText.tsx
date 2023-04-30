@@ -17,18 +17,6 @@ export const HeaderText = ({ title, style }: HeaderTextProps) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        // display: 'flex',
-        // flexDirection: 'row',
-        // flex: 0,
-        // textAlign: 'left',
-        // alignSelf: 'flex-start',
-        // flexDirection: 'row',
-        // justifyContent: 'center',
-        // alignItems: 'flex-start',
-        // marginVertical: 20,
-
-    },
     text: {
         fontSize: 32,
         fontWeight: "600",
