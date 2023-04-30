@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useState } from 'react';
 import { Goal } from '../../model/types';
 import { api } from '../api';
 import useAppQuery from '../api/useAppQuery';
@@ -9,6 +9,8 @@ interface GoalContext {
     fetchAllGoals: () => void;
     isLoading: boolean;
     isError: boolean;
+    selectedGoal?: Goal | undefined;
+    setSelectedGoal: React.Dispatch<React.SetStateAction<Goal>>
 }
 
 interface GoalProviderProps {
@@ -22,6 +24,7 @@ const GoalProvider = ({ children }: GoalProviderProps) => {
         queryFn: () => api.findAllGoals() as Promise<Goal[]>,
         enabled: true,
     });
+    const [selectedGoal, setSelectedGoal] = useState<Goal | undefined>();
 
     const fetchAllGoals = () => {
         refetch();
@@ -31,7 +34,9 @@ const GoalProvider = ({ children }: GoalProviderProps) => {
         allGoals,
         fetchAllGoals,
         isLoading,
-        isError
+        isError,
+        selectedGoal,
+        setSelectedGoal
     };
     return <GoalContext.Provider value={value}>{children}</GoalContext.Provider>;
 };

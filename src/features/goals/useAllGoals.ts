@@ -12,5 +12,7 @@ export default function useAllGoals() {
         fetchAllGoals: value.fetchAllGoals,
         isLoading: value.isLoading,
         isError: value.isError,
+        selectedGoal: value.selectedGoal,
+        setSelectedGoal: value.setSelectedGoal
     };
 }

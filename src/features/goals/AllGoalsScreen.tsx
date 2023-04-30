@@ -6,14 +6,20 @@ import Spinner from "../../components/Spinner";
 import { Colors } from "../../util/Colors";
 import { GoalPreview } from "./GoalPreview";
 import useAllGoals from "./useAllGoals";
+import { Goal } from "../../model/types";
 
 export const AllGoalsScreen = ({ navigation }) => {
 
-    const { allGoals, fetchAllGoals, isLoading, isError } = useAllGoals();
+    const { allGoals, fetchAllGoals, isLoading, isError, setSelectedGoal } = useAllGoals();
+
+    const onGoalSelect = (goal: Goal) => {
+        setSelectedGoal(goal)
+        navigation.push("GoalScreen", { goal: goal })
+    }
 
     const renderItem = ({ item, index }) => {
         return (
-            <TouchableOpacity onPress={() => navigation.navigate("GoalScreen", { goal: item, title: item.title })}>
+            <TouchableOpacity onPress={() => onGoalSelect(item)}>
                 <GoalPreview goalId={item.id} key={index}></GoalPreview>
             </TouchableOpacity>
         );

@@ -11,6 +11,9 @@ import { mockData } from "../../unused/mockData";
 import { Colors } from "../../util/Colors";
 import { CategoryTags } from "./CategoryTags";
 import { Goal } from "../../model/types";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
+import useAllGoals from "./useAllGoals";
 
 interface Params {
     goal: Goal;
@@ -22,11 +25,23 @@ interface RouteProps {
 
 interface GoalScreenProps {
     route: RouteProps;
+    navigation: any
 };
 
-export const GoalScreen = ({ route }: GoalScreenProps) => {
+export const GoalScreen = ({ route, navigation }: GoalScreenProps) => {
 
     const { goal } = route.params;
+    const { setSelectedGoal } = useAllGoals();
+
+    useFocusEffect(
+        useCallback(() => {
+            const unsubscribe = navigation.addListener('blur', () => {
+                console.log('GoalScreen is exited');
+                setSelectedGoal(undefined);
+            });
+            return unsubscribe;
+        }, [navigation])
+    );
 
     const getRemaining = () => {
         if (goal && goal.currentValue && goal.targetValue) {
