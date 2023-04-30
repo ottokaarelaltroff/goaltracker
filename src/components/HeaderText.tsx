@@ -3,39 +3,31 @@ import { Colors } from "../util/Colors";
 import { GText } from "./GText";
 
 interface HeaderTextProps {
-    title: string
+    title: string,
+    style?: any
 };
 
-export const HeaderText = ({ title }: HeaderTextProps) => {
+export const HeaderText = ({ title, style }: HeaderTextProps) => {
 
     return (
-        <View style={styles.container}>
-            <GText style={styles.text}>
-                {title}
-            </GText>
-        </View>
+        <GText style={[styles.text, style]}>
+            {title}
+        </GText>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        display: 'flex',
-        flexDirection: 'row',
-        flex: 0,
-        textAlign: 'left',
-        alignSelf: 'flex-start',
+        // display: 'flex',
         // flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        marginVertical: 20,
-        borderWidth: 2,
+        // flex: 0,
+        // textAlign: 'left',
+        // alignSelf: 'flex-start',
+        // flexDirection: 'row',
+        // justifyContent: 'center',
+        // alignItems: 'flex-start',
+        // marginVertical: 20,
 
-    },
-    icon: {
-        width: 20,
-        height: 20,
-        tintColor: Colors.lightGray,
-        marginRight: 10,
     },
     text: {
         fontSize: 32,

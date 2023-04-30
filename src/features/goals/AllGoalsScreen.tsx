@@ -7,6 +7,7 @@ import { Colors } from "../../util/Colors";
 import { GoalPreview } from "./GoalPreview";
 import useAllGoals from "./useAllGoals";
 import { Goal } from "../../model/types";
+import { ScreenHeader } from "../../components/ScreenHeader";
 
 export const AllGoalsScreen = ({ navigation }) => {
 
@@ -27,6 +28,7 @@ export const AllGoalsScreen = ({ navigation }) => {
 
     return (
         <ScreenContainer>
+            <ScreenHeader title={"My Goals"} fontSize={32} navigation={navigation}></ScreenHeader>
             <View style={styles.container} >
                 {isLoading ? <Spinner style={styles.spinner} /> : null}
                 {allGoals && <FlatList

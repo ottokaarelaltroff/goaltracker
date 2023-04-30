@@ -1,11 +1,9 @@
 import { StyleSheet, View } from "react-native";
-import { Tag } from "../../components/Tag";
-import { Category, Goal } from "../../model/types";
-import { Colors, getColorByName } from "../../util/Colors";
-import { Icon } from "../../components/Icon";
-import { CategoryTags } from "./CategoryTags";
 import { GText } from "../../components/GText";
 import { InputBar } from "../../components/InputBar";
+import { Category, Goal } from "../../model/types";
+import { Colors } from "../../util/Colors";
+import { CategoryTags } from "./CategoryTags";
 
 type EditCategoriesProps = {
     goal: Goal,

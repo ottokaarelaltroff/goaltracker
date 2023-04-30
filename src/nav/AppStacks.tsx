@@ -51,9 +51,7 @@ export const AuthStackScreen = () => (
 )
 
 export const HabitsStackScreen = () => (
-  <HabitsStack.Navigator screenOptions={{
-    headerShown: false
-  }}>
+  <HabitsStack.Navigator screenOptions={defaultScreenOptions}>
     <HabitsStack.Screen name="HabitsScreen" component={HabitsScreen} />
   </HabitsStack.Navigator>
 )

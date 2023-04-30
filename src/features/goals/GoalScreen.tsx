@@ -5,12 +5,13 @@ import { ScrollView } from "react-native-gesture-handler";
 import { Collapse } from "../../components/Collapse";
 import { DiaryList } from "../../components/DiaryList";
 import Divider from "../../components/Divider";
-import { GButton } from "../../components/GButton";
 import { HabitsList } from "../../components/HabitsList";
 import { ProgressSection } from "../../components/ProgressSection";
 import { ScreenContainer } from "../../components/ScreenContainer";
+import { ScreenHeader } from "../../components/ScreenHeader";
 import Spinner from "../../components/Spinner";
 import { StepsList } from "../../components/StepsList";
+import { TextButton } from "../../components/TextButton";
 import { Goal } from "../../model/types";
 import { mockData } from "../../unused/mockData";
 import { Colors } from "../../util/Colors";
@@ -98,10 +99,13 @@ export const GoalScreen = ({ route, navigation }: GoalScreenProps) => {
 
     return (
         <ScreenContainer backgroundColor={Colors.secondary}>
+            <ScreenHeader title={goal?.title} fontSize={24} canGoBack={true} navigation={navigation}>
+                <TextButton title={"Edit"} onPress={openModal}></TextButton>
+            </ScreenHeader>
             {EditGoalModal}
             <ScrollView ref={scrollViewRef}>
                 <View style={styles.container}>
-                    <GButton title={'Edit'} onPress={openModal}></GButton>
+                    {/* <GButton title={'Edit'} onPress={openModal}></GButton> */}
                     <View style={styles.categories}>
                         <CategoryTags categories={goal.categories} />
                     </View>
