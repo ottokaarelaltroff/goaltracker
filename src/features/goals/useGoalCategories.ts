@@ -10,7 +10,7 @@ export const useGoalCategories = (goalId: string) => {
     });
 
     const fetchGoalCategories = () => {
-        refetch();
+        goalId && refetch();
     };
 
     return {

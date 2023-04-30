@@ -8,13 +8,15 @@ import { GText } from "./GText";
 interface CollapseProps {
     title: string,
     backgroundColor?: string;
-    children?: any
+    children?: any,
+    handleScroll?: any
 };
 
-export const Collapse = ({ title, backgroundColor = Colors.secondary, children }: CollapseProps) => {
+export const Collapse = ({ title, backgroundColor = Colors.secondary, children, handleScroll }: CollapseProps) => {
     const [isCollapsed, setIsCollapsed] = useState(true);
 
     const handleToggle = () => {
+        isCollapsed && handleScroll()
         setIsCollapsed(!isCollapsed);
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     };
@@ -32,6 +34,7 @@ export const Collapse = ({ title, backgroundColor = Colors.secondary, children }
                 <AntDesign name={isCollapsed ? 'down' : 'up'} size={24} color={Colors.lightGray} />
             </TouchableOpacity>
             {content}
+
         </View>
     );
 };

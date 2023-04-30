@@ -12,15 +12,14 @@ export const GButton = ({ title, onPress, icon }: GButtonProps) => {
     const defaultHitSlop: Insets = { top: 5, left: 5, bottom: 5, right: 5 };
 
     return (
-        <View style={styles.container}>
-            {icon && <Image source={icon} style={styles.icon}></Image>}
-            <TouchableOpacity onPress={onPress} hitSlop={defaultHitSlop}>
+        <TouchableOpacity onPress={onPress} hitSlop={defaultHitSlop}>
+            <View style={styles.container}>
+                {icon && <Image source={icon} style={styles.icon}></Image>}
                 <Text style={styles.text}>
                     {title}
                 </Text>
-            </TouchableOpacity>
-
-        </View>
+            </View>
+        </TouchableOpacity>
     );
 };
 

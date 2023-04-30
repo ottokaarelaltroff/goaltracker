@@ -21,6 +21,27 @@ const authStackOptions = {
     backgroundColor: Colors.secondary
   },
 }
+
+const defaultScreenOptions = {
+  headerShown: false,
+  headerBackTitle: ' ',
+  headerStyle: {
+    backgroundColor: Colors.primary,
+    height: 120,
+    borderBottomWidth: 0,
+    borderBottomColor: 'transparent',
+
+  },
+  headerTitleAlign: 'left',
+  headerTitleStyle: {
+    fontSize: 32,
+    color: Colors.lightGray,
+  },
+  headerTitleContainerStyle: {
+    marginLeft: 30,
+  },
+}
+
 export const AuthStackScreen = () => (
   <AuthStack.Navigator screenOptions={authStackOptions}>
     <AuthStack.Screen name="Welcome" component={AuthScreen} options={{ title: "GoalTracker", headerShown: false }} />
@@ -41,23 +62,14 @@ export const GoalStackScreen = () => {
   const { selectedGoal } = useAllGoals();
   return (
     <GoalsStack.Navigator screenOptions={{
-      headerShown: true,
-      headerBackTitle: ' ',
-      headerStyle: {
-        backgroundColor: Colors.primary,
-        height: 120,
-        borderBottomWidth: 0,
-        borderBottomColor: 'transparent',
-
-      },
-      headerTitleAlign: selectedGoal ? 'center' : 'left',
-      headerTitleStyle: {
-        fontSize: selectedGoal ? 24 : 32,
-        color: Colors.lightGray,
-      },
-      headerTitleContainerStyle: {
-        marginLeft: 30,
-      },
+      ...defaultScreenOptions,
+      ...{
+        headerTitleAlign: selectedGoal ? 'center' : 'left',
+        headerTitleStyle: {
+          fontSize: selectedGoal ? 24 : 32,
+          color: Colors.lightGray,
+        },
+      }
     }}>
       <GoalsStack.Screen name="AllGoalsScreen" component={AllGoalsScreen} options={{ headerTitle: 'My Goals' }} />
       <GoalsStack.Screen name="GoalScreen" component={GoalScreen} options={{ headerTitle: selectedGoal?.title || 'Goal' }} />
@@ -66,9 +78,10 @@ export const GoalStackScreen = () => {
 }
 
 export const SettingsStackScreen = () => (
-  <SettingsStack.Navigator screenOptions={{
-    headerShown: false
-  }}>
-    <SettingsStack.Screen name="SettingsScreen" component={SettingsScreen} />
+  <SettingsStack.Navigator screenOptions={
+    defaultScreenOptions
+
+  }>
+    <SettingsStack.Screen name="SettingsScreen" component={SettingsScreen} options={{ headerTitle: 'Settings' }} />
   </SettingsStack.Navigator>
 )

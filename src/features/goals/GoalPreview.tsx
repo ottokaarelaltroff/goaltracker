@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         flex: 1,
-        justifyContent: 'space-between', alignItems: 'center',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         // borderWidth: 2
     },
     currentValue: {

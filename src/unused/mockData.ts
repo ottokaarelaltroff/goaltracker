@@ -115,6 +115,30 @@ const mockDiary = [
         id: "2",
         content: 'today was a bad day',
     },
+    {
+        id: "2",
+        content: 'today was a bad day',
+    },
+    {
+        id: "2",
+        content: 'today was a bad day',
+    },
+    {
+        id: "2",
+        content: 'today was a bad day',
+    },
+    {
+        id: "2",
+        content: 'today was a bad day',
+    },
+    {
+        id: "2",
+        content: 'today was a bad day',
+    },
+    {
+        id: "2",
+        content: 'today was a bad day',
+    },
 ]
 
 export const mockData = {

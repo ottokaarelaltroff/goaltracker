@@ -1,18 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
-import { ScreenContainer } from "../../components/ScreenContainer";
-import { Colors } from "../../util/Colors";
-import { Button } from "react-native";
-import useAuth from "../auth/useAuth";
+import { StyleSheet, View } from "react-native";
 import { GButton } from "../../components/GButton";
-import { GText } from "../../components/GText";
-import { HeaderText } from "../../components/HeaderText";
+import { ScreenContainer } from "../../components/ScreenContainer";
+import useAuth from "../auth/useAuth";
 
 export const SettingsScreen = ({ navigation }) => {
 
     const { logOut } = useAuth();
 
     return (
-        <ScreenContainer>
+        <ScreenContainer center>
             {/* <HeaderText title={'Settings'} /> */}
             <View style={styles.buttons}>
                 <GButton title={'Account'} onPress={() => { }} icon={require('../../assets/settings.png')}></GButton>
@@ -23,12 +19,14 @@ export const SettingsScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    container: {
+        alignItems: 'center',
+    },
     buttons: {
         display: 'flex',
         flexDirection: 'row',
         flex: 1,
         alignItems: 'center',
         justifyContent: 'flex-start',
-        // borderWidth: 2,
     },
 });

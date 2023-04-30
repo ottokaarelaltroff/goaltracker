@@ -10,7 +10,7 @@ export const useHabits = (goalId: string) => {
     });
 
     const fetchGoalHabits = () => {
-        refetch();
+        goalId && refetch();
     };
 
     return {

@@ -5,20 +5,23 @@ import useAllGoals from './useAllGoals';
 import { useHabits } from '../habits/useHabits';
 import { useEffect, useState } from 'react';
 
-export default function useGoal(goalId: string) {
+export default function useGoal(goalId?: string) {
     const { allGoals } = useAllGoals();
-    const { categories, fetchGoalCategories, isLoading, isError } = useGoalCategories(goalId);
+    const { categories, fetchGoalCategories, isLoading } = useGoalCategories(goalId);
     const { habits, fetchGoalHabits } = useHabits(goalId);
     const { steps, fetchGoalSteps } = useSteps(goalId);
 
     const [goal, setGoal] = useState<Goal | undefined>();
 
-    const setGoalData = () => {
+    const setGoalCategories = () => {
         if (categories) {
             goal.categories = categories;
         } else {
             fetchGoalCategories();
         }
+    }
+
+    const setGoalData = () => {
         if (habits) {
             goal.habits = habits;
         } else {
@@ -39,12 +42,13 @@ export default function useGoal(goalId: string) {
 
     useEffect(() => {
         if (goal) {
-            console.log("OTTO goal", goal)
-            setGoalData();
+            setGoalCategories();
         }
-    }, [goal, categories, habits, steps])
+    }, [goal, categories])
 
     return {
         goal: goal,
+        setGoalData: setGoalData,
+        setGoalCategories: setGoalCategories,
     };
 }

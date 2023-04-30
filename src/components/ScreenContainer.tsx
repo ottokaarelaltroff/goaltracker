@@ -7,9 +7,10 @@ const { width } = Dimensions.get("window");
 type ScreenContainerProps = {
     children: any,
     backgroundColor?: string,
+    center?: boolean
 }
-export const ScreenContainer = ({ children, backgroundColor = Colors.primary }: ScreenContainerProps) => (
-    <View style={[styles.container, { backgroundColor: backgroundColor }]}>{children}</View>
+export const ScreenContainer = ({ children, backgroundColor = Colors.primary, center = false }: ScreenContainerProps) => (
+    <View style={[styles.container, { backgroundColor: backgroundColor, alignItems: center ? 'center' : 'stretch' }]}>{children}</View>
 );
 
 const styles = StyleSheet.create({
@@ -19,6 +20,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         // paddingTop: 20,
         width: width,
-        alignItems: 'stretch',
     },
 });

@@ -1,19 +1,23 @@
-import { StyleSheet, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback, useRef } from "react";
+import { LayoutAnimation, StyleSheet, UIManager, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Collapse } from "../../components/Collapse";
 import { DiaryList } from "../../components/DiaryList";
 import Divider from "../../components/Divider";
+import { GButton } from "../../components/GButton";
 import { HabitsList } from "../../components/HabitsList";
 import { ProgressSection } from "../../components/ProgressSection";
 import { ScreenContainer } from "../../components/ScreenContainer";
+import Spinner from "../../components/Spinner";
 import { StepsList } from "../../components/StepsList";
+import { Goal } from "../../model/types";
 import { mockData } from "../../unused/mockData";
 import { Colors } from "../../util/Colors";
 import { CategoryTags } from "./CategoryTags";
-import { Goal } from "../../model/types";
-import { useFocusEffect } from "@react-navigation/native";
-import { useCallback } from "react";
 import useAllGoals from "./useAllGoals";
+import useEditGoalModal from "./useEditGoalModal";
+import useGoal from "./useGoal";
 
 interface Params {
     goal: Goal;
@@ -28,10 +32,23 @@ interface GoalScreenProps {
     navigation: any
 };
 
+UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+
 export const GoalScreen = ({ route, navigation }: GoalScreenProps) => {
 
-    const { goal } = route.params;
-    const { setSelectedGoal } = useAllGoals();
+    // const { goal } = route.params;
+    const { selectedGoal, setSelectedGoal } = useAllGoals();
+    const { goal, setGoalData } = useGoal(selectedGoal?.id);
+    const scrollViewRef = useRef<ScrollView>(null);
+
+    const { EditGoalModal, openModal } = useEditGoalModal({ goal: goal });
+
+    const handleScrollTo = () => {
+        if (scrollViewRef.current) {
+            LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+            scrollViewRef.current.scrollTo({ y: 1000, animated: true });
+        }
+    };
 
     useFocusEffect(
         useCallback(() => {
@@ -71,14 +88,20 @@ export const GoalScreen = ({ route, navigation }: GoalScreenProps) => {
         return Math.ceil(differenceInMilliseconds / (1000 * 60 * 60 * 24));
     }
 
-    if (!goal || !goal.habits || !goal.steps) {
-        return null;
+    if (!goal) {
+        return <Spinner />;
+    }
+
+    if (!goal.habits || !goal.steps) {
+        setGoalData();
     }
 
     return (
         <ScreenContainer backgroundColor={Colors.secondary}>
-            <ScrollView >
+            {EditGoalModal}
+            <ScrollView ref={scrollViewRef}>
                 <View style={styles.container}>
+                    <GButton title={'Edit'} onPress={openModal}></GButton>
                     <View style={styles.categories}>
                         <CategoryTags categories={goal.categories} />
                     </View>
@@ -99,21 +122,20 @@ export const GoalScreen = ({ route, navigation }: GoalScreenProps) => {
                         isGoal={false}
                     />
                     <Divider />
-                    <Collapse title={"Steps I need to take"}>
+                    <Collapse title={"Steps I need to take"} handleScroll={handleScrollTo}>
                         <StepsList items={goal.steps} />
                     </Collapse>
-                    <Collapse title={"Habits I need to follow"}>
+                    <Collapse title={"Habits I need to follow"} handleScroll={handleScrollTo}>
                         <HabitsList items={goal.habits} />
                     </Collapse>
-                    <Collapse title={"Dear Diary..."}>
+                    <Collapse title={"Dear Diary..."} handleScroll={handleScrollTo}>
                         <DiaryList items={mockData.diaryEntries} />
                     </Collapse>
                 </View>
             </ScrollView>
         </ScreenContainer>
     )
-}
-    ;
+};
 
 const styles = StyleSheet.create({
     container: {
