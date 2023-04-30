@@ -1,12 +1,10 @@
-import { useContext, useRef } from 'react';
-import { UserContext } from '../providers/UserProvider';
+import { useRef } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { Modalize } from 'react-native-modalize';
-import { Image, StyleSheet, View } from 'react-native';
-import { Colors } from '../../util/Colors';
 import { GText } from '../../components/GText';
-import { TextButton } from '../../components/TextButton';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon } from '../../components/Icon';
+import { TextButton } from '../../components/TextButton';
+import { Colors } from '../../util/Colors';
 
 type ModalizeRef = {
   open: () => void;
@@ -35,8 +33,8 @@ export default function useModal({ headerText, content, onClose, onDelete }: Mod
   const headerComponent = (
     <View style={styles.header}>
       <View style={styles.iconRow}>
-        <Icon name='close' onPress={closeModal} />
-        {onDelete && <Icon name='delete' onPress={onDelete} />}
+        <Icon source={require("../../assets/close.png")} onPress={closeModal} />
+        {onDelete && <Icon source={require("../../assets/delete.png")} onPress={onDelete} style={styles.deleteIcon} />}
       </View>
       <GText bold size={22} style={styles.title}>{headerText}</GText>
       <View style={styles.save}>
@@ -79,15 +77,15 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
-  icon: {
-    width: 30,
-    height: 30,
-    marginRight: 20,
+  deleteIcon: {
+    marginLeft: 20,
+    // borderWidth: 2
   },
   iconRow: {
     display: 'flex',
     flexDirection: 'row',
-    flex: 1
+    flex: 1,
+
   },
   title: {
     flex: 1,

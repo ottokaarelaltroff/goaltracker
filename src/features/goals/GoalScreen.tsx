@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
     },
     categories: {
         alignItems: 'center',
-        marginVertical: 10,
+        marginTop: 10,
+        marginBottom: 20,
     },
 });

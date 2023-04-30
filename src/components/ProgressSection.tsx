@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.primary,
         borderRadius: 20,
-        marginBottom: 10,
+        marginBottom: 15,
         display: 'flex',
         flexDirection: 'column',
     },
@@ -54,9 +54,10 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     icon: {
-        width: 40,
-        height: 40,
+        width: 30,
+        height: 30,
         tintColor: Colors.lightGray,
+        marginRight: 10,
     },
     iconRow: {
         display: 'flex',

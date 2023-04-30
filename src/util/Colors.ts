@@ -22,5 +22,7 @@ export const Colors = {
     green: '#85CF76',
     lightBlue: '#2DB1E1',
     lightRed: '#CF6357',
-    getColorByName: getColorByName
+    getColorByName: getColorByName,
+    grayAlpha: (alphaValue: number) => `rgba(153,153,153,${alphaValue})`,
+    blackAlpha: (alphaValue: number) => `rgba(0,0,0,${alphaValue})`,
 };
