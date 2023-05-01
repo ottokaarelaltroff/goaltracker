@@ -7,12 +7,17 @@ import { CategoryTags } from "./CategoryTags";
 import { useCategories } from "./useCategories";
 import useGoal from "./useGoal";
 import { Icon } from "../../components/Icon";
+import { GButton } from "../../components/GButton";
+import useEditGoalModal from "./useEditGoalModal";
+import useEditCategoryModal from "./useEditCategoryModal";
 
 type EditCategoriesProps = {
     goalId: string,
+    onEdit: () => void,
 }
-export const EditCategories = ({ goalId }: EditCategoriesProps) => {
+export const EditCategories = ({ goalId, onEdit }: EditCategoriesProps) => {
 
+    // const { EditCategoryModal, openModal, isOpened } = useEditCategoryModal({ category: undefined, title: 'Add Category' });
     const { goal } = useGoal(goalId);
     const { allCategories, fetchAllCategories } = useCategories(goalId);
 
@@ -37,18 +42,17 @@ export const EditCategories = ({ goalId }: EditCategoriesProps) => {
     // }
 
     return (
-        <View>
+        <View style={{}}>
             <GText style={styles.label}>{"Categories"}</GText>
             <InputBar style={styles.bar}>
                 {goal?.categories
                     ? <CategoryTags categories={goal?.categories} onPress={onRemove}></CategoryTags>
                     : <GText bold style={styles.placeholder}>{"Add or Create"}</GText>}
-                <Icon source={require("../../assets/plus.png")} light size={24} onPress={() => { }} />
+                <Icon source={require("../../assets/plus.png")} light size={24} onPress={onEdit} />
             </InputBar>
             <View style={styles.selection}>
                 <CategoryTags add categories={categoriesToAdd} onPress={onAdd}></CategoryTags>
             </View>
-
         </View>
     )
 };

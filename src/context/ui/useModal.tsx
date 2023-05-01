@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import { GText } from '../../components/GText';
@@ -19,14 +19,17 @@ type ModalProps = {
 };
 
 export default function useModal({ headerText, content, onClose, onDelete }: ModalProps) {
+  const [isOpened, setIsOpened] = useState<boolean>(false);
   const modalRef = useRef<ModalizeRef>(null);
 
   const openModal = () => {
     modalRef.current?.open();
+    setIsOpened(true);
   };
 
   const closeModal = () => {
     modalRef.current?.close();
+    setIsOpened(false);
     onClose && onClose();
   };
 
@@ -59,6 +62,7 @@ export default function useModal({ headerText, content, onClose, onDelete }: Mod
     Modal,
     openModal,
     closeModal,
+    isOpened
   };
 }
 

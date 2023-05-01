@@ -6,6 +6,9 @@ import useModal from '../../context/ui/useModal';
 import { Goal, Unit } from '../../model/types';
 import { EditCategories } from './EditCategories';
 import { useUnits } from './useUnits';
+import { GButton } from '../../components/GButton';
+import useDialog from '../../context/ui/useDialog';
+import useAddCategoryDialog from './useAddCategoryDialog';
 
 interface EditGoalModalProps {
     goal: Goal;
@@ -17,7 +20,6 @@ export default function useEditGoalModal({ goal, title }: EditGoalModalProps) {
     const [selectedUnit, setSelectedUnit] = useState<OptionType<Unit> | undefined>();
     const { units, fetchAllUnits } = useUnits(goal?.id);
 
-    console.log("OTTO selectedUnit", selectedUnit)
     const getUnitOptions = () => {
         if (units) {
             const result = [];
@@ -35,8 +37,12 @@ export default function useEditGoalModal({ goal, title }: EditGoalModalProps) {
         }
     }, [goal])
 
+
+    const { AddCategoryDialog, openDialog, closeDialog } = useAddCategoryDialog();
+
     const editGoalForm = (
         <View style={styles.container}>
+            {AddCategoryDialog}
             <Input label={"Name"} initialValue={goal?.title} placeHolder={"What goal are you chasing?"}></Input>
             <View style={styles.row}>
                 <Input numeric label={"Current"} initialValue={goal?.currentValue.toString()} placeHolder={"Current value"} style={styles.current}></Input>
@@ -57,16 +63,18 @@ export default function useEditGoalModal({ goal, title }: EditGoalModalProps) {
                 onValueChange={setSelectedValue}
                 icon={require("../../assets/calendar.png")}
             /> */}
-            <EditCategories goalId={goal?.id} />
+            <EditCategories goalId={goal?.id} onEdit={openDialog} />
+
         </View>
     )
 
-    const { Modal, openModal, closeModal } = useModal({ headerText: title, content: editGoalForm, onDelete: () => { } });
+    const { Modal, openModal, closeModal, isOpened } = useModal({ headerText: title, content: editGoalForm, onDelete: () => { } });
 
     return {
         EditGoalModal: Modal,
         openModal,
         closeModal,
+        isOpened
     };
 }
 

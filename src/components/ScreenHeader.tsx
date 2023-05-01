@@ -15,7 +15,7 @@ interface ScreenHeaderProps {
 export const ScreenHeader = ({ navigation, title, style, children, fontSize = 32, canGoBack = false }: ScreenHeaderProps) => {
     return (
         <View style={[styles.container, style]}>
-            {canGoBack && <Icon source={require("../assets/caret-left.png")} light onPress={() => navigation?.pop()} style={styles.backIcon} />}
+            {canGoBack && <Icon source={require("../assets/caret-left.png")} size={20} light onPress={() => navigation?.pop()} style={styles.backIcon} />}
             <HeaderText title={title} style={{ fontSize: fontSize }}></HeaderText>
             {children}
         </View>
