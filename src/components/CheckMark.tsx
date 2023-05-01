@@ -1,5 +1,6 @@
 import { Image, StyleSheet, View } from "react-native";
 import { Colors } from "../util/Colors";
+import { Icon } from "./Icon";
 
 interface CheckMarkProps {
     style?: any,
@@ -9,7 +10,7 @@ interface CheckMarkProps {
 export const CheckMark = ({ style, isChecked }: CheckMarkProps) => {
     return (
         <View style={[styles.circle, style, !isChecked ? { borderColor: Colors.grayAlpha(0.5) } : {}]}>
-            {isChecked ? <Image source={require("../assets/checkmark.png")} resizeMode="contain" style={styles.check} /> : null}
+            {isChecked ? <Icon source={require("../assets/checkmark.png")} light style={styles.check} /> : null}
         </View>
     );
 };
@@ -26,8 +27,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: 25,
         height: 25,
-        bottom: 2,
-        left: 2
+        bottom: -23,
+        left: -1
     }
 
 

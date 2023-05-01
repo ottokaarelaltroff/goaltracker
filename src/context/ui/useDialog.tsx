@@ -13,9 +13,10 @@ type DialogProps = {
     content?: any,
     onClose?: () => void;
     onDelete?: () => void;
+    canSave?: boolean
 };
 
-export default function useDialog({ headerText, content, onClose, onDelete }: DialogProps) {
+export default function useDialog({ headerText, content, onClose, onDelete, canSave }: DialogProps) {
     const [isOpened, setIsOpened] = useState<boolean>(false);
 
     const openDialog = () => {
@@ -28,7 +29,7 @@ export default function useDialog({ headerText, content, onClose, onDelete }: Di
     };
 
     const Dialog = (
-        <PopUpDialog isOpened={isOpened} setIsOpened={setIsOpened} content={content} title={headerText} />
+        <PopUpDialog isOpened={isOpened} setIsOpened={setIsOpened} content={content} title={headerText} canSave={canSave} />
     );
 
     return {
@@ -38,39 +39,3 @@ export default function useDialog({ headerText, content, onClose, onDelete }: Di
         isOpened
     };
 }
-
-const styles = StyleSheet.create({
-    modalContainer: {
-        flex: 0.9,
-        backgroundColor: Colors.primary,
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-    },
-    header: {
-        display: 'flex',
-        flexDirection: 'row',
-        backgroundColor: Colors.primary,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: 16,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-    },
-    deleteIcon: {
-        marginLeft: 20,
-        // borderWidth: 2
-    },
-    iconRow: {
-        display: 'flex',
-        flexDirection: 'row',
-        flex: 1,
-
-    },
-    title: {
-        flex: 1,
-        textAlign: 'center'
-    },
-    save: {
-        flex: 1,
-    },
-});

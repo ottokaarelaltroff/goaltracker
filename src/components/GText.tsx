@@ -55,8 +55,4 @@ const styles = StyleSheet.create({
         tintColor: Colors.lightGray,
         marginRight: 10,
     },
-    text: {
-        color: Colors.lightGray,
-        fontSize: 18,
-    }
 });

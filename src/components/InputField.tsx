@@ -9,10 +9,12 @@ interface InputFieldProps {
     style?: any,
     icon?: any,
     onPress?: () => void,
-    numeric?: boolean
+    onChange?: (value: string) => void,
+    numeric?: boolean,
+    color?: string,
 };
 
-export const InputField = ({ initialValue, placeHolder, style, icon, onPress, numeric = false }: InputFieldProps) => {
+export const InputField = ({ initialValue, placeHolder, style, icon, onPress, onChange, numeric = false, color = Colors.secondary }: InputFieldProps) => {
 
     const [value, setValue] = useState<string>(initialValue || '');
 
@@ -21,12 +23,13 @@ export const InputField = ({ initialValue, placeHolder, style, icon, onPress, nu
             text = text.replace(/[^0-9]/g, '');
         }
         setValue(text);
+        onChange && onChange(text);
     }
     return (
-        <View style={[styles.container, style]}>
+        <View style={[styles.container, style, { backgroundColor: color }]}>
             {icon && <Icon source={icon} style={styles.icon}></Icon>}
             <TextInput
-                style={styles.input}
+                style={[styles.input, { backgroundColor: color }]}
                 placeholder={placeHolder}
                 placeholderTextColor={Colors.grayAlpha(0.3)}
                 onChangeText={onChangeText}
@@ -48,13 +51,11 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         height: 50,
-        backgroundColor: Colors.secondary,
         borderRadius: 25,
     },
     input: {
         flex: 1,
         borderRadius: 25,
-        backgroundColor: Colors.secondary,
         color: Colors.light,
         fontSize: 18,
         fontWeight: 'bold',

@@ -1,30 +1,38 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import DropdownInput, { OptionType } from '../../components/DropdownInput';
+import { ColorSelection } from '../../components/ColorSelection';
+import { GText } from '../../components/GText';
 import { Input } from '../../components/Input';
-import useModal from '../../context/ui/useModal';
-import { Category, Goal, Unit } from '../../model/types';
-import { EditCategories } from './EditCategories';
-import { useUnits } from './useUnits';
-import { GButton } from '../../components/GButton';
+import { Tag } from '../../components/Tag';
 import useDialog from '../../context/ui/useDialog';
+import { Category } from '../../model/types';
+import { Colors } from '../../util/Colors';
 
-interface AddCategoryDialogProps {
-    // category: Category;
-    // title: string;
-};
+type Props = {
 
-export default function useAddCategoryDialog() {
+    category?: Category
+}
+
+export default function useAddCategoryDialog({ category }: Props) {
+
+    const [name, setName] = useState<string>(category?.name);
+    const [color, setColor] = useState<string>(category?.color || Colors.purple);
 
     const addCategoryForm = (
         <View style={styles.container}>
-            <Input label={"Name"} initialValue={"goal?.title"} placeHolder={"What goal are you chasing?"}></Input>
-
+            <View style={styles.tagContainer}>
+                <Tag title={name || 'Title'} color={color} style={styles.tag}></Tag>
+            </View>
+            <Input label={"Name"} placeHolder={"Add name"} color={Colors.primary} style={{ width: '100%' }} onChange={setName}></Input>
+            <View>
+                <GText style={styles.label}>{"Color"}</GText>
+            </View>
+            <ColorSelection onSelect={setColor} selectedColor={category?.color || Colors.purple} />
 
         </View>
     )
 
-    const { Dialog, openDialog, closeDialog, isOpened } = useDialog({ headerText: "Add Category", content: addCategoryForm });
+    const { Dialog, openDialog, closeDialog, isOpened } = useDialog({ headerText: "Add Category", content: addCategoryForm, canSave: name && name.length > 0 });
 
     return {
         AddCategoryDialog: Dialog,
@@ -36,20 +44,22 @@ export default function useAddCategoryDialog() {
 
 const styles = StyleSheet.create({
     container: {
-        display: 'flex',
-        flexDirection: 'column',
-        flex: 1,
-        paddingHorizontal: 12,
+        // alignItems: 'center',
         paddingVertical: 20,
+        width: '100%'
+    },
+    tagContainer: {
+        alignItems: 'center',
+    },
+    tag: {
+        marginVertical: 10
+    },
+    label: {
+        marginLeft: 15,
+        marginBottom: 5,
+        color: Colors.grayAlpha(0.8)
+    },
 
-    },
-    row: {
-        display: 'flex',
-        flexDirection: 'row',
-    },
-    current: {
-        marginRight: 15,
-    },
 
 
 });

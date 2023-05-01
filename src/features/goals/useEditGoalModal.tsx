@@ -6,9 +6,6 @@ import useModal from '../../context/ui/useModal';
 import { Goal, Unit } from '../../model/types';
 import { EditCategories } from './EditCategories';
 import { useUnits } from './useUnits';
-import { GButton } from '../../components/GButton';
-import useDialog from '../../context/ui/useDialog';
-import useAddCategoryDialog from './useAddCategoryDialog';
 
 interface EditGoalModalProps {
     goal: Goal;
@@ -38,15 +35,14 @@ export default function useEditGoalModal({ goal, title }: EditGoalModalProps) {
     }, [goal])
 
 
-    const { AddCategoryDialog, openDialog, closeDialog } = useAddCategoryDialog();
+
 
     const editGoalForm = (
         <View style={styles.container}>
-            {AddCategoryDialog}
             <Input label={"Name"} initialValue={goal?.title} placeHolder={"What goal are you chasing?"}></Input>
             <View style={styles.row}>
-                <Input numeric label={"Current"} initialValue={goal?.currentValue.toString()} placeHolder={"Current value"} style={styles.current}></Input>
-                <Input numeric label={"Goal"} initialValue={goal?.targetValue.toString()} placeHolder={"Goal value"}></Input>
+                <Input numeric label={"Current"} initialValue={goal?.currentValue.toString()} placeHolder={"Current value"} style={styles.currentValue}></Input>
+                <Input numeric label={"Goal"} initialValue={goal?.targetValue.toString()} placeHolder={"Goal value"} style={styles.goalValue}></Input>
             </View>
             <DropdownInput
                 label={"Unit"}
@@ -63,7 +59,7 @@ export default function useEditGoalModal({ goal, title }: EditGoalModalProps) {
                 onValueChange={setSelectedValue}
                 icon={require("../../assets/calendar.png")}
             /> */}
-            <EditCategories goalId={goal?.id} onEdit={openDialog} />
+            <EditCategories goalId={goal?.id} />
 
         </View>
     )
@@ -91,9 +87,13 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
     },
-    current: {
+    currentValue: {
         marginRight: 15,
+        flex: 1
     },
+    goalValue: {
+        flex: 1
+    }
 
 
 });

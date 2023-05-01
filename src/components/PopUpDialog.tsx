@@ -9,11 +9,12 @@ interface PopUpDialogProps {
     onSave?: () => void;
     onClose?: () => void;
     isOpened: boolean,
+    canSave: boolean,
     setIsOpened: (value: boolean) => void;
     content: any
 }
 ;
-export const PopUpDialog = ({ isOpened, setIsOpened, content, onSave, onClose, title, }: PopUpDialogProps) => {
+export const PopUpDialog = ({ isOpened, setIsOpened, content, onSave, onClose, title, canSave }: PopUpDialogProps) => {
 
     const onActionLeft = () => {
         setIsOpened(false)
@@ -37,7 +38,7 @@ export const PopUpDialog = ({ isOpened, setIsOpened, content, onSave, onClose, t
                     <View style={styles.header}>
                         <Icon source={require("../assets/close.png")} light size={24} onPress={onActionLeft} />
                         <GText bold size={22} style={styles.title}>{title}</GText>
-                        <TextButton title="Save" onPress={onActionRight} />
+                        <TextButton title="Save" onPress={onActionRight} disabled={!canSave} />
                     </View>
                     <View style={styles.content}>{content}</View>
 
@@ -58,10 +59,9 @@ const styles = StyleSheet.create({
     modal: {
         width: '90%',
         maxHeight: '80%',
-        flex: 0,
+        // flex: 0,
         display: 'flex',
         flexDirection: 'column',
-
         backgroundColor: Colors.secondary,
         borderRadius: 25,
         padding: 10,
@@ -72,9 +72,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 10,
+        // flex: 0,
     },
     content: {
-        alignItems: 'center',
+        // alignItems: 'center',
+        flex: 0
 
     },
     title: {

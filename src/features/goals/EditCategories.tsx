@@ -1,25 +1,22 @@
 import { StyleSheet, View } from "react-native";
 import { GText } from "../../components/GText";
+import { Icon } from "../../components/Icon";
 import { InputBar } from "../../components/InputBar";
-import { Category, Goal } from "../../model/types";
+import { Category } from "../../model/types";
 import { Colors } from "../../util/Colors";
 import { CategoryTags } from "./CategoryTags";
+import useAddCategoryDialog from "./useAddCategoryDialog";
 import { useCategories } from "./useCategories";
 import useGoal from "./useGoal";
-import { Icon } from "../../components/Icon";
-import { GButton } from "../../components/GButton";
-import useEditGoalModal from "./useEditGoalModal";
-import useEditCategoryModal from "./useEditCategoryModal";
 
 type EditCategoriesProps = {
     goalId: string,
-    onEdit: () => void,
 }
-export const EditCategories = ({ goalId, onEdit }: EditCategoriesProps) => {
+export const EditCategories = ({ goalId }: EditCategoriesProps) => {
 
-    // const { EditCategoryModal, openModal, isOpened } = useEditCategoryModal({ category: undefined, title: 'Add Category' });
     const { goal } = useGoal(goalId);
     const { allCategories, fetchAllCategories } = useCategories(goalId);
+    const { AddCategoryDialog, openDialog } = useAddCategoryDialog({ category: undefined });
 
     if (!allCategories) {
         fetchAllCategories();
@@ -37,18 +34,15 @@ export const EditCategories = ({ goalId, onEdit }: EditCategoriesProps) => {
         return !goal?.categories.some(goalCategory => goalCategory.categoryId === category.id);
     }) || [];
 
-    // if (!goal) {
-    //     return null;
-    // }
-
     return (
         <View style={{}}>
+            {AddCategoryDialog}
             <GText style={styles.label}>{"Categories"}</GText>
             <InputBar style={styles.bar}>
                 {goal?.categories
                     ? <CategoryTags categories={goal?.categories} onPress={onRemove}></CategoryTags>
                     : <GText bold style={styles.placeholder}>{"Add or Create"}</GText>}
-                <Icon source={require("../../assets/plus.png")} light size={24} onPress={onEdit} />
+                <Icon source={require("../../assets/plus.png")} light size={24} onPress={openDialog} />
             </InputBar>
             <View style={styles.selection}>
                 <CategoryTags add categories={categoriesToAdd} onPress={onAdd}></CategoryTags>
