@@ -8,7 +8,7 @@ interface CheckMarkProps {
 
 export const CheckMark = ({ style, isChecked }: CheckMarkProps) => {
     return (
-        <View style={[styles.circle, style]}>
+        <View style={[styles.circle, style, !isChecked ? { borderColor: Colors.grayAlpha(0.5) } : {}]}>
             {isChecked ? <Image source={require("../assets/checkmark.png")} resizeMode="contain" style={styles.check} /> : null}
         </View>
     );

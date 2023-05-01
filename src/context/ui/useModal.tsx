@@ -47,6 +47,8 @@ export default function useModal({ headerText, content, onClose, onDelete }: Mod
   const Modal = (
     <Modalize
       ref={modalRef}
+      disableScrollIfPossible={true}
+      useNativeDriver
       modalStyle={styles.modalContainer}
       HeaderComponent={headerComponent}>
       {content}

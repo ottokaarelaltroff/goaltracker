@@ -1,5 +1,5 @@
-import { StyleSheet, View } from "react-native";
-import { FlatList, RefreshControl, TouchableOpacity } from "react-native-gesture-handler";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { FlatList, RefreshControl } from "react-native-gesture-handler";
 import { GButton } from "../../components/GButton";
 import { GText } from "../../components/GText";
 import { Icon } from "../../components/Icon";
@@ -11,10 +11,12 @@ import { Colors } from "../../util/Colors";
 import { GoalPreview } from "./GoalPreview";
 import useAllGoals from "./useAllGoals";
 import useEditGoalModal from "./useEditGoalModal";
+import { useState } from "react";
 
 export const AllGoalsScreen = ({ navigation }) => {
 
     const { allGoals, fetchAllGoals, isLoading, isError, setSelectedGoal } = useAllGoals();
+    // const [addMode, setAddMode] = useState<boolean>(false);
     const { EditGoalModal, openModal } = useEditGoalModal({ goal: undefined, title: 'Add Goal' });
 
     const onGoalSelect = (goal: Goal) => {

@@ -1,15 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import DropdownInput from '../../components/DropdownInput';
+import DropdownInput, { OptionType } from '../../components/DropdownInput';
 import { Input } from '../../components/Input';
 import useModal from '../../context/ui/useModal';
-import { Goal } from '../../model/types';
-import { InputBar } from '../../components/InputBar';
-import { GText } from '../../components/GText';
-import { Colors } from '../../util/Colors';
-import { CategoryTags } from './CategoryTags';
+import { Goal, Unit } from '../../model/types';
 import { EditCategories } from './EditCategories';
-import { getTargetDateFormatted as getDateFormatted } from '../../util/Util';
+import { useUnits } from './useUnits';
 
 interface EditGoalModalProps {
     goal: Goal;
@@ -18,57 +14,50 @@ interface EditGoalModalProps {
 
 export default function useEditGoalModal({ goal, title }: EditGoalModalProps) {
 
-    const [selectedValue, setSelectedValue] = useState(null);
+    const [selectedUnit, setSelectedUnit] = useState<OptionType<Unit> | undefined>();
+    const { units, fetchAllUnits } = useUnits(goal?.id);
 
-    const options = [
-        { label: 'Option 1', value: 'option1' },
-        { label: 'Option 2', value: 'option2' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 3', value: 'option3' },
-        { label: 'Option 3', value: 'option3' },
-    ];
+    console.log("OTTO selectedUnit", selectedUnit)
+    const getUnitOptions = () => {
+        if (units) {
+            const result = [];
+            units.map((unit) => result.push({ label: unit.name, value: unit }))
+            return result;
+        } else {
+            fetchAllUnits();
+        }
+        return [];
+    }
+
+    useEffect(() => {
+        if (goal && goal.unit) {
+            setSelectedUnit({ label: goal?.unit?.name, value: goal?.unit })
+        }
+    }, [goal])
 
     const editGoalForm = (
         <View style={styles.container}>
             <Input label={"Name"} initialValue={goal?.title} placeHolder={"What goal are you chasing?"}></Input>
             <View style={styles.row}>
-                <Input label={"Current"} initialValue={goal?.currentValue.toString()} placeHolder={"Current value"} style={styles.current}></Input>
-                <Input label={"Goal"} initialValue={goal?.targetValue.toString()} placeHolder={"Goal value"}></Input>
+                <Input numeric label={"Current"} initialValue={goal?.currentValue.toString()} placeHolder={"Current value"} style={styles.current}></Input>
+                <Input numeric label={"Goal"} initialValue={goal?.targetValue.toString()} placeHolder={"Goal value"}></Input>
             </View>
             <DropdownInput
                 label={"Unit"}
                 placeholder={"Insert or Select"}
-                options={options}
-                selectedValue={{ label: goal?.unit?.name, value: goal?.unit }}
-                onValueChange={setSelectedValue}
+                options={getUnitOptions()}
+                selectedValue={selectedUnit}
+                onValueChange={setSelectedUnit}
             />
-            <DropdownInput
+            {/* <DropdownInput
                 label={"Due Date"}
                 placeholder={"Select"}
                 options={options}
                 selectedValue={{ label: getDateFormatted(goal?.targetDate), value: goal?.unit }}
                 onValueChange={setSelectedValue}
                 icon={require("../../assets/calendar.png")}
-            />
-            <EditCategories goal={goal} />
+            /> */}
+            <EditCategories goalId={goal?.id} />
         </View>
     )
 

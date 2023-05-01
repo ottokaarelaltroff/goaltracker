@@ -1,7 +1,6 @@
 import { AntDesign } from '@expo/vector-icons';
 import { useState } from "react";
-import { LayoutAnimation, StyleSheet, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { LayoutAnimation, StyleSheet, View, TouchableOpacity } from "react-native";
 import { Colors } from "../util/Colors";
 import { GText } from "./GText";
 

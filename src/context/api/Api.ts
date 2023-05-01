@@ -12,7 +12,7 @@ const Api = () => {
         const headers = {
             Authorization: 'Bearer ' + jwtToken
         };
-        console.log("OTTO request", method, headers, path, body)
+        console.log("OTTO request", method, path, body || '')
         const response = await axios({
             method: method,
             headers: headers,
@@ -43,12 +43,22 @@ const Api = () => {
         return await fetchApi('GET', `/goalsteps/goalId=${goalId}`)
     };
 
+    const findAllUnits = async () => {
+        return await fetchApi('GET', `/units`)
+    };
+
+    const findAllCategories = async () => {
+        return await fetchApi('GET', `/categories`)
+    };
+
     return {
         login,
         findAllGoals,
         findGoalCategories,
         findGoalHabits,
         findGoalSteps,
+        findAllUnits,
+        findAllCategories
     };
 };
 

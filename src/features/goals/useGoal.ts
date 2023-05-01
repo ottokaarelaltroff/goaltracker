@@ -1,5 +1,5 @@
 import { Goal } from '../../model/types';
-import { useGoalCategories } from './useGoalCategories';
+import { useCategories } from './useCategories';
 import { useSteps } from './useSteps';
 import useAllGoals from './useAllGoals';
 import { useHabits } from '../habits/useHabits';
@@ -7,15 +7,15 @@ import { useEffect, useState } from 'react';
 
 export default function useGoal(goalId?: string) {
     const { allGoals } = useAllGoals();
-    const { categories, fetchGoalCategories, isLoading } = useGoalCategories(goalId);
+    const { goalCategories, fetchGoalCategories } = useCategories(goalId);
     const { habits, fetchGoalHabits } = useHabits(goalId);
     const { steps, fetchGoalSteps } = useSteps(goalId);
 
     const [goal, setGoal] = useState<Goal | undefined>();
 
     const setGoalCategories = () => {
-        if (categories) {
-            goal.categories = categories;
+        if (goalCategories) {
+            goal.categories = goalCategories;
         } else {
             fetchGoalCategories();
         }
@@ -35,7 +35,7 @@ export default function useGoal(goalId?: string) {
     }
 
     if (allGoals) {
-        if (!goal) {
+        if (goalId && !goal) {
             setGoal(allGoals.filter(goal => goal.id === goalId).find(g => g));
         }
     }
@@ -44,7 +44,7 @@ export default function useGoal(goalId?: string) {
         if (goal) {
             setGoalCategories();
         }
-    }, [goal, categories])
+    }, [goal, goalCategories])
 
     return {
         goal: goal,

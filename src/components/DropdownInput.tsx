@@ -4,43 +4,46 @@ import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { Colors } from '../util/Colors';
 import { GText } from './GText';
 import { Icon } from './Icon';
+import { Step, Unit } from '../model/types';
 
-type OptionType = {
+export type OptionType<T> = {
   label: string;
-  value: any;
+  value: T | string;
 };
 
-type Props = {
+type AllowedDropDownType = Unit | Step;
+
+type Props<T> = {
   label: string;
   placeholder: string;
-  options: OptionType[];
-  selectedValue: OptionType | null;
-  onValueChange: (value: OptionType | null) => void;
+  options: OptionType<T>[];
+  selectedValue: OptionType<T> | undefined;
+  onValueChange: (value: OptionType<T> | undefined) => void;
   icon?: any
 };
 
-const DropdownInput: React.FC<Props> = ({
-  label,
-  placeholder,
-  options,
-  selectedValue,
-  onValueChange,
-  icon
-}) => {
-  const [isOpened, setIsOpened] = useState(false);
-  const [value, setValue] = useState(selectedValue?.label);
+const DropdownInput = <T extends any>({ label, placeholder, options, selectedValue, onValueChange, icon }: Props<T>) => {
 
-  const handleToggleModal = () => {
+  const [isOpened, setIsOpened] = useState<boolean>(false);
+  const [value, setValue] = useState<OptionType<T>>(selectedValue);
+
+  const toggleModal = () => {
     setIsOpened(!isOpened);
   };
 
-  const handleSelectValue = (value: OptionType) => {
-    setValue(value.value)
+  const handleSelectValue = (value: OptionType<T>) => {
+    setValue(value)
     onValueChange(value);
-    handleToggleModal();
+    toggleModal();
   };
 
-  const renderOption = (option: OptionType, index: number) => (
+  const onChangeText = (text: string) => {
+    const newOption = { label: text, value: text }
+    setValue(newOption)
+    onValueChange(newOption);
+  }
+
+  const renderOption = (option: OptionType<T>, index: number) => (
     <TouchableOpacity
       style={styles.option}
       onPress={() => handleSelectValue(option)}
@@ -60,18 +63,18 @@ const DropdownInput: React.FC<Props> = ({
             style={styles.input}
             placeholder={placeholder}
             placeholderTextColor={Colors.grayAlpha(0.3)}
-            onChangeText={setValue}
-            value={value}
+            onChangeText={onChangeText}
+            value={value?.label}
           />
-          <TouchableOpacity onPress={handleToggleModal}>
-            <Icon source={require("../assets/caret-down.png")} style={styles.caret} onPress={handleToggleModal} ></Icon>
+          <TouchableOpacity onPress={toggleModal}>
+            <Icon source={require("../assets/caret-down.png")} style={styles.caret} onPress={toggleModal} ></Icon>
           </TouchableOpacity>
         </View>
       </View>
       <Modal visible={isOpened} transparent={true}>
         <TouchableOpacity
           style={styles.modalBackground}
-          onPress={handleToggleModal}
+          onPress={toggleModal}
         >
           <View style={styles.modal}>
             <ScrollView>
@@ -120,7 +123,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: 80,
-    // borderWidth: 2
     marginBottom: 15,
   },
   inputContainer: {
@@ -155,6 +157,5 @@ const styles = StyleSheet.create({
     tintColor: Colors.lightGray,
     width: 20,
     marginRight: 20,
-    // borderWidth: 2,
   }
 });

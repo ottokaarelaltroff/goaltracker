@@ -23,6 +23,6 @@ const styles = StyleSheet.create({
         height: 50,
         backgroundColor: Colors.secondary,
         borderRadius: 25,
-        paddingHorizontal: 25,
+        paddingHorizontal: 15,
     },
 });

@@ -6,6 +6,12 @@ export const getColorByName = (name: string) => {
             return Colors.lightBlue;
         case 'gray':
             return Colors.darkGray;
+        case 'green':
+            return Colors.darkGreen;
+        case 'purple':
+            return Colors.darkPurple;
+        case 'orange':
+            return Colors.darkOrange;
         default:
             return Colors.secondary
     }
@@ -20,6 +26,9 @@ export const Colors = {
     darkGray: '#344247',
     orange: '#FFBD59',
     green: '#85CF76',
+    darkGreen: '#006400',
+    darkPurple: '#301934',
+    darkOrange: '#ff8c00',
     lightBlue: '#2DB1E1',
     lightRed: '#CF6357',
     getColorByName: getColorByName,

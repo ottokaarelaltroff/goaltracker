@@ -1,5 +1,4 @@
-import { Insets } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { Insets, TouchableOpacity } from "react-native";
 import { GText } from "./GText";
 
 interface TextButtonProps {

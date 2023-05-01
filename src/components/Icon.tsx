@@ -1,27 +1,19 @@
-import { Image, ImageSourcePropType, Insets, StyleSheet } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { Image, ImageSourcePropType, Insets, StyleSheet, TouchableOpacity } from "react-native";
 import { Colors } from "../util/Colors";
 
 interface IconProps {
     source: ImageSourcePropType;
     onPress?: (value?) => void;
-    style?: any
+    style?: any,
+    size?: number,
     light?: boolean
 }
 ;
-export const Icon = ({ source, onPress, style, light = false }: IconProps) => {
+export const Icon = ({ source, onPress, style, size = 30, light = false }: IconProps) => {
     const defaultHitSlop: Insets = { top: 10, left: 10, bottom: 10, right: 10 };
     return (
         <TouchableOpacity onPress={onPress} hitSlop={defaultHitSlop}>
-            <Image source={source} resizeMode='contain' style={[styles.icon, style, light ? { tintColor: Colors.lightGray } : {}]} />
+            <Image source={source} resizeMode='contain' style={[style, { width: size, height: size }, light ? { tintColor: Colors.lightGray } : {}]} />
         </TouchableOpacity>
     );
 };
-
-const styles = StyleSheet.create({
-    icon: {
-        width: 30,
-        height: 30,
-    },
-
-});

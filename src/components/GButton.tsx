@@ -1,5 +1,4 @@
-import { Image, ImageSourcePropType, Insets, StyleSheet, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { Image, ImageSourcePropType, Insets, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Colors } from "../util/Colors";
 
 interface GButtonProps {
