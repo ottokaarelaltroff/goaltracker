@@ -20,6 +20,7 @@ import useAllGoals from "./useAllGoals";
 import useEditGoalModal from "./useEditGoalModal";
 import useGoal from "./useGoal";
 import { getRemainingDays, getTargetDateFormatted } from "../../util/Util";
+import { useCategories } from "./useCategories";
 
 interface Params {
     goal: Goal;
@@ -40,6 +41,7 @@ export const GoalScreen = ({ navigation }: GoalScreenProps) => {
 
     const { selectedGoal, setSelectedGoal } = useAllGoals();
     const { goal, setGoalData } = useGoal(selectedGoal?.id);
+    const { goalCategories } = useCategories(selectedGoal?.id);
     const scrollViewRef = useRef<ScrollView>(null);
 
     const { EditGoalModal, openModal } = useEditGoalModal({ goal: goal, title: 'Edit Goal' });
@@ -91,7 +93,7 @@ export const GoalScreen = ({ navigation }: GoalScreenProps) => {
             <ScrollView ref={scrollViewRef}>
                 <View style={styles.container}>
                     <View style={styles.categories}>
-                        <CategoryTags categories={goal.categories} />
+                        <CategoryTags categories={goalCategories} />
                     </View>
                     <ProgressSection
                         title={goal.currentValue + " / " + goal.targetValue + ' ' + goal.unit.name}

@@ -15,31 +15,43 @@ interface EditGoalModalProps {
 
 export default function useEditGoalModal({ goal, title }: EditGoalModalProps) {
 
-    const { updateGoal } = useGoal(goal?.id)
+    const { saveGoal, updateGoal } = useGoal(goal?.id)
     const [selectedUnit, setSelectedUnit] = useState<OptionType<Unit> | undefined>();
-    const { units, fetchAllUnits } = useUnits(goal?.id);
-
-    const getUnitOptions = () => {
-        if (units) {
-            const result = [];
-            units.map((unit) => result.push({ label: unit.name, value: unit }))
-            return result;
-        } else {
-            fetchAllUnits();
-        }
-        return [];
-    }
-
-    const updateCurrentValue = (value: string) => goal.currentValue = parseFloat(value) || 0;
-    const updateTargetValue = (value: string) => goal.targetValue = parseFloat(value) || 0;
+    const [titleValue, setTitleValue] = useState<string | undefined>(goal?.title);
+    const [targetDate, setTargetDate] = useState<Date | undefined>(new Date());
+    const [currentValue, setCurrentValue] = useState<string | undefined>(goal?.currentValue?.toString());
+    const [targetValue, setTargetValue] = useState<string | undefined>(goal?.targetValue?.toString());
+    const { getUnitOptions } = useUnits(goal?.id);
 
     const onSave = () => {
+        let newUnit = {} as Unit;
         if (typeof selectedUnit.value === 'string') {
-            // create new unit
+            newUnit.name = selectedUnit.value
         } else {
-            goal.unit = selectedUnit.value
+            newUnit = selectedUnit.value
         }
-        updateGoal(goal);
+
+        if (goal) {
+            goal.title = titleValue;
+            goal.isCompleted = false,
+                goal.targetDate = targetDate;
+            goal.currentValue = parseFloat(currentValue) || 0;
+            goal.targetValue = parseFloat(targetValue) || 0;
+            goal.unit = newUnit;
+            updateGoal(goal);
+        } else {
+            const newGoal = {
+                title: titleValue,
+                isCompleted: false,
+                targetDate: targetDate,
+                currentValue: parseFloat(currentValue) || 0,
+                targetValue: parseFloat(targetValue) || 0,
+                unit: newUnit
+            } as Goal;
+            console.log("OTTO save", newGoal)
+            saveGoal(newGoal);
+        }
+
 
     }
 
@@ -51,7 +63,11 @@ export default function useEditGoalModal({ goal, title }: EditGoalModalProps) {
 
     const editGoalForm = (
         <View style={styles.container}>
-            <Input label={"Name"} initialValue={goal?.title} placeHolder={"What goal are you chasing?"}></Input>
+            <Input
+                label={"Name"}
+                initialValue={goal?.title}
+                placeHolder={"What goal are you chasing?"}
+                onChange={setTitleValue} />
             <View style={styles.row}>
                 <Input
                     numeric
@@ -59,14 +75,14 @@ export default function useEditGoalModal({ goal, title }: EditGoalModalProps) {
                     initialValue={goal?.currentValue.toString()}
                     placeHolder={"Current value"}
                     style={styles.currentValue}
-                    onChange={updateCurrentValue} />
+                    onChange={setCurrentValue} />
                 <Input
                     numeric
                     label={"Target"}
                     initialValue={goal?.targetValue.toString()}
                     placeHolder={"Target value"}
                     style={styles.goalValue}
-                    onChange={updateTargetValue} />
+                    onChange={setTargetValue} />
             </View>
             <DropdownInput
                 label={"Unit"}

@@ -5,6 +5,7 @@ import { ProgressBar } from "../../components/ProgressBar";
 import { Colors } from "../../util/Colors";
 import { CategoryTags } from "./CategoryTags";
 import useGoal from "./useGoal";
+import { useCategories } from "./useCategories";
 
 type GoalPreviewProps = {
     goalId: string;
@@ -13,6 +14,7 @@ type GoalPreviewProps = {
 export const GoalPreview = ({ goalId }: GoalPreviewProps) => {
 
     const { goal } = useGoal(goalId);
+    const { goalCategories } = useCategories(goalId);
 
     const getPercentage = () => {
         if (goal && goal.currentValue && goal.targetValue) {
@@ -28,7 +30,7 @@ export const GoalPreview = ({ goalId }: GoalPreviewProps) => {
     return (
         <View style={styles.container}>
             <View style={styles.row}>
-                <CategoryTags categories={goal.categories} />
+                <CategoryTags categories={goalCategories} />
                 <GText bold style={styles.currentValue}>{goal.currentValue + ' ' + goal.unit.name}</GText>
             </View>
             <View style={styles.row}>

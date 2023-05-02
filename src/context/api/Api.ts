@@ -71,10 +71,9 @@ const Api = () => {
         return await fetchApi('DELETE', `/goalcategories/${goalCategoryId}`)
     };
 
-    const updateGoal = async (goal: Goal) => {
+    const saveGoal = async (goal: Goal) => {
         return await fetchApi('POST', '/goals', goal)
     };
-
 
     return {
         login,
@@ -89,7 +88,7 @@ const Api = () => {
         saveGoalCategory,
         deleteCategory,
         deleteGoalCategory,
-        updateGoal
+        saveGoal
     };
 };
 

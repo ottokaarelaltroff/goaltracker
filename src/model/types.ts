@@ -15,7 +15,7 @@ export type LoginResponse = {
 }
 
 export type Goal = {
-    id: string,
+    id?: string,
     title: string,
     isCompleted: boolean,
     targetDate: Date,
@@ -29,7 +29,7 @@ export type Goal = {
 }
 
 export type Unit = {
-    id: string,
+    id?: string,
     name: string,
 }
 

@@ -50,7 +50,8 @@ export default function useGoal(goalId?: string) {
         delete copy.categories;
         delete copy.steps;
         delete copy.habits;
-        return await api.updateGoal(goal);
+        console.log("fetchUpdateGoal", goal)
+        return await api.saveGoal(goal);
     }
 
     const updateGoal = useMutation(fetchUpdateGoal, {
@@ -60,6 +61,20 @@ export default function useGoal(goalId?: string) {
     const updateGoalHandler = (goal: Goal) => {
         updateGoal.mutate(goal);
     };
+
+    const fetchSaveGoal = async (goal: Goal) => {
+
+        return await api.saveGoal(goal);
+    }
+
+    const saveGoal = useMutation(fetchSaveGoal, {
+        onSuccess: fetchAllGoals
+    });
+
+    const saveGoalHandler = (goal: Goal) => {
+        saveGoal.mutate(goal);
+    };
+
 
     useEffect(() => {
         if (goal) {
@@ -71,6 +86,7 @@ export default function useGoal(goalId?: string) {
         goal,
         setGoalData,
         setGoalCategories,
-        updateGoal: updateGoalHandler
+        updateGoal: updateGoalHandler,
+        saveGoal: saveGoalHandler
     };
 }
