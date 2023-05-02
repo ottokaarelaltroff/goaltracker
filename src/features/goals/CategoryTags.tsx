@@ -22,7 +22,7 @@ export const CategoryTags = ({ categories, onPress, add = false }: CategoryTagsP
                     <View style={styles.tagContainer}>
                         <Tag
                             title={category.name}
-                            color={getColorByName(category.color)}
+                            color={category.color}
                             style={styles.tag} />
                         {onPress &&
                             <Icon

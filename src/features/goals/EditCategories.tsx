@@ -17,7 +17,7 @@ export const EditCategories = ({ goalId }: EditCategoriesProps) => {
 
     const { goal } = useGoal(goalId);
     const { allCategories, fetchAllCategories } = useCategories(goalId);
-    const { AddCategoryDialog, openDialog } = useAddCategoryDialog({ category: undefined });
+    const { AddCategoryDialog, openDialog } = useAddCategoryDialog({ category: undefined, goalId: goalId });
 
     if (!allCategories) {
         fetchAllCategories();
@@ -50,7 +50,7 @@ export const EditCategories = ({ goalId }: EditCategoriesProps) => {
     }, [goal])
 
     useEffect(() => {
-        if (allCategories && !categoriesToAdd) {
+        if (allCategories) {
             console.log("useEffect");
             setCategoriesToAdd(getCategoriesToAdd())
         }

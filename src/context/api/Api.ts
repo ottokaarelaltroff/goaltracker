@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_URL } from "../../../settings";
-import { LoginRequest } from "../../model/types";
+import { Category, LoginRequest } from "../../model/types";
 import useStorage from "../../storage/useStorage";
 
 const Api = () => {
@@ -51,6 +51,14 @@ const Api = () => {
         return await fetchApi('GET', `/categories`)
     };
 
+    const saveCategory = async (category: Category) => {
+        return await fetchApi('POST', `/categories`, category)
+    };
+
+    const saveGoalCategory = async (category: Category) => {
+        return await fetchApi('POST', `/goalcategories`, category)
+    };
+
     return {
         login,
         findAllGoals,
@@ -58,7 +66,9 @@ const Api = () => {
         findGoalHabits,
         findGoalSteps,
         findAllUnits,
-        findAllCategories
+        findAllCategories,
+        saveCategory,
+        saveGoalCategory
     };
 };
 

@@ -66,8 +66,8 @@ const DropdownInput = <T extends any>({ label, placeholder, options, selectedVal
             onChangeText={onChangeText}
             value={value?.label}
           />
-          <TouchableOpacity onPress={toggleModal}>
-            <Icon source={require("../assets/caret-down.png")} style={styles.caret} onPress={toggleModal} ></Icon>
+          <TouchableOpacity onPress={toggleModal} >
+            <Icon source={require("../assets/caret-down.png")} size={24} style={styles.caret} onPress={toggleModal} ></Icon>
           </TouchableOpacity>
         </View>
       </View>
@@ -157,5 +157,6 @@ const styles = StyleSheet.create({
     tintColor: Colors.lightGray,
     width: 20,
     marginRight: 20,
+    marginLeft: 50,
   }
 });

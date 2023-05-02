@@ -34,7 +34,7 @@ export type Unit = {
 }
 
 export type Category = {
-    id: string,
+    id?: string,
     name: string,
     color: string,
     goalId?: string,

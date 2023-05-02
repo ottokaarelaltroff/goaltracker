@@ -7,23 +7,29 @@ import { Tag } from '../../components/Tag';
 import useDialog from '../../context/ui/useDialog';
 import { Category } from '../../model/types';
 import { Colors } from '../../util/Colors';
+import { useCategories } from './useCategories';
 
 type Props = {
-
+    goalId?: string,
     category?: Category
 }
 
-export default function useAddCategoryDialog({ category }: Props) {
+export default function useAddCategoryDialog({ goalId, category }: Props) {
 
     const [name, setName] = useState<string>(category?.name);
     const [color, setColor] = useState<string>(category?.color || Colors.purple);
+    const { saveCategory } = useCategories(goalId);
+
+    const onSave = () => {
+        saveCategory && saveCategory({ name: name, color: color })
+    };
 
     const addCategoryForm = (
         <View style={styles.container}>
             <View style={styles.tagContainer}>
-                <Tag title={name || 'Title'} color={color} style={styles.tag}></Tag>
+                <Tag title={name || 'Preview'} color={color} style={styles.tag}></Tag>
             </View>
-            <Input label={"Name"} placeHolder={"Add name"} color={Colors.primary} style={{ width: '100%' }} onChange={setName}></Input>
+            <Input label={"Name"} placeHolder={"Add name"} initialValue={name || ''} color={Colors.primary} style={{ width: '100%' }} onChange={setName}></Input>
             <View>
                 <GText style={styles.label}>{"Color"}</GText>
             </View>
@@ -32,7 +38,13 @@ export default function useAddCategoryDialog({ category }: Props) {
         </View>
     )
 
-    const { Dialog, openDialog, closeDialog, isOpened } = useDialog({ headerText: "Add Category", content: addCategoryForm, canSave: name && name.length > 0 });
+    const { Dialog, openDialog, closeDialog, isOpened } = useDialog(
+        {
+            onSave: onSave,
+            headerText: "Create Category",
+            content: addCategoryForm,
+            canSave: name && name.length > 0
+        });
 
     return {
         AddCategoryDialog: Dialog,
@@ -44,7 +56,6 @@ export default function useAddCategoryDialog({ category }: Props) {
 
 const styles = StyleSheet.create({
     container: {
-        // alignItems: 'center',
         paddingVertical: 20,
         width: '100%'
     },
