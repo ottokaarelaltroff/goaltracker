@@ -1,8 +1,8 @@
-import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { Icon } from "../../components/Icon";
 import { Tag } from "../../components/Tag";
 import { Category } from "../../model/types";
-import { Colors, getColorByName } from "../../util/Colors";
-import { Icon } from "../../components/Icon";
+import { Colors } from "../../util/Colors";
 
 type CategoryTagsProps = {
     categories: Category[],

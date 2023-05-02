@@ -1,17 +1,28 @@
+import { useEffect } from 'react';
 import { Goal } from '../../model/types';
+import { useHabits } from '../habits/useHabits';
+import useAllGoals from './useAllGoals';
 import { useCategories } from './useCategories';
 import { useSteps } from './useSteps';
-import useAllGoals from './useAllGoals';
-import { useHabits } from '../habits/useHabits';
-import { useEffect, useState } from 'react';
+
+import { useMutation } from '@tanstack/react-query';
+import { api } from '../../context/api';
+import useAppQuery from '../../context/api/useAppQuery';
 
 export default function useGoal(goalId?: string) {
-    const { allGoals } = useAllGoals();
+    const { fetchAllGoals } = useAllGoals();
     const { goalCategories, fetchGoalCategories } = useCategories(goalId);
     const { habits, fetchGoalHabits } = useHabits(goalId);
     const { steps, fetchGoalSteps } = useSteps(goalId);
 
-    const [goal, setGoal] = useState<Goal | undefined>();
+    const { data: goal, refetch: refetchGoal } = useAppQuery(['goal', goalId], {
+        queryFn: () => api.findGoal(goalId) as Promise<Goal>,
+        enabled: false,
+    });
+
+    if (!goal && goalId) {
+        refetchGoal();
+    }
 
     const setGoalCategories = () => {
         if (goalCategories) {
@@ -34,11 +45,21 @@ export default function useGoal(goalId?: string) {
         }
     }
 
-    if (allGoals) {
-        if (goalId && !goal) {
-            setGoal(allGoals.filter(goal => goal.id === goalId).find(g => g));
-        }
+    const fetchUpdateGoal = async (goal: Goal) => {
+        const copy = goal;
+        delete copy.categories;
+        delete copy.steps;
+        delete copy.habits;
+        return await api.updateGoal(goal);
     }
+
+    const updateGoal = useMutation(fetchUpdateGoal, {
+        onSuccess: refetchGoal && fetchAllGoals
+    });
+
+    const updateGoalHandler = (goal: Goal) => {
+        updateGoal.mutate(goal);
+    };
 
     useEffect(() => {
         if (goal) {
@@ -47,8 +68,9 @@ export default function useGoal(goalId?: string) {
     }, [goal, goalCategories])
 
     return {
-        goal: goal,
-        setGoalData: setGoalData,
-        setGoalCategories: setGoalCategories,
+        goal,
+        setGoalData,
+        setGoalCategories,
+        updateGoal: updateGoalHandler
     };
 }

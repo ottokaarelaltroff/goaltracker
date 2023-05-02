@@ -14,11 +14,12 @@ type ModalizeRef = {
 type ModalProps = {
   headerText: string
   content: any,
+  onSave?: () => void;
   onClose?: () => void;
   onDelete?: () => void;
 };
 
-export default function useModal({ headerText, content, onClose, onDelete }: ModalProps) {
+export default function useModal({ headerText, content, onSave, onClose, onDelete }: ModalProps) {
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const modalRef = useRef<ModalizeRef>(null);
 
@@ -33,6 +34,11 @@ export default function useModal({ headerText, content, onClose, onDelete }: Mod
     onClose && onClose();
   };
 
+  const onSaveClick = () => {
+    onSave && onSave();
+    closeModal();
+  }
+
   const headerComponent = (
     <View style={styles.header}>
       <View style={styles.iconRow}>
@@ -41,7 +47,7 @@ export default function useModal({ headerText, content, onClose, onDelete }: Mod
       </View>
       <GText bold size={22} style={styles.title}>{headerText}</GText>
       <View style={styles.save}>
-        <TextButton title={'Save'} onPress={closeModal} style={{ textAlign: 'right' }} />
+        <TextButton title={'Save'} onPress={onSaveClick} style={{ textAlign: 'right' }} />
       </View>
     </View>
   )

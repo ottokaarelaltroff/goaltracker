@@ -34,7 +34,7 @@ interface GoalScreenProps {
     navigation: any
 };
 
-UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
+// UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
 export const GoalScreen = ({ navigation }: GoalScreenProps) => {
 
@@ -54,7 +54,7 @@ export const GoalScreen = ({ navigation }: GoalScreenProps) => {
     useFocusEffect(
         useCallback(() => {
             const unsubscribe = navigation.addListener('blur', () => {
-                setSelectedGoal(undefined);
+                // setSelectedGoal(undefined);
             });
             return unsubscribe;
         }, [navigation])

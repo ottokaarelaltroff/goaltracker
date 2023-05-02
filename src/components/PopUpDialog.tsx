@@ -6,6 +6,8 @@ import { TextButton } from "./TextButton";
 import { BlurView } from "@react-native-community/blur";
 
 
+
+
 interface PopUpDialogProps {
     title?: string;
     onSave?: () => void;
@@ -34,26 +36,25 @@ export const PopUpDialog = ({ isOpened, setIsOpened, content, onSave, onClose, t
     }
     return (
         <View>
-            <BlurView style={styles.blurView}
+            {/* <BlurView
+                style={styles.blurView}
                 blurType="light"
-                blurAmount={10}>
-
-                <Modal visible={isOpened} transparent={true}>
-                    <View
-                        style={styles.modalBackground}>
-                        <View style={styles.modal}>
-                            <View style={styles.header}>
-                                <Icon source={require("../assets/close.png")} light size={24} onPress={onActionLeft} />
-                                <GText bold size={22} style={styles.title}>{title}</GText>
-                                <TextButton title="Save" onPress={onActionRight} disabled={!canSave} />
-                            </View>
-                            <View style={styles.content}>{content}</View>
-
+                blurAmount={10} /> */}
+            <Modal visible={isOpened} transparent={true}>
+                <View
+                    style={styles.modalBackground}>
+                    <View style={styles.modal}>
+                        <View style={styles.header}>
+                            <Icon source={require("../assets/close.png")} light size={24} onPress={onActionLeft} />
+                            <GText bold size={22} style={styles.title}>{title}</GText>
+                            <TextButton title="Save" onPress={onActionRight} disabled={!canSave} />
                         </View>
+                        <View style={styles.content}>{content}</View>
 
                     </View>
-                </Modal>
-            </BlurView>
+
+                </View>
+            </Modal>
         </View>
     );
 };

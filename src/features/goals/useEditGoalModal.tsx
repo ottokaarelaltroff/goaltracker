@@ -6,6 +6,7 @@ import useModal from '../../context/ui/useModal';
 import { Goal, Unit } from '../../model/types';
 import { EditCategories } from './EditCategories';
 import { useUnits } from './useUnits';
+import useGoal from './useGoal';
 
 interface EditGoalModalProps {
     goal: Goal;
@@ -14,6 +15,7 @@ interface EditGoalModalProps {
 
 export default function useEditGoalModal({ goal, title }: EditGoalModalProps) {
 
+    const { updateGoal } = useGoal(goal?.id)
     const [selectedUnit, setSelectedUnit] = useState<OptionType<Unit> | undefined>();
     const { units, fetchAllUnits } = useUnits(goal?.id);
 
@@ -28,21 +30,43 @@ export default function useEditGoalModal({ goal, title }: EditGoalModalProps) {
         return [];
     }
 
+    const updateCurrentValue = (value: string) => goal.currentValue = parseFloat(value) || 0;
+    const updateTargetValue = (value: string) => goal.targetValue = parseFloat(value) || 0;
+
+    const onSave = () => {
+        if (typeof selectedUnit.value === 'string') {
+            // create new unit
+        } else {
+            goal.unit = selectedUnit.value
+        }
+        updateGoal(goal);
+
+    }
+
     useEffect(() => {
         if (goal && goal.unit) {
             setSelectedUnit({ label: goal?.unit?.name, value: goal?.unit })
         }
     }, [goal])
 
-
-
-
     const editGoalForm = (
         <View style={styles.container}>
             <Input label={"Name"} initialValue={goal?.title} placeHolder={"What goal are you chasing?"}></Input>
             <View style={styles.row}>
-                <Input numeric label={"Current"} initialValue={goal?.currentValue.toString()} placeHolder={"Current value"} style={styles.currentValue}></Input>
-                <Input numeric label={"Goal"} initialValue={goal?.targetValue.toString()} placeHolder={"Goal value"} style={styles.goalValue}></Input>
+                <Input
+                    numeric
+                    label={"Current"}
+                    initialValue={goal?.currentValue.toString()}
+                    placeHolder={"Current value"}
+                    style={styles.currentValue}
+                    onChange={updateCurrentValue} />
+                <Input
+                    numeric
+                    label={"Target"}
+                    initialValue={goal?.targetValue.toString()}
+                    placeHolder={"Target value"}
+                    style={styles.goalValue}
+                    onChange={updateTargetValue} />
             </View>
             <DropdownInput
                 label={"Unit"}
@@ -64,7 +88,7 @@ export default function useEditGoalModal({ goal, title }: EditGoalModalProps) {
         </View>
     )
 
-    const { Modal, openModal, closeModal, isOpened } = useModal({ headerText: title, content: editGoalForm, onDelete: () => { } });
+    const { Modal, openModal, closeModal, isOpened } = useModal({ headerText: title, content: editGoalForm, onSave: onSave, onDelete: () => { } });
 
     return {
         EditGoalModal: Modal,
