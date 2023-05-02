@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { GText } from "../../components/GText";
 import { Icon } from "../../components/Icon";
@@ -22,30 +23,51 @@ export const EditCategories = ({ goalId }: EditCategoriesProps) => {
         fetchAllCategories();
     }
 
-    const onAdd = (category: Category) => {
-        console.log("add", category)
+    const getCategoriesToAdd = () => allCategories?.filter((category) => {
+        return !selectedCategories?.some(goalCategory => goalCategory.categoryId === category.id);
+    });
+
+    const [selectedCategories, setSelectedCategories] = useState<Category[]>(goal?.categories || undefined);
+    const [categoriesToAdd, setCategoriesToAdd] = useState<Category[]>(getCategoriesToAdd() || undefined);
+
+
+    const addCategory = (category: Category) => {
+        setSelectedCategories([...selectedCategories || [], category]);
+        const updatedCategoriesToAdd = categoriesToAdd.filter(c => c.id !== category.id);
+        setCategoriesToAdd(updatedCategoriesToAdd);
     }
 
-    const onRemove = (category: Category) => {
-        console.log("remove", category)
+    const removeCategory = (category: Category) => {
+        const updatedSelectedCategories = selectedCategories.filter(c => c.id !== category.id);
+        setSelectedCategories(updatedSelectedCategories);
+        setCategoriesToAdd([...categoriesToAdd || [], category]);
     }
 
-    const categoriesToAdd = allCategories?.filter((category) => {
-        return !goal?.categories.some(goalCategory => goalCategory.categoryId === category.id);
-    }) || [];
+    useEffect(() => {
+        if (goal && goal.categories !== undefined && goal.categories.length > 0 && !selectedCategories) {
+            setSelectedCategories(goal.categories)
+        }
+    }, [goal])
+
+    useEffect(() => {
+        if (allCategories && !categoriesToAdd) {
+            console.log("useEffect");
+            setCategoriesToAdd(getCategoriesToAdd())
+        }
+    }, [allCategories])
 
     return (
         <View style={{}}>
             {AddCategoryDialog}
             <GText style={styles.label}>{"Categories"}</GText>
             <InputBar style={styles.bar}>
-                {goal?.categories
-                    ? <CategoryTags categories={goal?.categories} onPress={onRemove}></CategoryTags>
+                {selectedCategories
+                    ? <CategoryTags categories={selectedCategories} onPress={removeCategory}></CategoryTags>
                     : <GText bold style={styles.placeholder}>{"Add or Create"}</GText>}
                 <Icon source={require("../../assets/plus.png")} light size={24} onPress={openDialog} />
             </InputBar>
             <View style={styles.selection}>
-                <CategoryTags add categories={categoriesToAdd} onPress={onAdd}></CategoryTags>
+                <CategoryTags add categories={categoriesToAdd} onPress={addCategory}></CategoryTags>
             </View>
         </View>
     )
