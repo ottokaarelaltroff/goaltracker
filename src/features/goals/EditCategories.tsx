@@ -6,7 +6,7 @@ import { InputBar } from "../../components/InputBar";
 import { Category } from "../../model/types";
 import { Colors } from "../../util/Colors";
 import { CategoryTags } from "./CategoryTags";
-import useAddCategoryDialog from "./useAddCategoryDialog";
+import useEditCategoryDialog from "./useEditCategoryDialog";
 import { useCategories } from "./useCategories";
 import useGoal from "./useGoal";
 
@@ -16,8 +16,8 @@ type EditCategoriesProps = {
 export const EditCategories = ({ goalId }: EditCategoriesProps) => {
 
     const { goal } = useGoal(goalId);
-    const { allCategories, fetchAllCategories } = useCategories(goalId);
-    const { AddCategoryDialog, openDialog } = useAddCategoryDialog({ category: undefined, goalId: goalId });
+    const { goalCategories, allCategories, fetchAllCategories, deleteGoalCategory, saveGoalCategory } = useCategories(goalId);
+    const { AddCategoryDialog, openDialog } = useEditCategoryDialog({ category: undefined, goalId: goalId });
 
     if (!allCategories) {
         fetchAllCategories();
@@ -27,31 +27,34 @@ export const EditCategories = ({ goalId }: EditCategoriesProps) => {
         return !selectedCategories?.some(goalCategory => goalCategory.categoryId === category.id);
     });
 
-    const [selectedCategories, setSelectedCategories] = useState<Category[]>(goal?.categories || undefined);
+    const [selectedCategories, setSelectedCategories] = useState<Category[]>(goalCategories || undefined);
     const [categoriesToAdd, setCategoriesToAdd] = useState<Category[]>(getCategoriesToAdd() || undefined);
 
 
-    const addCategory = (category: Category) => {
+    const addGoalCategory = (category: Category) => {
+        console.log("OTTO add", category)
+        saveGoalCategory(category);
         setSelectedCategories([...selectedCategories || [], category]);
         const updatedCategoriesToAdd = categoriesToAdd.filter(c => c.id !== category.id);
         setCategoriesToAdd(updatedCategoriesToAdd);
     }
 
-    const removeCategory = (category: Category) => {
+    const removeGoalCategory = (category: Category) => {
+        console.log("OTTO removeCategory", category)
+        deleteGoalCategory(category);
         const updatedSelectedCategories = selectedCategories.filter(c => c.id !== category.id);
         setSelectedCategories(updatedSelectedCategories);
         setCategoriesToAdd([...categoriesToAdd || [], category]);
     }
 
     useEffect(() => {
-        if (goal && goal.categories !== undefined && goal.categories.length > 0 && !selectedCategories) {
-            setSelectedCategories(goal.categories)
+        if (goal && goalCategories !== undefined && goalCategories.length > 0) {
+            setSelectedCategories(goalCategories)
         }
-    }, [goal])
+    }, [goal, goalCategories])
 
     useEffect(() => {
         if (allCategories) {
-            console.log("useEffect");
             setCategoriesToAdd(getCategoriesToAdd())
         }
     }, [allCategories])
@@ -62,12 +65,12 @@ export const EditCategories = ({ goalId }: EditCategoriesProps) => {
             <GText style={styles.label}>{"Categories"}</GText>
             <InputBar style={styles.bar}>
                 {selectedCategories
-                    ? <CategoryTags categories={selectedCategories} onPress={removeCategory}></CategoryTags>
+                    ? <CategoryTags categories={selectedCategories} onPress={removeGoalCategory}></CategoryTags>
                     : <GText bold style={styles.placeholder}>{"Add or Create"}</GText>}
                 <Icon source={require("../../assets/plus.png")} light size={24} onPress={openDialog} />
             </InputBar>
             <View style={styles.selection}>
-                <CategoryTags add categories={categoriesToAdd} onPress={addCategory}></CategoryTags>
+                <CategoryTags add categories={categoriesToAdd} onPress={addGoalCategory}></CategoryTags>
             </View>
         </View>
     )

@@ -3,6 +3,8 @@ import { Colors } from "../util/Colors";
 import { GText } from "./GText";
 import { Icon } from "./Icon";
 import { TextButton } from "./TextButton";
+import { BlurView } from "@react-native-community/blur";
+
 
 interface PopUpDialogProps {
     title?: string;
@@ -31,21 +33,28 @@ export const PopUpDialog = ({ isOpened, setIsOpened, content, onSave, onClose, t
         return null;
     }
     return (
-        <Modal visible={isOpened} transparent={true}>
-            <View
-                style={styles.modalBackground}>
-                <View style={styles.modal}>
-                    <View style={styles.header}>
-                        <Icon source={require("../assets/close.png")} light size={24} onPress={onActionLeft} />
-                        <GText bold size={22} style={styles.title}>{title}</GText>
-                        <TextButton title="Save" onPress={onActionRight} disabled={!canSave} />
+        <View>
+            <BlurView style={styles.blurView}
+                blurType="light"
+                blurAmount={10}>
+
+                <Modal visible={isOpened} transparent={true}>
+                    <View
+                        style={styles.modalBackground}>
+                        <View style={styles.modal}>
+                            <View style={styles.header}>
+                                <Icon source={require("../assets/close.png")} light size={24} onPress={onActionLeft} />
+                                <GText bold size={22} style={styles.title}>{title}</GText>
+                                <TextButton title="Save" onPress={onActionRight} disabled={!canSave} />
+                            </View>
+                            <View style={styles.content}>{content}</View>
+
+                        </View>
+
                     </View>
-                    <View style={styles.content}>{content}</View>
-
-                </View>
-
-            </View>
-        </Modal>
+                </Modal>
+            </BlurView>
+        </View>
     );
 };
 
@@ -81,5 +90,12 @@ const styles = StyleSheet.create({
     },
     title: {
         color: Colors.light
-    }
+    },
+    blurView: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+    },
 });

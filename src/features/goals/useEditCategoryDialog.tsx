@@ -14,7 +14,7 @@ type Props = {
     category?: Category
 }
 
-export default function useAddCategoryDialog({ goalId, category }: Props) {
+export default function useEditCategoryDialog({ goalId, category }: Props) {
 
     const [name, setName] = useState<string>(category?.name);
     const [color, setColor] = useState<string>(category?.color || Colors.purple);
@@ -41,7 +41,7 @@ export default function useAddCategoryDialog({ goalId, category }: Props) {
     const { Dialog, openDialog, closeDialog, isOpened } = useDialog(
         {
             onSave: onSave,
-            headerText: "Create Category",
+            headerText: category ? "Edit Category" : "Create Category",
             content: addCategoryForm,
             canSave: name && name.length > 0
         });

@@ -79,5 +79,6 @@ const styles = StyleSheet.create({
     },
     goalList: {
         justifyContent: 'flex-start',
+        flex: 1,
     }
 });
