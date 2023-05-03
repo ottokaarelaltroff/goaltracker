@@ -14,10 +14,11 @@ type DialogProps = {
     onClose?: () => void;
     onDelete?: () => void;
     onSave?: () => void;
-    canSave?: boolean
+    canSave?: boolean,
+    bottomButtons?: boolean,
 };
 
-export default function useDialog({ headerText, content, onClose, onDelete, onSave, canSave }: DialogProps) {
+export default function useDialog({ headerText, content, onClose, onDelete, onSave, canSave, bottomButtons }: DialogProps) {
     const [isOpened, setIsOpened] = useState<boolean>(false);
 
     const openDialog = () => {
@@ -30,7 +31,14 @@ export default function useDialog({ headerText, content, onClose, onDelete, onSa
     };
 
     const Dialog = (
-        <PopUpDialog isOpened={isOpened} setIsOpened={setIsOpened} onSave={onSave} content={content} title={headerText} canSave={canSave} />
+        <PopUpDialog
+            isOpened={isOpened}
+            setIsOpened={setIsOpened}
+            onSave={onSave}
+            content={content}
+            title={headerText}
+            canSave={canSave}
+            bottomButtons={bottomButtons} />
     );
 
     return {

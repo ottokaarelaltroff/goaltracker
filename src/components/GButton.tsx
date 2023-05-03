@@ -4,15 +4,16 @@ import { Colors } from "../util/Colors";
 interface GButtonProps {
     title: string;
     onPress: () => void;
-    icon?: ImageSourcePropType
+    icon?: ImageSourcePropType,
+    backgroundColor?: string,
 }
 ;
-export const GButton = ({ title, onPress, icon }: GButtonProps) => {
+export const GButton = ({ title, onPress, icon, backgroundColor = Colors.darkGray }: GButtonProps) => {
     const defaultHitSlop: Insets = { top: 5, left: 5, bottom: 5, right: 5 };
 
     return (
         <TouchableOpacity onPress={onPress} hitSlop={defaultHitSlop}>
-            <View style={styles.container}>
+            <View style={[styles.container, { backgroundColor: backgroundColor, }]}>
                 {icon && <Image source={icon} style={styles.icon}></Image>}
                 <Text style={styles.text}>
                     {title}
@@ -24,7 +25,6 @@ export const GButton = ({ title, onPress, icon }: GButtonProps) => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: Colors.darkGray,
         borderRadius: 20,
         height: 50,
         paddingVertical: 2,

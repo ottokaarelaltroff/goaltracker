@@ -42,12 +42,12 @@ export default function useModal({ headerText, content, onSave, onClose, onDelet
   const headerComponent = (
     <View style={styles.header}>
       <View style={styles.iconRow}>
-        <Icon source={require("../../assets/close.png")} onPress={closeModal} />
+        <Icon source={require("../../assets/close.png")} onPress={closeModal} style={styles.closeIcon} />
         {onDelete && <Icon source={require("../../assets/delete.png")} onPress={onDelete} style={styles.deleteIcon} />}
       </View>
       <GText bold size={22} style={styles.title}>{headerText}</GText>
       <View style={styles.save}>
-        <TextButton title={'Save'} onPress={onSaveClick} style={{ textAlign: 'right' }} />
+        <TextButton title={'Save'} onPress={onSaveClick} />
       </View>
     </View>
   )
@@ -90,14 +90,17 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
   },
   deleteIcon: {
-    marginLeft: 20,
-    // borderWidth: 2
+    // borderWidth: 2,
+    flex: 0.5
+  },
+  closeIcon: {
+    // borderWidth: 2,
+    flex: 0.5
   },
   iconRow: {
     display: 'flex',
     flexDirection: 'row',
     flex: 1,
-
   },
   title: {
     flex: 1,
@@ -105,5 +108,8 @@ const styles = StyleSheet.create({
   },
   save: {
     flex: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
   },
 });

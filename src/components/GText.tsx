@@ -24,7 +24,7 @@ const defaultBoldStyle = (size) => ({
     color: Colors.lightGray,
 });
 
-export const GText = ({ bold = false, italic = false, size, numberOfLines = 2, style, children }: GTextProps) => {
+export const GText = ({ bold = false, italic = false, size, numberOfLines = 10, style, children }: GTextProps) => {
 
     return (
         <Text

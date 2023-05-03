@@ -13,8 +13,8 @@ export const TextButton = ({ title, onPress, style, disabled = false }: TextButt
     const defaultHitSlop: Insets = { top: 5, left: 5, bottom: 5, right: 5 };
 
     return (
-        <TouchableOpacity onPress={onPress} hitSlop={defaultHitSlop} disabled={disabled}>
-            <GText size={18} style={[style, disabled ? { color: Colors.grayAlpha(0.5) } : {}]}>{title}</GText>
+        <TouchableOpacity onPress={onPress} hitSlop={defaultHitSlop} disabled={disabled} style={{ display: 'flex', flexDirection: 'row' }}>
+            <GText size={18} style={[style, disabled ? { color: Colors.grayAlpha(0.5), } : {}]}>{title}</GText>
         </TouchableOpacity>
     );
 };

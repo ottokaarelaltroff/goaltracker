@@ -50,7 +50,6 @@ export default function useGoal(goalId?: string) {
         delete copy.categories;
         delete copy.steps;
         delete copy.habits;
-        console.log("fetchUpdateGoal", goal)
         return await api.saveGoal(goal);
     }
 
@@ -63,7 +62,6 @@ export default function useGoal(goalId?: string) {
     };
 
     const fetchSaveGoal = async (goal: Goal) => {
-
         return await api.saveGoal(goal);
     }
 
@@ -73,6 +71,21 @@ export default function useGoal(goalId?: string) {
 
     const saveGoalHandler = (goal: Goal) => {
         saveGoal.mutate(goal);
+    };
+
+
+    const fetchDeleteGoal = async () => {
+        return await api.deleteGoal(goalId);
+    }
+
+    const deleteGoal = useMutation(fetchDeleteGoal, {
+        onSuccess: fetchAllGoals
+    });
+
+    const deleteGoalHandler = () => {
+        if (goalId) {
+            deleteGoal.mutate();
+        }
     };
 
 
@@ -87,6 +100,7 @@ export default function useGoal(goalId?: string) {
         setGoalData,
         setGoalCategories,
         updateGoal: updateGoalHandler,
-        saveGoal: saveGoalHandler
+        saveGoal: saveGoalHandler,
+        deleteGoal: deleteGoalHandler,
     };
 }

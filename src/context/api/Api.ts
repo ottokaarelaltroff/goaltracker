@@ -75,6 +75,10 @@ const Api = () => {
         return await fetchApi('POST', '/goals', goal)
     };
 
+    const deleteGoal = async (goalId: string) => {
+        return await fetchApi('DELETE', `/goals/${goalId}`)
+    };
+
     return {
         login,
         findGoal,
@@ -88,6 +92,7 @@ const Api = () => {
         saveGoalCategory,
         deleteCategory,
         deleteGoalCategory,
+        deleteGoal,
         saveGoal
     };
 };

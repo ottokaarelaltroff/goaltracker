@@ -1,33 +1,34 @@
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import DropdownInput, { OptionType } from '../../components/DropdownInput';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { GText } from '../../components/GText';
+import { Icon } from '../../components/Icon';
 import { Input } from '../../components/Input';
+import { InputBar } from '../../components/InputBar';
+import useDialog from '../../context/ui/useDialog';
 import useModal from '../../context/ui/useModal';
 import { Goal, Unit } from '../../model/types';
-import { EditCategories } from './EditCategories';
-import { useUnits } from './useUnits';
-import useGoal from './useGoal';
-import { InputBar } from '../../components/InputBar';
-import { Icon } from '../../components/Icon';
-import { TextButton } from '../../components/TextButton';
 import { Colors } from '../../util/Colors';
+import { EditCategories } from './EditCategories';
+import useGoal from './useGoal';
+import { useUnits } from './useUnits';
 
 interface EditGoalModalProps {
     goal: Goal;
     title: string;
+    navigation: any
 };
 
-export default function useEditGoalModal({ goal, title }: EditGoalModalProps) {
+export default function useEditGoalModal({ goal, title, navigation }: EditGoalModalProps) {
 
-    const { saveGoal, updateGoal } = useGoal(goal?.id)
+    const { saveGoal, updateGoal, deleteGoal } = useGoal(goal?.id)
+    const { getUnitOptions } = useUnits(goal?.id);
     const [selectedUnit, setSelectedUnit] = useState<OptionType<Unit> | undefined>();
     const [titleValue, setTitleValue] = useState<string | undefined>(goal?.title);
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date(goal?.targetDate));
     const [currentValue, setCurrentValue] = useState<string | undefined>(goal?.currentValue?.toString());
     const [targetValue, setTargetValue] = useState<string | undefined>(goal?.targetValue?.toString());
-    const [showPicker, setShowPicker] = useState(false);
-    const { getUnitOptions } = useUnits(goal?.id);
 
     const onSave = () => {
         let newUnit = {} as Unit;
@@ -57,11 +58,7 @@ export default function useEditGoalModal({ goal, title }: EditGoalModalProps) {
             console.log("OTTO save", newGoal)
             saveGoal(newGoal);
         }
-
-
     }
-
-    console.log("OTTO selectedDate", selectedDate)
 
     useEffect(() => {
         if (goal && goal.unit) {
@@ -69,8 +66,32 @@ export default function useEditGoalModal({ goal, title }: EditGoalModalProps) {
         }
     }, [goal])
 
+
+    const deleteGoalConfirmation = (
+        <View style={styles.confirmationContainer}>
+            <GText style={styles.confirmation}>{"Are you sure you want to delete this goal?"}</GText>
+        </View>
+
+    );
+    const { Dialog: DeleteGoalDialog, openDialog } = useDialog(
+        {
+            onSave: () => {
+                deleteGoal();
+                navigation.push("AllGoalsScreen");
+            },
+            content: deleteGoalConfirmation,
+            canSave: true,
+            bottomButtons: true,
+        });
+
+    const onDelete = () => {
+        openDialog()
+    }
+
+
     const editGoalForm = (
         <View style={styles.container}>
+            {DeleteGoalDialog}
             <Input
                 label={"Name"}
                 initialValue={goal?.title}
@@ -120,7 +141,7 @@ export default function useEditGoalModal({ goal, title }: EditGoalModalProps) {
         </View>
     )
 
-    const { Modal, openModal, closeModal, isOpened } = useModal({ headerText: title, content: editGoalForm, onSave: onSave, onDelete: () => { } });
+    const { Modal, openModal, closeModal, isOpened } = useModal({ headerText: title, content: editGoalForm, onSave: onSave, onDelete: onDelete });
 
     return {
         EditGoalModal: Modal,
@@ -137,7 +158,6 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 12,
         paddingVertical: 20,
-
     },
     row: {
         display: 'flex',
@@ -152,7 +172,14 @@ const styles = StyleSheet.create({
     },
     calendar: {
         marginLeft: 5,
+    },
+    confirmationContainer: {
+        padding: 20,
+        display: 'flex',
+        justifyContent: 'center',
+        textAlign: 'center',
+    },
+    confirmation: {
+        textAlign: 'center'
     }
-
-
 });

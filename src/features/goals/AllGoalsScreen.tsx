@@ -15,7 +15,7 @@ import useEditGoalModal from "./useEditGoalModal";
 export const AllGoalsScreen = ({ navigation }) => {
 
     const { allGoals, fetchAllGoals, isLoading, isError, setSelectedGoal } = useAllGoals();
-    const { EditGoalModal, openModal } = useEditGoalModal({ goal: undefined, title: 'Add Goal' });
+    const { EditGoalModal, openModal } = useEditGoalModal({ goal: undefined, title: 'Add Goal', navigation: navigation });
 
     const onGoalSelect = (goal: Goal) => {
         setSelectedGoal(goal)

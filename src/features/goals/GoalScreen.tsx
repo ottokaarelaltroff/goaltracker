@@ -44,7 +44,7 @@ export const GoalScreen = ({ navigation }: GoalScreenProps) => {
     const { goalCategories } = useCategories(selectedGoal?.id);
     const scrollViewRef = useRef<ScrollView>(null);
 
-    const { EditGoalModal, openModal } = useEditGoalModal({ goal: goal, title: 'Edit Goal' });
+    const { EditGoalModal, openModal } = useEditGoalModal({ goal: goal, title: 'Edit Goal', navigation: navigation });
 
     const handleScrollTo = () => {
         if (scrollViewRef.current) {
