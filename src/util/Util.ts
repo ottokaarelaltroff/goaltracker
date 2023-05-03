@@ -1,6 +1,6 @@
 export const getRemainingDays = (date: Date) => {
-    const differenceInMilliseconds = Math.abs(new Date().getMilliseconds() - new Date(date).getMilliseconds());
-    return Math.ceil(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+    const differenceInMilliseconds = new Date(date).getTime() - new Date().getTime();
+    return Math.floor(differenceInMilliseconds / (1000 * 60 * 60 * 24));
 }
 
 

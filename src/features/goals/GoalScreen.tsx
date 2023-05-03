@@ -1,6 +1,6 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useRef } from "react";
-import { LayoutAnimation, StyleSheet, UIManager, View } from "react-native";
+import { LayoutAnimation, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Collapse } from "../../components/Collapse";
 import { DiaryList } from "../../components/DiaryList";
@@ -15,12 +15,12 @@ import { TextButton } from "../../components/TextButton";
 import { Goal } from "../../model/types";
 import { mockData } from "../../unused/mockData";
 import { Colors } from "../../util/Colors";
+import { getRemainingDays, getTargetDateFormatted } from "../../util/Util";
 import { CategoryTags } from "./CategoryTags";
 import useAllGoals from "./useAllGoals";
+import { useCategories } from "./useCategories";
 import useEditGoalModal from "./useEditGoalModal";
 import useGoal from "./useGoal";
-import { getRemainingDays, getTargetDateFormatted } from "../../util/Util";
-import { useCategories } from "./useCategories";
 
 interface Params {
     goal: Goal;
@@ -39,7 +39,7 @@ interface GoalScreenProps {
 
 export const GoalScreen = ({ navigation }: GoalScreenProps) => {
 
-    const { selectedGoal, setSelectedGoal } = useAllGoals();
+    const { selectedGoal } = useAllGoals();
     const { goal, setGoalData } = useGoal(selectedGoal?.id);
     const { goalCategories } = useCategories(selectedGoal?.id);
     const scrollViewRef = useRef<ScrollView>(null);
@@ -62,16 +62,45 @@ export const GoalScreen = ({ navigation }: GoalScreenProps) => {
         }, [navigation])
     );
 
-    const getRemainingValue = () => {
+    const getRemainingValueText = () => {
         if (goal && goal.currentValue && goal.targetValue) {
-            return goal.targetValue - goal.currentValue;
+            const remainingValue = goal.targetValue - goal.currentValue;
+            if (remainingValue > 0) {
+                return remainingValue + " " + goal.unit.name + ' to go!';
+            } else {
+                return Math.abs(remainingValue) + " " + goal.unit.name + ' over!';
+            }
+        }
+        return '';
+    }
+
+    const getRemainingDaysText = () => {
+        if (goal && goal.targetDate) {
+            const remainingDays = getRemainingDays(goal.targetDate);
+            if (remainingDays >= 0) {
+                return remainingDays + ' days left!';
+            } else {
+                return Math.abs(remainingDays) + ' days overdue!';
+            }
+        }
+        return '';
+    }
+
+    const getValueCompletionPercentage = () => {
+        if (goal && goal.currentValue && goal.targetValue) {
+            return Math.round(goal.currentValue / goal.targetValue * 100);
         }
         return 0;
     }
 
-    const getCompletionPercentage = () => {
-        if (goal && goal.currentValue && goal.targetValue) {
-            return Math.round(goal.currentValue / goal.targetValue * 100);
+    const getDateCompletionPercentage = () => {
+        if (goal && goal.targetDate && goal.createdAt) {
+            const daysSinceCreated = Math.abs(getRemainingDays(goal.createdAt));
+            const daysRemaining = getRemainingDays(goal.targetDate);
+            if (daysRemaining <= 0) {
+                return 100;
+            }
+            return Math.round(daysSinceCreated / (daysSinceCreated + daysRemaining) * 100);
         }
         return 0;
     }
@@ -97,18 +126,18 @@ export const GoalScreen = ({ navigation }: GoalScreenProps) => {
                     </View>
                     <ProgressSection
                         title={goal.currentValue + " / " + goal.targetValue + ' ' + goal.unit.name}
-                        altText={getRemainingValue() + " " + goal.unit.name + ' to go!'}
+                        altText={getRemainingValueText()}
                         icon={require("../../assets/goal.png")}
                         backgroundColor={Colors.darkGray}
-                        percentage={getCompletionPercentage()}
+                        percentage={getValueCompletionPercentage()}
                     />
                     <Divider />
                     <ProgressSection
                         title={getTargetDateFormatted(goal?.targetDate)}
-                        altText={getRemainingDays(goal.targetDate) + ' days left!'}
+                        altText={getRemainingDaysText()}
                         icon={require("../../assets/calendar.png")}
                         backgroundColor={Colors.darkGray}
-                        percentage={34}
+                        percentage={getDateCompletionPercentage()}
                         isGoal={false}
                     />
                     <Divider />

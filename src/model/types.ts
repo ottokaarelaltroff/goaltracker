@@ -19,6 +19,7 @@ export type Goal = {
     title: string,
     isCompleted: boolean,
     targetDate: Date,
+    createdAt: Date,
     currentValue: number,
     targetValue: number,
     unit: Unit
