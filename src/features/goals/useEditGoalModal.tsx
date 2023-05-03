@@ -26,7 +26,7 @@ export default function useEditGoalModal({ goal, title, navigation }: EditGoalMo
     const { getUnitOptions } = useUnits(goal?.id);
     const [selectedUnit, setSelectedUnit] = useState<OptionType<Unit> | undefined>();
     const [titleValue, setTitleValue] = useState<string | undefined>(goal?.title);
-    const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date(goal?.targetDate));
+    const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date(goal?.targetDate || new Date()));
     const [currentValue, setCurrentValue] = useState<string | undefined>(goal?.currentValue?.toString());
     const [targetValue, setTargetValue] = useState<string | undefined>(goal?.targetValue?.toString());
 
