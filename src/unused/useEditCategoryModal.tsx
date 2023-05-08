@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import DropdownInput, { OptionType } from '../../components/DropdownInput';
-import { Input } from '../../components/Input';
-import useModal from '../../context/ui/useModal';
-import { Category, Goal, Unit } from '../../model/types';
-import { EditCategories } from './EditCategories';
-import { useUnits } from './useUnits';
-import { GButton } from '../../components/GButton';
+import DropdownInput, { OptionType } from '../components/DropdownInput';
+import { Input } from '../components/Input';
+import useModal from '../context/ui/useModal';
+import { Category, Goal, Unit } from '../model/types';
+import { EditCategories } from '../features/goals/EditCategories';
+import { useUnits } from '../features/goals/useUnits';
+import { GButton } from '../components/GButton';
 
 interface EditCategoryModalProps {
     category: Category;

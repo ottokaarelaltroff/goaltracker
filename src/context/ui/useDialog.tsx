@@ -35,6 +35,7 @@ export default function useDialog({ headerText, content, onClose, onDelete, onSa
             isOpened={isOpened}
             setIsOpened={setIsOpened}
             onSave={onSave}
+            onDelete={onDelete}
             content={content}
             title={headerText}
             canSave={canSave}

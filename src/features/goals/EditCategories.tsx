@@ -6,9 +6,10 @@ import { InputBar } from "../../components/InputBar";
 import { Category } from "../../model/types";
 import { Colors } from "../../util/Colors";
 import { CategoryTags } from "./CategoryTags";
-import useEditCategoryDialog from "./useEditCategoryDialog";
+import useCreateCategoryDialog from "./useCreateCategoryDialog";
 import { useCategories } from "./useCategories";
 import useGoal from "./useGoal";
+import useEditCategoryDialog from "./useEditCategoryDialog";
 
 type EditCategoriesProps = {
     goalId: string,
@@ -17,7 +18,8 @@ export const EditCategories = ({ goalId }: EditCategoriesProps) => {
 
     const { goal } = useGoal(goalId);
     const { goalCategories, allCategories, fetchAllCategories, deleteGoalCategory, saveGoalCategory } = useCategories(goalId);
-    const { AddCategoryDialog, openDialog } = useEditCategoryDialog({ category: undefined, goalId: goalId });
+    const { AddCategoryDialog, openAddDialog } = useCreateCategoryDialog({ goalId: goalId });
+    const { EditCategoryDialog, openEditDialog } = useEditCategoryDialog({ goalId: goalId });
 
     if (!allCategories) {
         fetchAllCategories();
@@ -47,6 +49,10 @@ export const EditCategories = ({ goalId }: EditCategoriesProps) => {
         setCategoriesToAdd([...categoriesToAdd || [], category]);
     }
 
+    const onCategoryEdit = (category: Category) => {
+        openEditDialog(category);
+    }
+
     useEffect(() => {
         if (goal && goalCategories !== undefined && goalCategories.length > 0) {
             setSelectedCategories(goalCategories)
@@ -62,15 +68,16 @@ export const EditCategories = ({ goalId }: EditCategoriesProps) => {
     return (
         <View style={{}}>
             {AddCategoryDialog}
+            {EditCategoryDialog}
             <GText style={styles.label}>{"Categories"}</GText>
             <InputBar style={styles.bar}>
                 {selectedCategories
-                    ? <CategoryTags categories={selectedCategories} onPress={removeGoalCategory}></CategoryTags>
+                    ? <CategoryTags categories={selectedCategories} onAction={removeGoalCategory} onEdit={onCategoryEdit}></CategoryTags>
                     : <GText bold style={styles.placeholder}>{"Add or Create"}</GText>}
-                <Icon source={require("../../assets/plus.png")} light size={24} onPress={openDialog} />
+                <Icon source={require("../../assets/plus.png")} light size={24} onPress={openAddDialog} />
             </InputBar>
             <View style={styles.selection}>
-                <CategoryTags add categories={categoriesToAdd} onPress={addGoalCategory}></CategoryTags>
+                <CategoryTags add categories={categoriesToAdd} onAction={addGoalCategory} onEdit={onCategoryEdit}></CategoryTags>
             </View>
         </View>
     )

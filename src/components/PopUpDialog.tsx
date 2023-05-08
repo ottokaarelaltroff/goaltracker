@@ -9,6 +9,7 @@ interface PopUpDialogProps {
     title?: string;
     onSave?: () => void;
     onClose?: () => void;
+    onDelete?: () => void;
     isOpened: boolean,
     canSave: boolean,
     setIsOpened: (value: boolean) => void,
@@ -16,7 +17,7 @@ interface PopUpDialogProps {
     bottomButtons?: boolean
 }
 ;
-export const PopUpDialog = ({ isOpened, setIsOpened, content, onSave, onClose, title, canSave, bottomButtons = false }: PopUpDialogProps) => {
+export const PopUpDialog = ({ isOpened, setIsOpened, content, onSave, onClose, onDelete, title, canSave, bottomButtons = false }: PopUpDialogProps) => {
 
     const onActionLeft = () => {
         setIsOpened(false)
@@ -26,6 +27,11 @@ export const PopUpDialog = ({ isOpened, setIsOpened, content, onSave, onClose, t
     const onActionRight = () => {
         setIsOpened(false)
         onSave && onSave();
+    }
+
+    const onDeleteIcon = () => {
+        setIsOpened(false)
+        onDelete && onDelete();
     }
 
     if (!isOpened) {
@@ -39,12 +45,20 @@ export const PopUpDialog = ({ isOpened, setIsOpened, content, onSave, onClose, t
                     style={styles.modalBackground}>
                     <View style={styles.modal}>
 
+
                         {title &&
                             <View style={styles.header}>
-                                <Icon source={require("../assets/close.png")} light size={24} onPress={onActionLeft} />
+                                <View style={styles.iconRow}>
+                                    <Icon source={require("../assets/close.png")} light onPress={onActionLeft} style={styles.closeIcon} />
+                                    {onDelete && <Icon source={require("../assets/delete.png")} onPress={onDeleteIcon} style={styles.deleteIcon} />}
+                                </View>
                                 <GText bold size={22} style={styles.title}>{title}</GText>
-                                <TextButton title="Save" onPress={onActionRight} disabled={!canSave} />
+                                <View style={styles.save}>
+                                    <TextButton title="Save" onPress={onActionRight} disabled={!canSave} />
+                                </View>
+
                             </View>}
+
 
                         {content &&
                             <View style={styles.content}>{content}</View>
@@ -62,6 +76,7 @@ export const PopUpDialog = ({ isOpened, setIsOpened, content, onSave, onClose, t
                         }
                     </View>
                 </View>
+
             </Modal>
         </View>
     );
@@ -97,7 +112,9 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     title: {
-        color: Colors.light
+        color: Colors.light,
+        flex: 2,
+        textAlign: 'center',
     },
     blurView: {
         position: 'absolute',
@@ -113,5 +130,24 @@ const styles = StyleSheet.create({
     },
     bottomButton: {
         flex: 1,
+    },
+    iconRow: {
+        display: 'flex',
+        flexDirection: 'row',
+        flex: 1,
+    },
+    deleteIcon: {
+        // borderWidth: 2,
+        flex: 0.5
+    },
+    closeIcon: {
+        // borderWidth: 2,
+        flex: 0.5
+    },
+    save: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end'
     },
 });

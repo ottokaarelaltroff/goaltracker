@@ -30,7 +30,7 @@ export const GoalPreview = ({ goalId }: GoalPreviewProps) => {
     return (
         <View style={styles.container}>
             <View style={styles.row}>
-                <CategoryTags categories={goalCategories} />
+                <CategoryTags categories={goalCategories} wrap={false} limit={2} />
                 <GText bold style={styles.currentValue}>{goal.currentValue + ' ' + goal.unit.name}</GText>
             </View>
             <View style={styles.row}>
@@ -62,9 +62,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between',
         alignItems: 'center',
-        // borderWidth: 2
     },
     currentValue: {
         fontSize: 24
-    }
+    },
 });

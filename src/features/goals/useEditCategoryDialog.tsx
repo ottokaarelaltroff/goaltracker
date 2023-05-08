@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ColorSelection } from '../../components/ColorSelection';
 import { GText } from '../../components/GText';
@@ -11,44 +11,69 @@ import { useCategories } from './useCategories';
 
 type Props = {
     goalId?: string,
-    category?: Category
 }
 
-export default function useEditCategoryDialog({ goalId, category }: Props) {
+export default function useEditCategoryDialog({ goalId }: Props) {
 
-    const [name, setName] = useState<string>(category?.name);
-    const [color, setColor] = useState<string>(category?.color || Colors.purple);
-    const { saveCategory } = useCategories(goalId);
+
+    const [category, setCategory] = useState<Category | undefined>();
+    const [name, setName] = useState<string | undefined>('');
+    const [color, setColor] = useState<string>();
+    const { updateCategory, deleteCategory } = useCategories(goalId);
 
     const onSave = () => {
-        saveCategory && saveCategory({ name: name, color: color })
+        updateCategory({ id: category.categoryId || category.id, name: name, color: color })
     };
 
-    const addCategoryForm = (
+    const onDelete = () => {
+        deleteCategory(category.categoryId || category.id)
+    };
+
+    const changeName = (value: string) => {
+        setName(value)
+        category.name = value;
+    };
+
+    const changeColor = (value: string) => {
+        setColor(value)
+        category.color = value;
+    };
+
+    const editCategoryForm = (
         <View style={styles.container}>
             <View style={styles.tagContainer}>
-                <Tag title={name || 'Preview'} color={color} style={styles.tag}></Tag>
+                <Tag title={name || 'Preview'} color={color || Colors.purple} style={styles.tag}></Tag>
             </View>
-            <Input label={"Name"} placeHolder={"Add name"} initialValue={name || ''} color={Colors.primary} style={{ width: '100%' }} onChange={setName}></Input>
+            <Input label={"Name"} placeHolder={"Add name"} initialValue={name} color={Colors.primary} style={{ width: '100%' }} onChange={changeName}></Input>
             <View>
                 <GText style={styles.label}>{"Color"}</GText>
             </View>
-            <ColorSelection onSelect={setColor} selectedColor={category?.color || Colors.purple} />
-
+            <ColorSelection onSelect={changeColor} selectedColor={color || Colors.purple} />
         </View>
     )
+
 
     const { Dialog, openDialog, closeDialog, isOpened } = useDialog(
         {
             onSave: onSave,
-            headerText: category ? "Edit Category" : "Create Category",
-            content: addCategoryForm,
-            canSave: name && name.length > 0
+            onDelete: onDelete,
+            headerText: "Edit Category",
+            content: editCategoryForm,
+            canSave: category?.name && category?.name.length > 0
         });
 
+    const onOpen = (cat: Category) => {
+        setCategory(cat)
+        if (cat.name && cat.color) {
+            setName(cat.name)
+            setColor(cat.color)
+        }
+        openDialog()
+    }
+
     return {
-        AddCategoryDialog: Dialog,
-        openDialog,
+        EditCategoryDialog: Dialog,
+        openEditDialog: onOpen,
         closeDialog,
         isOpened
     };

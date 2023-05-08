@@ -46,13 +46,40 @@ export const useCategories = (goalId: string) => {
             if (goalId) {
                 saveGoalCategory.mutate(result);
             }
-            // refetchAllCategories()
         }
+    });
+
+    const updateCategory = useMutation(fetchSaveCategory, {
+        onSuccess: () => () => {
+            refetchAllCategories();
+            refetchGoalCategories();
+        },
     });
 
     const saveCategoryHandler = (category: Category) => {
         saveCategory.mutate(category);
     };
+
+    const updateCategoryHandler = (category: Category) => {
+        updateCategory.mutate(category);
+    };
+
+
+    const fetchDeleteCategory = async (categoryId: string) => {
+        return await api.deleteCategory(categoryId);
+    }
+
+    const deleteCategory = useMutation(fetchDeleteCategory, {
+        onSuccess: () => {
+            refetchAllCategories();
+            refetchGoalCategories();
+        }
+    });
+
+    const deleteCategoryHandler = (categoryId: string) => {
+        deleteCategory.mutate(categoryId);
+    };
+
 
     const saveGoalCategoryHandler = (category: Category) => {
         saveGoalCategory.mutate(category);
@@ -78,6 +105,8 @@ export const useCategories = (goalId: string) => {
         fetchGoalCategories,
         fetchAllCategories,
         saveCategory: saveCategoryHandler,
+        updateCategory: updateCategoryHandler,
+        deleteCategory: deleteCategoryHandler,
         saveGoalCategory: saveGoalCategoryHandler,
         deleteGoalCategory: deleteGoalCategoryHandler,
     };

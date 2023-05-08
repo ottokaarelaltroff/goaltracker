@@ -113,6 +113,7 @@ export default function useEditGoalModal({ goal, title, navigation }: EditGoalMo
                     style={styles.goalValue}
                     onChange={setTargetValue} />
             </View>
+
             <DropdownInput
                 label={"Unit"}
                 placeholder={"Insert or Select"}
@@ -120,7 +121,8 @@ export default function useEditGoalModal({ goal, title, navigation }: EditGoalMo
                 selectedValue={selectedUnit}
                 onValueChange={setSelectedUnit}
             />
-            <InputBar>
+            <GText style={styles.label}>{"Target Date"}</GText>
+            <InputBar style={styles.targetDate}>
                 <Icon source={require("../../assets/calendar.png")} light size={24} style={styles.calendar} />
                 {/* <TextButton title={selectedDate.toLocaleDateString()} onPress={() => setShowPicker(true)} /> */}
                 {selectedDate && <DateTimePicker
@@ -181,5 +183,13 @@ const styles = StyleSheet.create({
     },
     confirmation: {
         textAlign: 'center'
+    },
+    label: {
+        marginLeft: 15,
+        marginBottom: 5,
+        color: Colors.grayAlpha(0.8)
+    },
+    targetDate: {
+        marginBottom: 15,
     }
 });

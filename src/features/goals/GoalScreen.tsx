@@ -122,7 +122,7 @@ export const GoalScreen = ({ navigation }: GoalScreenProps) => {
             <ScrollView ref={scrollViewRef}>
                 <View style={styles.container}>
                     <View style={styles.categories}>
-                        <CategoryTags categories={goalCategories} />
+                        <CategoryTags categories={goalCategories} center />
                     </View>
                     <ProgressSection
                         title={goal.currentValue + " / " + goal.targetValue + ' ' + goal.unit.name}
@@ -169,7 +169,10 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
     },
     categories: {
+        display: 'flex',
+        justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 10,
+        borderWidth: 2
     },
 });
