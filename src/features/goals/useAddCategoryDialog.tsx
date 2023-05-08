@@ -10,10 +10,9 @@ import { useCategories } from './useCategories';
 
 type Props = {
     goalId?: string,
-    // category?: Category
 }
 
-export default function useCreateCategoryDialog({ goalId }: Props) {
+export default function useAddCategoryDialog({ goalId }: Props) {
 
     const [name, setName] = useState<string>();
     const [color, setColor] = useState<string>(Colors.purple);

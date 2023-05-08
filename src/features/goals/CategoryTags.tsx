@@ -44,7 +44,7 @@ export const CategoryTags = ({ categories, onAction, onEdit, add = false, wrap =
                                 <Tag
                                     title={category.name}
                                     color={category.color}
-                                    style={[styles.tag, { marginRight: onAction ? 20 : 0 }]} />
+                                    style={[styles.tag, { marginRight: onAction ? 20 : 10 }]} />
                             </TouchableOpacity>
 
                             {onAction &&

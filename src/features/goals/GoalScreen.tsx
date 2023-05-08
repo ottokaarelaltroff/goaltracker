@@ -173,6 +173,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 10,
-        borderWidth: 2
+        marginHorizontal: 20
     },
 });

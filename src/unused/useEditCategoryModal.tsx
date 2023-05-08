@@ -1,12 +1,7 @@
-import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import DropdownInput, { OptionType } from '../components/DropdownInput';
 import { Input } from '../components/Input';
 import useModal from '../context/ui/useModal';
-import { Category, Goal, Unit } from '../model/types';
-import { EditCategories } from '../features/goals/EditCategories';
-import { useUnits } from '../features/goals/useUnits';
-import { GButton } from '../components/GButton';
+import { Category } from '../model/types';
 
 interface EditCategoryModalProps {
     category: Category;

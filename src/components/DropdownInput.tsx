@@ -8,7 +8,7 @@ import { Step, Unit } from '../model/types';
 
 export type OptionType<T> = {
   label: string;
-  value: T | string;
+  value: T;
 };
 
 type AllowedDropDownType = Unit | Step;
@@ -19,10 +19,12 @@ type Props<T> = {
   options: OptionType<T>[];
   selectedValue: OptionType<T> | undefined;
   onValueChange: (value: OptionType<T> | undefined) => void;
+  onDelete?: (value: OptionType<T> | undefined) => void;
+  onAdd?: () => void;
   icon?: any
 };
 
-const DropdownInput = <T extends any>({ label, placeholder, options, selectedValue, onValueChange, icon }: Props<T>) => {
+const DropdownInput = <T extends AllowedDropDownType>({ label, placeholder, options, selectedValue, onValueChange, onAdd, onDelete, icon }: Props<T>) => {
 
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const [value, setValue] = useState<OptionType<T>>(selectedValue);
@@ -37,38 +39,37 @@ const DropdownInput = <T extends any>({ label, placeholder, options, selectedVal
     toggleModal();
   };
 
-  const onChangeText = (text: string) => {
-    const newOption = { label: text, value: text }
-    setValue(newOption)
-    onValueChange(newOption);
-  }
-
   const renderOption = (option: OptionType<T>, index: number) => (
-    <TouchableOpacity
-      style={styles.option}
-      onPress={() => handleSelectValue(option)}
-      key={index}
-    >
-      <GText bold style={styles.optionText}>{option.label}</GText>
-    </TouchableOpacity>
+    <View style={styles.optionContainer} key={index}>
+      <TouchableOpacity
+        style={styles.option}
+        onPress={() => handleSelectValue(option)}
+      >
+        <GText bold style={styles.optionText}>{option.label}</GText>
+      </TouchableOpacity>
+      <Icon source={require("../assets/delete.png")} size={24} onPress={() => onDelete(option)} />
+    </View>
+
   );
 
   return (
     <>
       <View style={[styles.container]}>
         <GText style={styles.label}>{label}</GText>
-        <View style={styles.inputContainer}>
+        <View style={styles.touchableContainer}>
           {icon && <Icon source={icon} style={styles.icon}></Icon>}
-          <TextInput
-            style={styles.input}
-            placeholder={placeholder}
-            placeholderTextColor={Colors.grayAlpha(0.3)}
-            onChangeText={onChangeText}
-            value={value?.label}
-          />
-          <TouchableOpacity onPress={toggleModal} >
-            <Icon source={require("../assets/caret-down.png")} size={24} style={styles.caret} onPress={toggleModal} ></Icon>
+          <TouchableOpacity onPress={toggleModal} style={styles.touchable}>
+            <GText style={styles.unitValue} bold size={18}>
+              {value?.label}
+            </GText>
+            <View style={styles.caret} >
+              <Icon source={require("../assets/caret-down.png")} size={24} light onPress={toggleModal} ></Icon>
+            </View>
+
           </TouchableOpacity>
+          <View style={styles.plusIcon}>
+            <Icon source={require("../assets/plus.png")} light size={24} onPress={onAdd} />
+          </View>
         </View>
       </View>
       <Modal visible={isOpened} transparent={true}>
@@ -83,7 +84,6 @@ const DropdownInput = <T extends any>({ label, placeholder, options, selectedVal
           </View>
         </TouchableOpacity>
       </Modal>
-
     </>
   );
 };
@@ -91,12 +91,6 @@ const DropdownInput = <T extends any>({ label, placeholder, options, selectedVal
 export default DropdownInput;
 
 const styles = StyleSheet.create({
-  field: {
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 5,
-    padding: 10,
-  },
   modalBackground: {
     flex: 1,
     justifyContent: 'center',
@@ -112,8 +106,17 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   option: {
+    flex: 1,
     padding: 15,
     color: Colors.light,
+
+  },
+  optionContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flex: 1,
     borderBottomWidth: 1,
     borderColor: Colors.grayAlpha(0.3)
   },
@@ -125,7 +128,7 @@ const styles = StyleSheet.create({
     height: 80,
     marginBottom: 15,
   },
-  inputContainer: {
+  touchableContainer: {
     display: 'flex',
     flexDirection: 'row',
     flex: 1,
@@ -133,15 +136,12 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: Colors.secondary,
     borderRadius: 25,
+    paddingHorizontal: 10,
   },
-  input: {
-    flex: 1,
-    borderRadius: 25,
-    backgroundColor: Colors.secondary,
+  unitValue: {
+    flex: 8,
     color: Colors.light,
-    fontSize: 18,
-    fontWeight: 'bold',
-    paddingHorizontal: 25,
+    paddingLeft: 15,
   },
   label: {
     marginLeft: 15,
@@ -154,9 +154,20 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   caret: {
-    tintColor: Colors.lightGray,
-    width: 20,
-    marginRight: 20,
-    marginLeft: 50,
+    flex: 1,
+  },
+  plusIcon: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    flex: 1,
+    marginRight: 5,
+  },
+  touchable: {
+    flex: 6,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
   }
+
 });

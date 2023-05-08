@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_URL } from "../../../settings";
-import { Category, Goal, LoginRequest } from "../../model/types";
+import { Category, Goal, LoginRequest, Unit } from "../../model/types";
 import useStorage from "../../storage/useStorage";
 
 const Api = () => {
@@ -51,6 +51,14 @@ const Api = () => {
         return await fetchApi('GET', `/units`)
     };
 
+    const saveUnit = async (unit: Unit) => {
+        return await fetchApi('POST', `/units`, unit)
+    };
+
+    const deleteUnit = async (unitId: string) => {
+        return await fetchApi('DELETE', `/units/${unitId}`)
+    };
+
     const findAllCategories = async () => {
         return await fetchApi('GET', `/categories`)
     };
@@ -93,7 +101,9 @@ const Api = () => {
         deleteCategory,
         deleteGoalCategory,
         deleteGoal,
-        saveGoal
+        saveGoal,
+        saveUnit,
+        deleteUnit
     };
 };
 

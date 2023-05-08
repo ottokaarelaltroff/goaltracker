@@ -14,12 +14,13 @@ type ModalizeRef = {
 type ModalProps = {
   headerText: string
   content: any,
+  canSave: boolean,
   onSave?: () => void;
   onClose?: () => void;
   onDelete?: () => void;
 };
 
-export default function useModal({ headerText, content, onSave, onClose, onDelete }: ModalProps) {
+export default function useModal({ headerText, content, onSave, onClose, onDelete, canSave }: ModalProps) {
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const modalRef = useRef<ModalizeRef>(null);
 
@@ -47,7 +48,7 @@ export default function useModal({ headerText, content, onSave, onClose, onDelet
       </View>
       <GText bold size={22} style={styles.title}>{headerText}</GText>
       <View style={styles.save}>
-        <TextButton title={'Save'} onPress={onSaveClick} />
+        <TextButton title={'Save'} onPress={onSaveClick} disabled={!canSave} />
       </View>
     </View>
   )

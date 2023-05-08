@@ -1,0 +1,174 @@
+{
+    "msisdn": "37253561881",
+    "language": "EST",
+    "brand": "SUPER",
+    "mainBalance": "1.96",
+    "expires": "2023-11-05T10:00:00.000+0000",
+    "currency": "EUR",
+    "accumulators": [
+        {
+            "id": 28,
+            "value": 60,
+            "type": "MONEY",
+            "unit": "EUR",
+            "description": "Andmesidelimiit välismaal (28)"
+        },
+        {
+            "id": 32,
+            "value": 0,
+            "type": "UNKNOWN",
+            "unit": "DECODE",
+            "description": "Andmesidelimiidist välismaal on kasutatud (32)"
+        },
+        {
+            "id": 56,
+            "value": 0,
+            "type": "UNKNOWN",
+            "unit": "CNT",
+            "description": null
+        },
+        {
+            "id": 71,
+            "value": 1,
+            "type": "UNKNOWN",
+            "unit": "CNT",
+            "description": "Korduvlaadimiste counter"
+        }
+    ],
+    "usageDetails": [
+        {
+            "name": "Korduvlaadimise boonus (DA6)",
+            "daAccountId": 6,
+            "unit": "CURRENCY",
+            "usedAmount": null,
+            "remainingAmount": 1,
+            "initalValue": null,
+            "expireDate": 1699092000000
+        },
+        {
+            "name": "Tasuta internet (DA7)",
+            "daAccountId": 7,
+            "unit": "BYTE",
+            "usedAmount": null,
+            "remainingAmount": 287744000,
+            "initalValue": null,
+            "expireDate": 1686128400000
+        }
+    ],
+    "offers": [
+        {
+            "offerID": 3,
+            "startDate": "00000101T12:00:00+0000",
+            "expiryDate": "20230607T12:00:00+0000",
+            "offerType": "0",
+            "attributeInformationList": null,
+            "usageCounterUsageThresholdInformation": null
+        },
+        {
+            "offerID": 9,
+            "startDate": "20221126T12:00:00+0000",
+            "expiryDate": "99991231T12:00:00+0000",
+            "offerType": "0",
+            "attributeInformationList": null,
+            "usageCounterUsageThresholdInformation": null
+        },
+        {
+            "offerID": 11,
+            "startDate": "20221126T12:00:00+0000",
+            "expiryDate": "99991231T12:00:00+0000",
+            "offerType": "0",
+            "attributeInformationList": [
+                {
+                    "attributeName": "ISO2",
+                    "attributeSource": 1,
+                    "value": "EE",
+                    "numberOfDecimals": 0
+                },
+                {
+                    "attributeName": "MCCMNC",
+                    "attributeSource": 1,
+                    "value": "24801",
+                    "numberOfDecimals": 0
+                },
+                {
+                    "attributeName": "STYPE",
+                    "attributeSource": null,
+                    "value": "106",
+                    "numberOfDecimals": 0
+                }
+            ],
+            "usageCounterUsageThresholdInformation": null
+        },
+        {
+            "offerID": 12,
+            "startDate": "20221126T12:00:00+0000",
+            "expiryDate": "99991231T12:00:00+0000",
+            "offerType": "0",
+            "attributeInformationList": [
+                {
+                    "attributeName": "charge_type",
+                    "attributeSource": null,
+                    "value": "10000",
+                    "numberOfDecimals": 0
+                },
+                {
+                    "attributeName": "overusage_tc",
+                    "attributeSource": null,
+                    "value": "501",
+                    "numberOfDecimals": 0
+                },
+                {
+                    "attributeName": "overusage_type",
+                    "attributeSource": null,
+                    "value": "N",
+                    "numberOfDecimals": 0
+                },
+                {
+                    "attributeName": "qos_3g",
+                    "attributeSource": null,
+                    "value": "22",
+                    "numberOfDecimals": 0
+                },
+                {
+                    "attributeName": "qos_3g_limited",
+                    "attributeSource": null,
+                    "value": "0",
+                    "numberOfDecimals": 0
+                },
+                {
+                    "attributeName": "qos_4g",
+                    "attributeSource": null,
+                    "value": "116",
+                    "numberOfDecimals": 0
+                },
+                {
+                    "attributeName": "qos_4g_limited",
+                    "attributeSource": null,
+                    "value": "0",
+                    "numberOfDecimals": 0
+                },
+                {
+                    "attributeName": "redirect_type",
+                    "attributeSource": null,
+                    "value": "44",
+                    "numberOfDecimals": 0
+                },
+                {
+                    "attributeName": "regular_volume",
+                    "attributeSource": null,
+                    "value": "0",
+                    "numberOfDecimals": 0
+                }
+            ],
+            "usageCounterUsageThresholdInformation": null
+        },
+        {
+            "offerID": 23,
+            "startDate": "20230508T12:00:00+0000",
+            "expiryDate": "20230510T12:00:00+0000",
+            "offerType": "0",
+            "attributeInformationList": null,
+            "usageCounterUsageThresholdInformation": null
+        }
+    ]
+}

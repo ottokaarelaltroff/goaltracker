@@ -13,6 +13,7 @@ import { Colors } from '../../util/Colors';
 import { EditCategories } from './EditCategories';
 import useGoal from './useGoal';
 import { useUnits } from './useUnits';
+import useAddUnitDialog from './useAddUnitDialog';
 
 interface EditGoalModalProps {
     goal: Goal;
@@ -23,28 +24,23 @@ interface EditGoalModalProps {
 export default function useEditGoalModal({ goal, title, navigation }: EditGoalModalProps) {
 
     const { saveGoal, updateGoal, deleteGoal } = useGoal(goal?.id)
-    const { getUnitOptions } = useUnits(goal?.id);
+
+    const { AddUnitDialog, openAddDialog } = useAddUnitDialog({ goalId: goal?.id })
     const [selectedUnit, setSelectedUnit] = useState<OptionType<Unit> | undefined>();
     const [titleValue, setTitleValue] = useState<string | undefined>(goal?.title);
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date(goal?.targetDate || new Date()));
     const [currentValue, setCurrentValue] = useState<string | undefined>(goal?.currentValue?.toString());
     const [targetValue, setTargetValue] = useState<string | undefined>(goal?.targetValue?.toString());
+    const { units, getUnitOptions, deleteUnit } = useUnits({ goalId: goal?.id });
 
     const onSave = () => {
-        let newUnit = {} as Unit;
-        if (typeof selectedUnit.value === 'string') {
-            newUnit.name = selectedUnit.value
-        } else {
-            newUnit = selectedUnit.value
-        }
-
         if (goal) {
             goal.title = titleValue;
             goal.isCompleted = false,
                 goal.targetDate = selectedDate;
             goal.currentValue = parseFloat(currentValue) || 0;
             goal.targetValue = parseFloat(targetValue) || 0;
-            goal.unit = newUnit;
+            goal.unit = selectedUnit.value;
             updateGoal(goal);
         } else {
             const newGoal = {
@@ -53,11 +49,14 @@ export default function useEditGoalModal({ goal, title, navigation }: EditGoalMo
                 targetDate: selectedDate,
                 currentValue: parseFloat(currentValue) || 0,
                 targetValue: parseFloat(targetValue) || 0,
-                unit: newUnit
+                unit: selectedUnit.value
             } as Goal;
-            console.log("OTTO save", newGoal)
             saveGoal(newGoal);
         }
+    }
+
+    const onUnitDelete = (option: OptionType<Unit>) => {
+        deleteUnit(option.value.id)
     }
 
     useEffect(() => {
@@ -66,7 +65,13 @@ export default function useEditGoalModal({ goal, title, navigation }: EditGoalMo
         }
     }, [goal])
 
+    useEffect(() => {
+        if (units) {
+            getUnitOptions();
+        }
+    }, [units])
 
+    console.log("OITTO selectedUnit", selectedUnit)
     const deleteGoalConfirmation = (
         <View style={styles.confirmationContainer}>
             <GText style={styles.confirmation}>{"Are you sure you want to delete this goal?"}</GText>
@@ -80,7 +85,7 @@ export default function useEditGoalModal({ goal, title, navigation }: EditGoalMo
                 navigation.push("AllGoalsScreen");
             },
             content: deleteGoalConfirmation,
-            canSave: true,
+            canSave: selectedUnit !== undefined,
             bottomButtons: true,
         });
 
@@ -91,6 +96,7 @@ export default function useEditGoalModal({ goal, title, navigation }: EditGoalMo
 
     const editGoalForm = (
         <View style={styles.container}>
+            {AddUnitDialog}
             {DeleteGoalDialog}
             <Input
                 label={"Name"}
@@ -120,6 +126,8 @@ export default function useEditGoalModal({ goal, title, navigation }: EditGoalMo
                 options={getUnitOptions()}
                 selectedValue={selectedUnit}
                 onValueChange={setSelectedUnit}
+                onAdd={openAddDialog}
+                onDelete={onUnitDelete}
             />
             <GText style={styles.label}>{"Target Date"}</GText>
             <InputBar style={styles.targetDate}>
@@ -143,7 +151,13 @@ export default function useEditGoalModal({ goal, title, navigation }: EditGoalMo
         </View>
     )
 
-    const { Modal, openModal, closeModal, isOpened } = useModal({ headerText: title, content: editGoalForm, onSave: onSave, onDelete: onDelete });
+    const { Modal, openModal, closeModal, isOpened } = useModal({
+        headerText: title,
+        content: editGoalForm,
+        onSave: onSave,
+        onDelete: onDelete,
+        canSave: titleValue && currentValue && targetValue && selectedDate && !!selectedUnit?.value
+    });
 
     return {
         EditGoalModal: Modal,
