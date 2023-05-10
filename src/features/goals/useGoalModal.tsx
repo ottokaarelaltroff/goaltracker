@@ -21,7 +21,7 @@ interface EditGoalModalProps {
     navigation: any
 };
 
-export default function useEditGoalModal({ goal, title, navigation }: EditGoalModalProps) {
+export default function useGoalModal({ goal, title, navigation }: EditGoalModalProps) {
 
     const { saveGoal, updateGoal, deleteGoal } = useGoal(goal?.id)
 
@@ -169,7 +169,7 @@ export default function useEditGoalModal({ goal, title, navigation }: EditGoalMo
     });
 
     return {
-        EditGoalModal: Modal,
+        GoalModal: Modal,
         openModal,
         closeModal,
         isOpened

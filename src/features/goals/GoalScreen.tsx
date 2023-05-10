@@ -20,8 +20,9 @@ import { useCategories } from "../categories/useCategories";
 import useEditCategoryDialog from "../categories/useEditCategoryDialog";
 import { StepsList } from "../steps/StepsList";
 import useAllGoals from "./useAllGoals";
-import useEditGoalModal from "./useEditGoalModal";
+import useGoalModal from "./useGoalModal";
 import useGoal from "./useGoal";
+import useEditHabitModal from "../habits/useEditHabitModal";
 
 interface Params {
     goal: Goal;
@@ -44,7 +45,7 @@ export const GoalScreen = ({ navigation }: GoalScreenProps) => {
     const { EditCategoryDialog, openEditDialog } = useEditCategoryDialog({ goalId: selectedGoal?.id });
     const scrollViewRef = useRef<ScrollView>(null);
 
-    const { EditGoalModal, openModal } = useEditGoalModal({ goal: goal, title: 'Edit Goal', navigation: navigation });
+    const { GoalModal: EditGoalModal, openModal } = useGoalModal({ goal: goal, title: 'Edit Goal', navigation: navigation });
 
     const handleScrollTo = () => {
         if (scrollViewRef.current) {
@@ -120,6 +121,7 @@ export const GoalScreen = ({ navigation }: GoalScreenProps) => {
             </ScreenHeader>
             {EditGoalModal}
             {EditCategoryDialog}
+
             <ScrollView ref={scrollViewRef}>
                 <View style={styles.container}>
                     <View style={styles.categories}>
@@ -146,8 +148,9 @@ export const GoalScreen = ({ navigation }: GoalScreenProps) => {
                         <StepsList />
                     </Collapse>
                     <Collapse title={"Habits I need to follow"} handleScroll={handleScrollTo}>
-                        <HabitsList items={goal.habits} />
+
                     </Collapse>
+                    <HabitsList />
                     <Collapse title={"Dear Diary..."} handleScroll={handleScrollTo}>
                         <DiaryList items={mockData.diaryEntries} />
                     </Collapse>

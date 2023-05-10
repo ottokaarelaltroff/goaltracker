@@ -1,14 +1,24 @@
-import { useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Modalize } from 'react-native-modalize';
 import { GText } from '../../components/GText';
 import { Icon } from '../../components/Icon';
 import { TextButton } from '../../components/TextButton';
 import { Colors } from '../../util/Colors';
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+} from '@gorhom/bottom-sheet';
+import { GButton } from '../../components/GButton';
 
 type ModalizeRef = {
   open: () => void;
   close: () => void;
+};
+
+export type BottomCardRef = {
+  openCard: () => void;
+  closeCard: () => void;
 };
 
 type ModalProps = {
@@ -23,9 +33,11 @@ type ModalProps = {
 export default function useModal({ headerText, content, onSave, onClose, onDelete, canSave }: ModalProps) {
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const modalRef = useRef<ModalizeRef>(null);
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   const openModal = () => {
     modalRef.current?.open();
+    bottomSheetModalRef.current.expand();
     setIsOpened(true);
   };
 
@@ -48,21 +60,51 @@ export default function useModal({ headerText, content, onSave, onClose, onDelet
       </View>
       <GText bold size={22} style={styles.title}>{headerText}</GText>
       <View style={styles.save}>
-        <TextButton title={'Save'} onPress={onSaveClick} disabled={!canSave} />
+        {onSave && <TextButton title={'Save'} onPress={onSaveClick} disabled={!canSave} />}
       </View>
     </View>
   )
 
+  // variables
+  const snapPoints = useMemo(() => ['25%', '50%'], []);
+
+  // callbacks
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
 
   const Modal = (
-    <Modalize
-      ref={modalRef}
-      disableScrollIfPossible={true}
-      useNativeDriver
-      modalStyle={styles.modalContainer}
-      HeaderComponent={headerComponent}>
-      {content}
-    </Modalize>
+    // <Modalize
+    //   ref={modalRef}
+    //   disableScrollIfPossible={true}
+    //   useNativeDriver
+    //   modalStyle={styles.modal}
+    //   HeaderComponent={headerComponent}
+    //   onClose={() => setIsOpened(false)}>
+    //   {content}
+    // </Modalize>
+    <BottomSheetModalProvider>
+      <View style={styles.container}>
+        <GButton
+          onPress={handlePresentModalPress}
+          title="Present Modal"
+        />
+        <BottomSheetModal
+          ref={bottomSheetModalRef}
+          index={1}
+          snapPoints={snapPoints}
+          onChange={handleSheetChanges}
+        >
+          <View style={styles.contentContainer}>
+            <GText>Awesome 🎉</GText>
+          </View>
+        </BottomSheetModal>
+      </View>
+    </BottomSheetModalProvider>
+
   );
 
   return {
@@ -74,7 +116,7 @@ export default function useModal({ headerText, content, onSave, onClose, onDelet
 }
 
 const styles = StyleSheet.create({
-  modalContainer: {
+  modal: {
     flex: 0.9,
     backgroundColor: Colors.primary,
     borderTopLeftRadius: 30,
@@ -112,5 +154,15 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'flex-end'
+  },
+  container: {
+    flex: 1,
+    padding: 24,
+    justifyContent: 'center',
+    backgroundColor: 'grey',
+  },
+  contentContainer: {
+    flex: 1,
+    alignItems: 'center',
   },
 });

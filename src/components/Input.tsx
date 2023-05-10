@@ -7,7 +7,7 @@ import { WarningText } from "./WarningText";
 import { Icon } from "./Icon";
 
 interface InputProps {
-    label: string,
+    label?: string,
     initialValue?: string,
     placeHolder?: string,
     style?: any,
@@ -42,7 +42,7 @@ export const Input = ({ label, initialValue, placeHolder, style, onPress, onChan
     return (
         <View style={[styles.container, style]}>
             <View style={styles.header}>
-                <GText style={styles.label}>{label}</GText>
+                {label && <GText style={styles.label}>{label}</GText>}
                 {error && renderError()}
             </View>
 

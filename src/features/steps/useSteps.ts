@@ -7,6 +7,7 @@ import useAllGoals from '../goals/useAllGoals';
 
 export const useSteps = () => {
     const { selectedGoal } = useAllGoals();
+
     const { data: steps, refetch: refetchGoalSteps, isLoading, isError } = useAppQuery(['goalSteps', selectedGoal?.id], {
         queryFn: () => api.findGoalSteps(selectedGoal.id) as Promise<Step[]>,
         enabled: false,

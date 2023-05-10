@@ -10,12 +10,12 @@ import { Goal } from "../../model/types";
 import { Colors } from "../../util/Colors";
 import { GoalPreview } from "./GoalPreview";
 import useAllGoals from "./useAllGoals";
-import useEditGoalModal from "./useEditGoalModal";
+import useGoalModal from "./useGoalModal";
 
 export const AllGoalsScreen = ({ navigation }) => {
 
     const { allGoals, fetchAllGoals, isLoading, isError, setSelectedGoal } = useAllGoals();
-    const { EditGoalModal, openModal } = useEditGoalModal({ goal: undefined, title: 'Add Goal', navigation: navigation });
+    const { GoalModal: AddGoalModal, openModal, isOpened } = useGoalModal({ goal: undefined, title: 'Add Goal', navigation: navigation });
 
     const onGoalSelect = (goal: Goal) => {
         setSelectedGoal(goal)
@@ -32,7 +32,7 @@ export const AllGoalsScreen = ({ navigation }) => {
 
     return (
         <ScreenContainer>
-            {EditGoalModal}
+            {AddGoalModal}
             <ScreenHeader title={"My Goals"} fontSize={32} navigation={navigation}>
                 <Icon source={require("../../assets/plus.png")} light onPress={openModal} />
             </ScreenHeader>
@@ -80,5 +80,10 @@ const styles = StyleSheet.create({
     goalList: {
         justifyContent: 'flex-start',
         flex: 1,
-    }
+    },
+    modalContainer: {
+
+        // height: '90%',
+        // width: '100%',
+    },
 });

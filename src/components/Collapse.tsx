@@ -40,12 +40,12 @@ export const Collapse = ({ title, backgroundColor = Colors.secondary, children, 
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        // flex: 1,
         borderRadius: 20,
         paddingVertical: 10,
         paddingHorizontal: 15,
         marginBottom: 15,
-        display: 'flex',
+        // display: 'flex',
         flexDirection: 'column',
     },
     row: {

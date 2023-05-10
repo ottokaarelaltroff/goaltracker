@@ -36,7 +36,7 @@ export const StepsList = ({ }: StepsListProps) => {
         checkList.push(
             {
                 icon: <CheckMark />,
-                step: <TextButton title={"Add new step"} size={16} italic onPress={openAddDialog} style={[styles.text, styles.addNewText]} />
+                step: <TextButton title={"Add new step"} size={16} onPress={openAddDialog} style={[styles.text, styles.addNewText]} />
             }
         )
         return checkList;
@@ -57,9 +57,6 @@ export const StepsList = ({ }: StepsListProps) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-
-    },
     listItem: {
         display: 'flex',
         flexDirection: 'row',
@@ -70,6 +67,6 @@ const styles = StyleSheet.create({
         marginLeft: 10,
     },
     addNewText: {
-        color: Colors.grayAlpha(0.8),
+        color: Colors.grayAlpha(0.5),
     }
 });

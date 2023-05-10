@@ -1,33 +1,57 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Habit } from "../../model/types";
 import { Bullet } from "../../components/Bullet";
+import { Icon } from "../../components/Icon";
+import { TextButton } from "../../components/TextButton";
+import { Colors } from "../../util/Colors";
+import { useHabits } from "./useHabits";
 import { GText } from "../../components/GText";
+import { Habit } from "../../model/types";
+import useEditHabitModal from "./useEditHabitModal";
 
-interface HabitsListProps {
-    style?: any,
-    children?: any
-    items: Habit[]
-};
+// type HabitsListProps = {
+//     openEditHabitModal: (habit: Habit) => void
+// }
+export const HabitsList = () => {
 
-export const HabitsList = ({ items }: HabitsListProps) => {
+    const { habits, fetchGoalHabits } = useHabits();
+    const { EditHabitModal, openEditHabitModal, isOpened } = useEditHabitModal();
+
+    if (habits === undefined) {
+        fetchGoalHabits()
+    }
 
     const getHabitListItems = () => {
         const checkList = []
-        items.map(item => checkList.push({
+        habits.map(item => checkList.push({
             icon: <Bullet />,
             habit: item
         }));
+        checkList.push(
+            {
+                icon: <Bullet />,
+                habit: undefined
+            }
+        )
         return checkList;
+    }
+
+    const openModalHandler = (habit: Habit) => {
+        openEditHabitModal(habit);
     }
 
     return (
         <View>
-            {items && getHabitListItems().map((item, index) => (
-                <TouchableOpacity onPress={() => { }} key={index}>
-                    <View style={styles.listItem}>
-                        {item.icon}
-                        <GText style={styles.text}>{item.habit.title}</GText>
-                    </View>
+            {EditHabitModal}
+            {habits !== undefined && getHabitListItems().map((item, index) => (
+                <TouchableOpacity style={styles.listItem} key={index} onPress={() => openModalHandler(item.habit)}>
+                    {item.icon}
+                    {item.habit ?
+                        <View style={styles.habit}>
+                            <GText size={16} style={styles.text}>{item.habit.title}</GText>
+                            <Icon source={require("../../assets/bell.png")} size={24} style={styles.bell} />
+                        </View>
+                        : <TextButton title={"Add new habit"} size={16} onPress={() => openModalHandler(undefined)} style={[styles.text, styles.addNewText]} />
+                    }
                 </TouchableOpacity>
             ))}
         </View>
@@ -35,16 +59,25 @@ export const HabitsList = ({ items }: HabitsListProps) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
 
-    },
     listItem: {
         display: 'flex',
         flexDirection: 'row',
-        marginBottom: 10,
+        marginBottom: 15,
         alignItems: 'center'
     },
     text: {
         marginLeft: 10,
-    }
+    },
+    addNewText: {
+        color: Colors.grayAlpha(0.5),
+    },
+    habit: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    bell: {
+        marginLeft: 10,
+    },
 });
