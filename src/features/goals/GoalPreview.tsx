@@ -4,9 +4,8 @@ import { HeadingText } from "../../components/HeadingText";
 import { ProgressBar } from "../../components/ProgressBar";
 import { Colors } from "../../util/Colors";
 import { CategoryTags } from "../categories/CategoryTags";
-import useGoal from "./useGoal";
-import { useEffect } from "react";
 import { useCategories } from "../categories/useCategories";
+import useGoal from "./useGoal";
 
 type GoalPreviewProps = {
     goalId: string;
@@ -15,7 +14,7 @@ type GoalPreviewProps = {
 export const GoalPreview = ({ goalId }: GoalPreviewProps) => {
 
     const { goal } = useGoal(goalId);
-    const { allCategories, goalCategories, fetchGoalCategories } = useCategories(goalId);
+    const { goalCategories } = useCategories(goalId);
 
     const getPercentage = () => {
         if (goal && goal.currentValue && goal.targetValue) {
@@ -27,10 +26,6 @@ export const GoalPreview = ({ goalId }: GoalPreviewProps) => {
     if (!goal) {
         return null;
     }
-
-    // useEffect(() => {
-    //     fetchGoalCategories()
-    // }, [allCategories])
 
     return (
         <View style={styles.container}>

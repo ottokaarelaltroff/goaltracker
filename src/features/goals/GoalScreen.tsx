@@ -3,26 +3,24 @@ import { useCallback, useRef } from "react";
 import { LayoutAnimation, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { CollapsibleDropdown } from "../../components/CollapsibleDropdown";
-import { DiaryList } from "../diary/DiaryList";
 import Divider from "../../components/Divider";
-import { HabitsList } from "../habits/HabitsList";
 import { ProgressSection } from "../../components/ProgressSection";
 import { ScreenContainer } from "../../components/ScreenContainer";
 import { ScreenHeader } from "../../components/ScreenHeader";
 import Spinner from "../../components/Spinner";
 import { TextButton } from "../../components/TextButton";
 import { Goal } from "../../model/types";
-import { mockData } from "../../unused/mockData";
 import { Colors } from "../../util/Colors";
 import { getRemainingDays, getTargetDateFormatted } from "../../util/Util";
 import { CategoryTags } from "../categories/CategoryTags";
 import { useCategories } from "../categories/useCategories";
 import useEditCategoryDialog from "../categories/useEditCategoryDialog";
+import { HabitsList } from "../habits/HabitsList";
+import useHabitModal from "../habits/useHabitModal";
 import { StepsList } from "../steps/StepsList";
 import useAllGoals from "./useAllGoals";
-import useGoalModal from "./useGoalModal";
 import useGoal from "./useGoal";
-import useHabitModal from "../habits/useHabitModal";
+import useGoalModal from "./useGoalModal";
 
 interface Params {
     goal: Goal;
@@ -150,9 +148,9 @@ export const GoalScreen = ({ navigation }: GoalScreenProps) => {
                     <CollapsibleDropdown title={"Habits I need to follow"} handleScroll={handleScrollTo}>
                         <HabitsList openEditHabitModal={openEditHabitModal} />
                     </CollapsibleDropdown>
-                    <CollapsibleDropdown title={"Dear Diary..."} handleScroll={handleScrollTo}>
+                    {/* <CollapsibleDropdown title={"Dear Diary..."} handleScroll={handleScrollTo}>
                         <DiaryList items={mockData.diaryEntries} />
-                    </CollapsibleDropdown>
+                    </CollapsibleDropdown> */}
                 </View>
             </ScrollView>
         </ScreenContainer>

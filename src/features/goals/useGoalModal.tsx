@@ -136,11 +136,9 @@ export default function useGoalModal({ goal, title, navigation }: EditGoalModalP
             <GText style={styles.label}>{"Target Date"}</GText>
             <InputBar style={styles.targetDate}>
                 <Icon source={require("../../assets/calendar.png")} light size={24} style={styles.calendar} />
-                {/* <TextButton title={selectedDate.toLocaleDateString()} onPress={() => setShowPicker(true)} /> */}
                 {selectedDate && <DateTimePicker
                     testID="dateTimePicker"
                     value={selectedDate}
-                    // dateFormat={'day month year'}
                     mode="date"
                     is24Hour={true}
                     display="default"

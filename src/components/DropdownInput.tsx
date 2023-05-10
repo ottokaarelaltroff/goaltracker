@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Modal, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { ScrollView, TextInput } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Step, Unit } from '../model/types';
 import { Colors } from '../util/Colors';
 import { GText } from './GText';
 import { Icon } from './Icon';
-import { Step, Unit } from '../model/types';
 
 export type OptionType<T> = {
   label: string;

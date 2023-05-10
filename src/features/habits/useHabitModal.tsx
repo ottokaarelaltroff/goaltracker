@@ -9,17 +9,9 @@ import useDialog from '../../context/ui/useDialog';
 import useModal from '../../context/ui/useModal';
 import { Habit } from '../../model/types';
 import { Colors } from '../../util/Colors';
-
 import { Collapsible } from '../../components/Collapsible';
 import { DaySelection } from './DaySelection';
 import { useHabits } from './useHabits';
-import { HeaderText } from '../../components/HeaderText';
-
-interface EditHabitModalProps {
-    habit?: Habit;
-    title?: string;
-    navigation: any
-};
 
 export default function useHabitModal() {
 
@@ -35,6 +27,7 @@ export default function useHabitModal() {
     const [friday, setFriday] = useState<boolean | undefined>(false);
     const [saturday, setSaturday] = useState<boolean | undefined>(false);
     const [sunday, setSunday] = useState<boolean | undefined>(false);
+    const [canSelect, setCanSelect] = useState<boolean | undefined>(true);
     const [reminderTime, setReminderTime] = useState<Date | undefined>(new Date());
 
 
@@ -46,10 +39,22 @@ export default function useHabitModal() {
         fetchGoalHabits();
     }
 
+    const reset = () => {
+        setTitle(undefined);
+        setReminderTime(new Date());
+        setMonday(false);
+        setTuesday(false);
+        setWednesday(false);
+        setThursday(false);
+        setFriday(false);
+        setSaturday(false);
+        setSunday(false);
+    }
+
     const onSave = () => {
         if (habit) {
             const updatedHabit = {
-                id: habit.habitId,
+                id: habit.habitId || habit.id,
                 title: title,
                 reminderTime: reminderTime,
                 monday: monday,
@@ -75,6 +80,7 @@ export default function useHabitModal() {
             }
             saveHabit(newHabit);
         }
+        reset();
     }
 
     const deleteHabitConfirmation = (
@@ -86,8 +92,9 @@ export default function useHabitModal() {
     const { Dialog: DeleteHabitDialog, openDialog } = useDialog(
         {
             onSave: () => {
-                deleteHabit(habit.habitId);
+                deleteHabit(habit.habitId || habit.id);
                 closeModal();
+                reset();
             },
             content: deleteHabitConfirmation,
             bottomButtons: true,
@@ -111,6 +118,7 @@ export default function useHabitModal() {
     const onExistingHabitSelect = (habit: Habit) => {
         saveGoalHabit(habit);
         closeModal();
+        reset();
     }
 
     const hasReminder = (habit: Habit) => {
@@ -154,7 +162,7 @@ export default function useHabitModal() {
     const editHabitForm = (
         <View style={styles.container}>
             {habit && DeleteHabitDialog}
-            {!habit && allHabits && allHabits.length > 0 && ExistingHabitsSelection}
+            {!habit && allHabits && allHabits.length > 0 && canSelect && ExistingHabitsSelection}
             <Input
                 label={"Name"}
                 initialValue={title}
@@ -162,7 +170,7 @@ export default function useHabitModal() {
                 placeHolder={"Describe your habit"}
                 onChange={setTitle} />
             <GText style={styles.label}>{"Reminder Days"}</GText>
-            <DaySelection days={days} />
+            <DaySelection days={days} style={styles.daySelection} />
             <View style={styles.reminderLabelRow}>
                 <View style={styles.reminderLabelColumn}>
                     <GText style={styles.label}>{"Reminder Time"}</GText>
@@ -217,7 +225,8 @@ export default function useHabitModal() {
     });
 
 
-    const openModalHandler = (habit: Habit) => {
+    const openModalHandler = (habit?: Habit, canSelect: boolean = true) => {
+        setCanSelect(canSelect);
         setHabit(habit);
         if (habit) {
             setTitle(habit.title);
@@ -229,6 +238,8 @@ export default function useHabitModal() {
             setFriday(habit.friday);
             setSaturday(habit.saturday);
             setSunday(habit.sunday);
+        } else {
+            reset();
         }
         openModal();
     }
@@ -312,5 +323,9 @@ const styles = StyleSheet.create({
     bell: {
         marginLeft: 10,
     },
+    daySelection: {
+        marginBottom: 35,
+        marginTop: 10,
+    }
 
 });

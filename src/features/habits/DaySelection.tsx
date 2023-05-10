@@ -8,19 +8,21 @@ interface DayOption {
     toggle?: (value: boolean) => void
 }
 interface DaySelectionProps {
-    days?: DayOption[],
+    days: DayOption[],
     style?: any,
+    disabled?: boolean,
 };
 
-export const DaySelection = ({ style, days, }: DaySelectionProps) => {
+export const DaySelection = ({ style, days, disabled = false }: DaySelectionProps) => {
 
     return (
         <View style={[style, styles.container]}>
             {days.map((option, index) => (
                 <TouchableOpacity
                     key={index}
+                    disabled={disabled}
                     style={[styles.day, { backgroundColor: option.value ? Colors.darkYellow : Colors.darkGray }]}
-                    onPress={() => option.toggle(!option.value)}>
+                    onPress={() => option.toggle && option.toggle(!option.value)}>
                     <GText bold size={20} style={styles.text}>{option.label.substring(0, 2)}</GText>
                 </TouchableOpacity>
             ))}
@@ -41,8 +43,6 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 35,
-        marginTop: 10,
     },
     text: {
         color: Colors.white

@@ -109,7 +109,6 @@ const Api = () => {
     };
 
 
-
     // HABIT
     const findAllHabits = async () => {
         return await fetchApi('GET', `/habits`)
@@ -133,13 +132,6 @@ const Api = () => {
     const saveGoalHabit = async (habit: Habit) => {
         return await fetchApi('POST', `/goalhabits`, habit)
     };
-
-
-    // DIARYENTRY
-
-
-    // GOALDIARYENTRY
-
 
 
 

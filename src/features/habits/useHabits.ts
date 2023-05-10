@@ -19,13 +19,12 @@ export const useHabits = () => {
     };
 
     // FIND ALL HABITS
-    const { data: allHabits, refetch: refetchAllHabits } = useAppQuery(['allHabits', selectedGoal?.id], {
+    const { data: allHabits, refetch: refetchAllHabits, isLoading: isLoadingAllHabits, isError: isErrorAllHabits } = useAppQuery(['allHabits', selectedGoal?.id], {
         queryFn: () => api.findAllHabits() as Promise<Habit[]>,
-        enabled: false,
     });
 
     const fetchAllHabits = () => {
-        selectedGoal?.id && refetchAllHabits();
+        refetchAllHabits();
     };
 
 
@@ -74,6 +73,7 @@ export const useHabits = () => {
     const updateHabit = useMutation(fetchSaveHabit, {
         onSuccess: () => {
             fetchGoalHabits();
+            fetchAllHabits();
         },
     });
 
@@ -91,6 +91,7 @@ export const useHabits = () => {
     const deleteHabit = useMutation(fetchDeleteHabit, {
         onSuccess: () => {
             fetchGoalHabits();
+            fetchAllHabits();
         },
     });
 
@@ -109,6 +110,8 @@ export const useHabits = () => {
         saveHabit: saveHabitHandler,
         updateHabit: updateHabitHandler,
         deleteHabit: deleteHabitHandler,
-        saveGoalHabit: saveGoalHabitHandler
+        saveGoalHabit: saveGoalHabitHandler,
+        isLoadingAllHabits,
+        isErrorAllHabits
     };
 };

@@ -80,8 +80,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    // position: 'absolute',
-    // width: '100%'
   },
   header: {
     display: 'flex',
@@ -94,11 +92,9 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
   },
   deleteIcon: {
-    // borderWidth: 2,
     flex: 0.5
   },
   closeIcon: {
-    // borderWidth: 2,
     flex: 0.5
   },
   iconRow: {
