@@ -8,8 +8,8 @@ import { Colors } from "../../util/Colors";
 import { CategoryTags } from "./CategoryTags";
 import useAddCategoryDialog from "./useAddCategoryDialog";
 import { useCategories } from "./useCategories";
-import useGoal from "./useGoal";
 import useEditCategoryDialog from "./useEditCategoryDialog";
+import useGoal from "../goals/useGoal";
 
 type EditCategoriesProps = {
     goalId: string,
@@ -34,7 +34,6 @@ export const EditCategories = ({ goalId }: EditCategoriesProps) => {
 
 
     const addGoalCategory = (category: Category) => {
-        console.log("OTTO add", category)
         saveGoalCategory(category);
         setSelectedCategories([...selectedCategories || [], category]);
         const updatedCategoriesToAdd = categoriesToAdd.filter(c => c.id !== category.id);
@@ -42,7 +41,6 @@ export const EditCategories = ({ goalId }: EditCategoriesProps) => {
     }
 
     const removeGoalCategory = (category: Category) => {
-        console.log("OTTO removeCategory", category)
         deleteGoalCategory(category);
         const updatedSelectedCategories = selectedCategories.filter(c => c.id !== category.id);
         setSelectedCategories(updatedSelectedCategories);
@@ -73,7 +71,6 @@ export const EditCategories = ({ goalId }: EditCategoriesProps) => {
             <InputBar style={styles.bar}>
                 <View style={styles.selected}>
                     {selectedCategories
-                        // ? <GText bold style={styles.placeholder}>{"Add or Create"}</GText>
                         ? <CategoryTags categories={selectedCategories} onAction={removeGoalCategory} onEdit={onCategoryEdit}></CategoryTags>
                         : <GText bold style={styles.placeholder}>{"Add or Create"}</GText>}
                 </View>

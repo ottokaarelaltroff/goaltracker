@@ -14,8 +14,6 @@ type Props = {
 }
 
 export default function useEditCategoryDialog({ goalId }: Props) {
-
-
     const [category, setCategory] = useState<Category | undefined>();
     const [name, setName] = useState<string | undefined>('');
     const [color, setColor] = useState<string>();
@@ -29,26 +27,25 @@ export default function useEditCategoryDialog({ goalId }: Props) {
         deleteCategory(category.categoryId || category.id)
     };
 
-    const changeName = (value: string) => {
-        setName(value)
-        category.name = value;
-    };
-
-    const changeColor = (value: string) => {
-        setColor(value)
-        category.color = value;
-    };
-
     const editCategoryForm = (
         <View style={styles.container}>
             <View style={styles.tagContainer}>
                 <Tag title={name || 'Preview'} color={color || Colors.purple} style={styles.tag}></Tag>
             </View>
-            <Input label={"Name"} placeHolder={"Add name"} initialValue={name} color={Colors.primary} style={{ width: '100%' }} onChange={changeName}></Input>
+            <Input
+                label={"Name"}
+                placeHolder={"Add name"}
+                initialValue={name}
+                charLimit={16}
+                color={Colors.primary}
+                style={{ width: '100%' }}
+                onChange={(value) => setName(value)} />
             <View>
                 <GText style={styles.label}>{"Color"}</GText>
             </View>
-            <ColorSelection onSelect={changeColor} selectedColor={color || Colors.purple} />
+            <ColorSelection
+                onSelect={(value) => setColor(value)}
+                selectedColor={color || Colors.purple} />
         </View>
     )
 
@@ -59,7 +56,7 @@ export default function useEditCategoryDialog({ goalId }: Props) {
             onDelete: onDelete,
             headerText: "Edit Category",
             content: editCategoryForm,
-            canSave: category?.name && category?.name.length > 0
+            canSave: name && name.length > 0 && name.length <= 16
         });
 
     const onOpen = (cat: Category) => {
@@ -88,7 +85,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     tag: {
-        marginVertical: 10
+        marginBottom: 20
     },
     label: {
         marginLeft: 15,

@@ -1,15 +1,16 @@
 import { StyleSheet } from "react-native";
+import { Colors } from "../util/Colors";
 import { GText } from "./GText";
 
-interface HeaderTextProps {
+interface WarningTextProps {
     title: string,
     style?: any
 };
 
-export const HeaderText = ({ title, style }: HeaderTextProps) => {
+export const WarningText = ({ title, style }: WarningTextProps) => {
 
     return (
-        <GText style={[styles.text, style]}>
+        <GText style={[styles.text, style]} size={14}>
             {title}
         </GText>
     );
@@ -17,7 +18,6 @@ export const HeaderText = ({ title, style }: HeaderTextProps) => {
 
 const styles = StyleSheet.create({
     text: {
-        fontSize: 32,
-        fontWeight: "600",
+        color: Colors.red
     }
 });

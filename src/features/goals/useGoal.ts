@@ -2,12 +2,11 @@ import { useEffect } from 'react';
 import { Goal } from '../../model/types';
 import { useHabits } from '../habits/useHabits';
 import useAllGoals from './useAllGoals';
-import { useCategories } from './useCategories';
 import { useSteps } from '../steps/useSteps';
-
 import { useMutation } from '@tanstack/react-query';
 import { api } from '../../context/api';
 import useAppQuery from '../../context/api/useAppQuery';
+import { useCategories } from '../categories/useCategories';
 
 export default function useGoal(goalId?: string) {
     const { fetchAllGoals } = useAllGoals();

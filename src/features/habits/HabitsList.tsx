@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { Habit } from "../model/types";
-import { Bullet } from "./Bullet";
-import { GText } from "./GText";
+import { Habit } from "../../model/types";
+import { Bullet } from "../../components/Bullet";
+import { GText } from "../../components/GText";
 
 interface HabitsListProps {
     style?: any,

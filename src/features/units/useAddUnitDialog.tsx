@@ -36,7 +36,7 @@ export default function useAddUnitDialog({ goalId }: Props) {
             onSave: onSave,
             headerText: "Create Unit",
             content: addUnitForm,
-            canSave: name && name.length > 0
+            canSave: name && name.length > 0 && name.length <= 16
         });
 
     return {

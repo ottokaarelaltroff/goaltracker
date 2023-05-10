@@ -10,10 +10,10 @@ import useDialog from '../../context/ui/useDialog';
 import useModal from '../../context/ui/useModal';
 import { Goal, Unit } from '../../model/types';
 import { Colors } from '../../util/Colors';
-import { EditCategories } from './EditCategories';
 import useGoal from './useGoal';
-import { useUnits } from './useUnits';
-import useAddUnitDialog from './useAddUnitDialog';
+import { useUnits } from '../units/useUnits';
+import useAddUnitDialog from '../units/useAddUnitDialog';
+import { EditCategories } from '../categories/EditCategories';
 
 interface EditGoalModalProps {
     goal: Goal;
@@ -100,21 +100,26 @@ export default function useEditGoalModal({ goal, title, navigation }: EditGoalMo
             <Input
                 label={"Name"}
                 initialValue={goal?.title}
+                charLimit={32}
                 placeHolder={"What goal are you chasing?"}
                 onChange={setTitleValue} />
             <View style={styles.row}>
                 <Input
+                    small
                     numeric
                     label={"Current"}
                     initialValue={goal?.currentValue.toString()}
+                    charLimit={9}
                     placeHolder={"Current value"}
                     style={styles.currentValue}
                     onChange={setCurrentValue} />
                 <Input
+                    small
                     numeric
                     label={"Target"}
                     initialValue={goal?.targetValue.toString()}
                     placeHolder={"Target value"}
+                    charLimit={9}
                     style={styles.goalValue}
                     onChange={setTargetValue} />
             </View>
@@ -150,12 +155,17 @@ export default function useEditGoalModal({ goal, title, navigation }: EditGoalMo
         </View>
     )
 
+    const isFormValid = titleValue && titleValue.length > 0 && titleValue.length <= 32 &&
+        currentValue && currentValue.length > 0 && currentValue.length <= 9 &&
+        targetValue && targetValue.length > 0 && targetValue.length <= 9 &&
+        selectedDate && !!selectedUnit?.value
+
     const { Modal, openModal, closeModal, isOpened } = useModal({
         headerText: title,
         content: editGoalForm,
         onSave: onSave,
         onDelete: onDelete,
-        canSave: titleValue && currentValue && targetValue && selectedDate && !!selectedUnit?.value
+        canSave: isFormValid
     });
 
     return {

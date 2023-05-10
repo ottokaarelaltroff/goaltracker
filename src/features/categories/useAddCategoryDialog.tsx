@@ -27,7 +27,14 @@ export default function useAddCategoryDialog({ goalId }: Props) {
             <View style={styles.tagContainer}>
                 <Tag title={name || 'Preview'} color={color} style={styles.tag}></Tag>
             </View>
-            <Input label={"Name"} placeHolder={"Add name"} initialValue={name || ''} color={Colors.primary} style={{ width: '100%' }} onChange={setName}></Input>
+            <Input
+                label={"Name"}
+                placeHolder={"Add name"}
+                charLimit={16}
+                initialValue={name || ''}
+                color={Colors.primary}
+                style={{ width: '100%' }}
+                onChange={setName} />
             <View>
                 <GText style={styles.label}>{"Color"}</GText>
             </View>
@@ -40,7 +47,7 @@ export default function useAddCategoryDialog({ goalId }: Props) {
             onSave: onSave,
             headerText: "Create Category",
             content: addCategoryForm,
-            canSave: name && name.length > 0
+            canSave: name && name.length > 0 && name.length <= 16
         });
 
     return {

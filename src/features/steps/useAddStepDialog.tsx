@@ -20,6 +20,7 @@ export default function useAddStepDialog() {
             <Input
                 label={"Title"}
                 placeHolder={"Add title"}
+                charLimit={32}
                 initialValue={title || ''}
                 color={Colors.primary}
                 style={styles.input}

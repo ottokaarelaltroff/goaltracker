@@ -3,10 +3,10 @@ import { GText } from "../../components/GText";
 import { HeadingText } from "../../components/HeadingText";
 import { ProgressBar } from "../../components/ProgressBar";
 import { Colors } from "../../util/Colors";
-import { CategoryTags } from "./CategoryTags";
+import { CategoryTags } from "../categories/CategoryTags";
 import useGoal from "./useGoal";
-import { useCategories } from "./useCategories";
 import { useEffect } from "react";
+import { useCategories } from "../categories/useCategories";
 
 type GoalPreviewProps = {
     goalId: string;

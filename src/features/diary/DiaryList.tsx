@@ -1,8 +1,8 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { DiaryEntry } from "../model/types";
-import { Bullet } from "./Bullet";
-import { GText } from "./GText";
-import { Colors } from "../util/Colors";
+import { DiaryEntry } from "../../model/types";
+import { Bullet } from "../../components/Bullet";
+import { GText } from "../../components/GText";
+import { Colors } from "../../util/Colors";
 
 export type OptionType<T> = {
     label: string;

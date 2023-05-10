@@ -1,27 +1,27 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useRef } from "react";
 import { LayoutAnimation, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Collapse } from "../../components/Collapse";
-import { DiaryList } from "../../components/DiaryList";
+import { DiaryList } from "../diary/DiaryList";
 import Divider from "../../components/Divider";
-import { HabitsList } from "../../components/HabitsList";
+import { HabitsList } from "../habits/HabitsList";
 import { ProgressSection } from "../../components/ProgressSection";
 import { ScreenContainer } from "../../components/ScreenContainer";
 import { ScreenHeader } from "../../components/ScreenHeader";
 import Spinner from "../../components/Spinner";
-import { StepsList } from "../steps/StepsList";
 import { TextButton } from "../../components/TextButton";
 import { Goal } from "../../model/types";
 import { mockData } from "../../unused/mockData";
 import { Colors } from "../../util/Colors";
 import { getRemainingDays, getTargetDateFormatted } from "../../util/Util";
-import { CategoryTags } from "./CategoryTags";
+import { CategoryTags } from "../categories/CategoryTags";
+import { useCategories } from "../categories/useCategories";
+import useEditCategoryDialog from "../categories/useEditCategoryDialog";
+import { StepsList } from "../steps/StepsList";
 import useAllGoals from "./useAllGoals";
-import { useCategories } from "./useCategories";
 import useEditGoalModal from "./useEditGoalModal";
 import useGoal from "./useGoal";
-import useEditCategoryDialog from "./useEditCategoryDialog";
 
 interface Params {
     goal: Goal;
@@ -35,8 +35,6 @@ interface GoalScreenProps {
     route: RouteProps;
     navigation: any
 };
-
-// UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 
 export const GoalScreen = ({ navigation }: GoalScreenProps) => {
 

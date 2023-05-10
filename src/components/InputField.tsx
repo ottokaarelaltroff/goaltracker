@@ -1,6 +1,6 @@
-import { StyleSheet, TextInput, View, TouchableOpacity } from "react-native";
-import { Colors } from "../util/Colors";
 import { useState } from "react";
+import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { Colors } from "../util/Colors";
 import { Icon } from "./Icon";
 
 interface InputFieldProps {
