@@ -3,7 +3,7 @@ import { Goal } from '../../model/types';
 import { useHabits } from '../habits/useHabits';
 import useAllGoals from './useAllGoals';
 import { useCategories } from './useCategories';
-import { useSteps } from './useSteps';
+import { useSteps } from '../steps/useSteps';
 
 import { useMutation } from '@tanstack/react-query';
 import { api } from '../../context/api';
@@ -13,7 +13,7 @@ export default function useGoal(goalId?: string) {
     const { fetchAllGoals } = useAllGoals();
     const { goalCategories, fetchGoalCategories } = useCategories(goalId);
     const { habits, fetchGoalHabits } = useHabits(goalId);
-    const { steps, fetchGoalSteps } = useSteps(goalId);
+    const { steps, fetchGoalSteps } = useSteps();
 
     const { data: goal, refetch: refetchGoal } = useAppQuery(['goal', goalId], {
         queryFn: () => api.findGoal(goalId) as Promise<Goal>,

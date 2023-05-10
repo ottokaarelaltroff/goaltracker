@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_URL } from "../../../settings";
-import { Category, Goal, LoginRequest, Unit } from "../../model/types";
+import { Category, Goal, LoginRequest, Step, Unit } from "../../model/types";
 import useStorage from "../../storage/useStorage";
 
 const Api = () => {
@@ -23,10 +23,13 @@ const Api = () => {
         return await response?.data;
     };
 
+    // AUTH
     const login = async (loginParams: LoginRequest) => {
         return await fetchApi('POST', '/account/login', loginParams)
     };
 
+
+    // GOAL
     const findGoal = async (goalId: string) => {
         return await fetchApi('GET', `/goals/${goalId}`)
     };
@@ -35,18 +38,16 @@ const Api = () => {
         return await fetchApi('GET', '/goals')
     };
 
-    const findGoalCategories = async (goalId: string) => {
-        return await fetchApi('GET', `/goalcategories/goalId=${goalId}`)
+    const saveGoal = async (goal: Goal) => {
+        return await fetchApi('POST', '/goals', goal)
     };
 
-    const findGoalHabits = async (goalId: string) => {
-        return await fetchApi('GET', `/goalhabits/goalId=${goalId}`)
+    const deleteGoal = async (goalId: string) => {
+        return await fetchApi('DELETE', `/goals/${goalId}`)
     };
 
-    const findGoalSteps = async (goalId: string) => {
-        return await fetchApi('GET', `/goalsteps/goalId=${goalId}`)
-    };
 
+    // UNIT
     const findAllUnits = async () => {
         return await fetchApi('GET', `/units`)
     };
@@ -59,6 +60,8 @@ const Api = () => {
         return await fetchApi('DELETE', `/units/${unitId}`)
     };
 
+
+    // CATEGORY
     const findAllCategories = async () => {
         return await fetchApi('GET', `/categories`)
     };
@@ -67,25 +70,63 @@ const Api = () => {
         return await fetchApi('POST', `/categories`, category)
     };
 
-    const saveGoalCategory = async (category: Category) => {
-        return await fetchApi('POST', `/goalcategories`, category)
-    };
-
     const deleteCategory = async (categoryId: string) => {
         return await fetchApi('DELETE', `/categories/${categoryId}`)
+    };
+
+
+    // GOALCATEGORY
+    const findGoalCategories = async (goalId: string) => {
+        return await fetchApi('GET', `/goalcategories/goalId=${goalId}`)
+    };
+
+    const saveGoalCategory = async (category: Category) => {
+        return await fetchApi('POST', `/goalcategories`, category)
     };
 
     const deleteGoalCategory = async (goalCategoryId: string) => {
         return await fetchApi('DELETE', `/goalcategories/${goalCategoryId}`)
     };
 
-    const saveGoal = async (goal: Goal) => {
-        return await fetchApi('POST', '/goals', goal)
+
+    // STEP
+    const saveStep = async (step: Step) => {
+        return await fetchApi('POST', `/steps`, step)
     };
 
-    const deleteGoal = async (goalId: string) => {
-        return await fetchApi('DELETE', `/goals/${goalId}`)
+    const deleteStep = async (stepId: string) => {
+        return await fetchApi('DELETE', `/steps/${stepId}`)
     };
+
+
+    // GOALSTEP
+    const findGoalSteps = async (goalId: string) => {
+        return await fetchApi('GET', `/goalsteps/goalId=${goalId}`)
+    };
+
+    const saveGoalStep = async (step: Step) => {
+        return await fetchApi('POST', `/goalsteps`, step)
+    };
+
+
+
+    // HABIT
+
+
+
+    // GOALHABIT
+    const findGoalHabits = async (goalId: string) => {
+        return await fetchApi('GET', `/goalhabits/goalId=${goalId}`)
+    };
+
+
+    // DIARYENTRY
+
+
+    // GOALDIARYENTRY
+
+
+
 
     return {
         login,
@@ -103,7 +144,10 @@ const Api = () => {
         deleteGoal,
         saveGoal,
         saveUnit,
-        deleteUnit
+        deleteUnit,
+        saveStep,
+        deleteStep,
+        saveGoalStep
     };
 };
 

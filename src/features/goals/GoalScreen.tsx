@@ -1,5 +1,5 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { LayoutAnimation, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Collapse } from "../../components/Collapse";
@@ -10,7 +10,7 @@ import { ProgressSection } from "../../components/ProgressSection";
 import { ScreenContainer } from "../../components/ScreenContainer";
 import { ScreenHeader } from "../../components/ScreenHeader";
 import Spinner from "../../components/Spinner";
-import { StepsList } from "../../components/StepsList";
+import { StepsList } from "../steps/StepsList";
 import { TextButton } from "../../components/TextButton";
 import { Goal } from "../../model/types";
 import { mockData } from "../../unused/mockData";
@@ -21,6 +21,7 @@ import useAllGoals from "./useAllGoals";
 import { useCategories } from "./useCategories";
 import useEditGoalModal from "./useEditGoalModal";
 import useGoal from "./useGoal";
+import useEditCategoryDialog from "./useEditCategoryDialog";
 
 interface Params {
     goal: Goal;
@@ -41,7 +42,8 @@ export const GoalScreen = ({ navigation }: GoalScreenProps) => {
 
     const { selectedGoal } = useAllGoals();
     const { goal, setGoalData } = useGoal(selectedGoal?.id);
-    const { goalCategories } = useCategories(selectedGoal?.id);
+    const { allCategories, goalCategories } = useCategories(selectedGoal?.id);
+    const { EditCategoryDialog, openEditDialog } = useEditCategoryDialog({ goalId: selectedGoal?.id });
     const scrollViewRef = useRef<ScrollView>(null);
 
     const { EditGoalModal, openModal } = useEditGoalModal({ goal: goal, title: 'Edit Goal', navigation: navigation });
@@ -119,10 +121,11 @@ export const GoalScreen = ({ navigation }: GoalScreenProps) => {
                 <TextButton title={"Edit"} onPress={openModal}></TextButton>
             </ScreenHeader>
             {EditGoalModal}
+            {EditCategoryDialog}
             <ScrollView ref={scrollViewRef}>
                 <View style={styles.container}>
                     <View style={styles.categories}>
-                        <CategoryTags categories={goalCategories} center />
+                        <CategoryTags categories={goalCategories} center onEdit={(category) => openEditDialog(category)} />
                     </View>
                     <ProgressSection
                         title={goal.currentValue + " / " + goal.targetValue + ' ' + goal.unit.name}
@@ -142,7 +145,7 @@ export const GoalScreen = ({ navigation }: GoalScreenProps) => {
                     />
                     <Divider />
                     <Collapse title={"Steps I need to take"} handleScroll={handleScrollTo}>
-                        <StepsList items={goal.steps} />
+                        <StepsList />
                     </Collapse>
                     <Collapse title={"Habits I need to follow"} handleScroll={handleScrollTo}>
                         <HabitsList items={goal.habits} />

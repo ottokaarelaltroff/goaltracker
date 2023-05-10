@@ -9,6 +9,7 @@ export const useCategories = (goalId: string) => {
     const { data: goalCategories, refetch: refetchGoalCategories } = useAppQuery(['goalCategories', goalId], {
         queryFn: () => api.findGoalCategories(goalId) as Promise<Category[]>,
         enabled: false,
+        onSuccess: () => console.log("OTTO refetchGoalCategories success")
     });
 
     const fetchGoalCategories = () => {
@@ -50,7 +51,7 @@ export const useCategories = (goalId: string) => {
     });
 
     const updateCategory = useMutation(fetchSaveCategory, {
-        onSuccess: () => () => {
+        onSuccess: () => {
             refetchAllCategories();
             refetchGoalCategories();
         },

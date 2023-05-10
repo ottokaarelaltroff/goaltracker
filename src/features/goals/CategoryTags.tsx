@@ -40,7 +40,7 @@ export const CategoryTags = ({ categories, onAction, onEdit, add = false, wrap =
                 } else {
                     return (
                         <View style={styles.tagContainer} key={index}>
-                            <TouchableOpacity onPress={() => onTagClick(category)}>
+                            <TouchableOpacity activeOpacity={onEdit ? 0.2 : 1} onPress={() => onTagClick(category)}>
                                 <Tag
                                     title={category.name}
                                     color={category.color}

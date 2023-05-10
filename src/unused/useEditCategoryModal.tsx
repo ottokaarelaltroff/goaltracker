@@ -22,7 +22,7 @@ export default function useEditCategoryModal({ category, title }: EditCategoryMo
         </View>
     )
 
-    const { Modal, openModal, closeModal, isOpened } = useModal({ headerText: title, content: editCategoryForm, onDelete: () => { } });
+    const { Modal, openModal, closeModal, isOpened } = useModal({ headerText: title, content: editCategoryForm, onDelete: () => { }, canSave: false });
 
     return {
         EditCategoryModal: Modal,

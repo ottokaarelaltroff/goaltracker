@@ -71,7 +71,6 @@ export default function useEditGoalModal({ goal, title, navigation }: EditGoalMo
         }
     }, [units])
 
-    console.log("OITTO selectedUnit", selectedUnit)
     const deleteGoalConfirmation = (
         <View style={styles.confirmationContainer}>
             <GText style={styles.confirmation}>{"Are you sure you want to delete this goal?"}</GText>

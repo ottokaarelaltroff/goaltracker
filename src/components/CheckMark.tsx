@@ -1,17 +1,21 @@
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Colors } from "../util/Colors";
 import { Icon } from "./Icon";
 
 interface CheckMarkProps {
     style?: any,
-    isChecked: boolean
+    isChecked?: boolean,
+    onClick?: () => void
 };
 
-export const CheckMark = ({ style, isChecked }: CheckMarkProps) => {
+export const CheckMark = ({ style, isChecked = false, onClick }: CheckMarkProps) => {
     return (
-        <View style={[styles.circle, style, !isChecked ? { borderColor: Colors.grayAlpha(0.5) } : {}]}>
+        <TouchableOpacity
+            onPress={onClick}
+            disabled={!onClick}
+            style={[styles.circle, style, !isChecked ? { borderColor: Colors.grayAlpha(0.5) } : {}]}>
             {isChecked ? <Icon source={require("../assets/checkmark.png")} light style={styles.check} /> : null}
-        </View>
+        </TouchableOpacity>
     );
 };
 

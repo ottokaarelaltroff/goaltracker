@@ -43,7 +43,7 @@ export type Category = {
 }
 
 export type Step = {
-    id: string,
+    id?: string,
     goalId?: string,
     stepId?: string,
     title: string,
