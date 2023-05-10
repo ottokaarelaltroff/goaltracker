@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_URL } from "../../../settings";
-import { Category, Goal, LoginRequest, Step, Unit } from "../../model/types";
+import { Category, Goal, Habit, LoginRequest, Step, Unit } from "../../model/types";
 import useStorage from "../../storage/useStorage";
 
 const Api = () => {
@@ -111,12 +111,27 @@ const Api = () => {
 
 
     // HABIT
+    const findAllHabits = async () => {
+        return await fetchApi('GET', `/habits`)
+    };
 
+
+    const saveHabit = async (habit: Habit) => {
+        return await fetchApi('POST', `/habits`, habit)
+    };
+
+    const deleteHabit = async (habitId: Habit) => {
+        return await fetchApi('DELETE', `/habits/${habitId}`)
+    };
 
 
     // GOALHABIT
     const findGoalHabits = async (goalId: string) => {
         return await fetchApi('GET', `/goalhabits/goalId=${goalId}`)
+    };
+
+    const saveGoalHabit = async (habit: Habit) => {
+        return await fetchApi('POST', `/goalhabits`, habit)
     };
 
 
@@ -147,7 +162,12 @@ const Api = () => {
         deleteUnit,
         saveStep,
         deleteStep,
-        saveGoalStep
+        saveGoalStep,
+        saveHabit,
+        deleteHabit,
+        saveGoalHabit,
+        findAllHabits
+
     };
 };
 

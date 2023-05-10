@@ -51,11 +51,11 @@ export type Step = {
 }
 
 export type Habit = {
-    id: string,
+    id?: string,
     goalId?: string,
     habitId?: string,
     title: string,
-    reminderTime: string,
+    reminderTime: Date,
     monday: boolean,
     tuesday: boolean,
     wednesday: boolean,

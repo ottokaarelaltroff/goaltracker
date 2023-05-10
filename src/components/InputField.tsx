@@ -14,7 +14,7 @@ interface InputFieldProps {
     color?: string,
 };
 
-export const InputField = ({ initialValue, placeHolder, style, icon, onPress, onChange, numeric = false, color = Colors.secondary }: InputFieldProps) => {
+export const InputField = ({ initialValue, placeHolder, style, icon, onPress, onChange, numeric = false, color = Colors.darkGray }: InputFieldProps) => {
 
     const [value, setValue] = useState<string>(initialValue || '');
 

@@ -11,7 +11,7 @@ import { useCategories } from '../categories/useCategories';
 export default function useGoal(goalId?: string) {
     const { fetchAllGoals } = useAllGoals();
     const { goalCategories, fetchGoalCategories } = useCategories(goalId);
-    const { habits, fetchGoalHabits } = useHabits();
+    const { goalHabits, fetchGoalHabits } = useHabits();
     const { steps, fetchGoalSteps } = useSteps();
 
     const { data: goal, refetch: refetchGoal } = useAppQuery(['goal', goalId], {
@@ -32,8 +32,8 @@ export default function useGoal(goalId?: string) {
     }
 
     const setGoalData = () => {
-        if (habits) {
-            goal.habits = habits;
+        if (goalHabits) {
+            goal.habits = goalHabits;
         } else {
             fetchGoalHabits();
         }

@@ -40,7 +40,7 @@ export const Input = ({ label, initialValue, placeHolder, style, onPress, onChan
             </View>)
 
     return (
-        <View style={[styles.container, style]}>
+        <View style={[styles.container, style, { height: label ? 80 : 60 }]}>
             <View style={styles.header}>
                 {label && <GText style={styles.label}>{label}</GText>}
                 {error && renderError()}
@@ -54,7 +54,6 @@ export const Input = ({ label, initialValue, placeHolder, style, onPress, onChan
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        height: 80,
         marginBottom: 15,
     },
     label: {
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
     header: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     warningIcon: {
         marginRight: 5

@@ -6,23 +6,21 @@ import { Colors } from "../../util/Colors";
 import { useHabits } from "./useHabits";
 import { GText } from "../../components/GText";
 import { Habit } from "../../model/types";
-import useEditHabitModal from "./useEditHabitModal";
 
-// type HabitsListProps = {
-//     openEditHabitModal: (habit: Habit) => void
-// }
-export const HabitsList = () => {
+type HabitsListProps = {
+    openEditHabitModal: (habit: Habit) => void
+}
+export const HabitsList = ({ openEditHabitModal }: HabitsListProps) => {
 
-    const { habits, fetchGoalHabits } = useHabits();
-    const { EditHabitModal, openEditHabitModal, isOpened } = useEditHabitModal();
+    const { goalHabits, fetchGoalHabits } = useHabits();
 
-    if (habits === undefined) {
+    if (goalHabits === undefined) {
         fetchGoalHabits()
     }
 
     const getHabitListItems = () => {
         const checkList = []
-        habits.map(item => checkList.push({
+        goalHabits.map(item => checkList.push({
             icon: <Bullet />,
             habit: item
         }));
@@ -39,18 +37,25 @@ export const HabitsList = () => {
         openEditHabitModal(habit);
     }
 
+    const hasReminder = (habit: Habit) => {
+        return habit.monday || habit.tuesday || habit.wednesday || habit.thursday || habit.friday || habit.saturday || habit.sunday;
+    }
+
     return (
         <View>
-            {EditHabitModal}
-            {habits !== undefined && getHabitListItems().map((item, index) => (
+            {goalHabits !== undefined && getHabitListItems().map((item, index) => (
                 <TouchableOpacity style={styles.listItem} key={index} onPress={() => openModalHandler(item.habit)}>
                     {item.icon}
                     {item.habit ?
                         <View style={styles.habit}>
                             <GText size={16} style={styles.text}>{item.habit.title}</GText>
-                            <Icon source={require("../../assets/bell.png")} size={24} style={styles.bell} />
+                            {hasReminder(item.habit) && <Icon source={require("../../assets/bell.png")} size={24} style={styles.bell} />}
                         </View>
-                        : <TextButton title={"Add new habit"} size={16} onPress={() => openModalHandler(undefined)} style={[styles.text, styles.addNewText]} />
+                        : (<TextButton
+                            title={"Add new habit"}
+                            size={16}
+                            onPress={() => openModalHandler(undefined)}
+                            style={[styles.text, styles.addNewText]} />)
                     }
                 </TouchableOpacity>
             ))}

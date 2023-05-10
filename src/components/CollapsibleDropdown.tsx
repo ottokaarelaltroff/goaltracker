@@ -4,14 +4,14 @@ import { LayoutAnimation, StyleSheet, View, TouchableOpacity } from "react-nativ
 import { Colors } from "../util/Colors";
 import { GText } from "./GText";
 
-interface CollapseProps {
-    title: string,
+interface CollapsibleDropdownProps {
+    title?: string,
     backgroundColor?: string;
     children?: any,
     handleScroll?: any
 };
 
-export const Collapse = ({ title, backgroundColor = Colors.secondary, children, handleScroll }: CollapseProps) => {
+export const CollapsibleDropdown = ({ title, backgroundColor = Colors.secondary, children, handleScroll }: CollapsibleDropdownProps) => {
     const [isCollapsed, setIsCollapsed] = useState(true);
 
     const handleToggle = () => {

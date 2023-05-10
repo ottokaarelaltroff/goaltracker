@@ -2,7 +2,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useRef } from "react";
 import { LayoutAnimation, StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { Collapse } from "../../components/Collapse";
+import { CollapsibleDropdown } from "../../components/CollapsibleDropdown";
 import { DiaryList } from "../diary/DiaryList";
 import Divider from "../../components/Divider";
 import { HabitsList } from "../habits/HabitsList";
@@ -22,7 +22,7 @@ import { StepsList } from "../steps/StepsList";
 import useAllGoals from "./useAllGoals";
 import useGoalModal from "./useGoalModal";
 import useGoal from "./useGoal";
-import useEditHabitModal from "../habits/useEditHabitModal";
+import useHabitModal from "../habits/useHabitModal";
 
 interface Params {
     goal: Goal;
@@ -44,7 +44,7 @@ export const GoalScreen = ({ navigation }: GoalScreenProps) => {
     const { allCategories, goalCategories } = useCategories(selectedGoal?.id);
     const { EditCategoryDialog, openEditDialog } = useEditCategoryDialog({ goalId: selectedGoal?.id });
     const scrollViewRef = useRef<ScrollView>(null);
-
+    const { EditHabitModal, openEditHabitModal, isOpened } = useHabitModal();
     const { GoalModal: EditGoalModal, openModal } = useGoalModal({ goal: goal, title: 'Edit Goal', navigation: navigation });
 
     const handleScrollTo = () => {
@@ -121,7 +121,7 @@ export const GoalScreen = ({ navigation }: GoalScreenProps) => {
             </ScreenHeader>
             {EditGoalModal}
             {EditCategoryDialog}
-
+            {EditHabitModal}
             <ScrollView ref={scrollViewRef}>
                 <View style={styles.container}>
                     <View style={styles.categories}>
@@ -144,16 +144,15 @@ export const GoalScreen = ({ navigation }: GoalScreenProps) => {
                         isGoal={false}
                     />
                     <Divider />
-                    <Collapse title={"Steps I need to take"} handleScroll={handleScrollTo}>
+                    <CollapsibleDropdown title={"Steps I need to take"} handleScroll={handleScrollTo}>
                         <StepsList />
-                    </Collapse>
-                    <Collapse title={"Habits I need to follow"} handleScroll={handleScrollTo}>
-
-                    </Collapse>
-                    <HabitsList />
-                    <Collapse title={"Dear Diary..."} handleScroll={handleScrollTo}>
+                    </CollapsibleDropdown>
+                    <CollapsibleDropdown title={"Habits I need to follow"} handleScroll={handleScrollTo}>
+                        <HabitsList openEditHabitModal={openEditHabitModal} />
+                    </CollapsibleDropdown>
+                    <CollapsibleDropdown title={"Dear Diary..."} handleScroll={handleScrollTo}>
                         <DiaryList items={mockData.diaryEntries} />
-                    </Collapse>
+                    </CollapsibleDropdown>
                 </View>
             </ScrollView>
         </ScreenContainer>
