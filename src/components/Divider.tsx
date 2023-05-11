@@ -9,7 +9,6 @@ const Divider = () => (
 const styles = StyleSheet.create({
     container: {
         height: 2,
-        flex: 1,
         backgroundColor: Colors.secondary,
         borderRadius: 1,
         marginBottom: 15,

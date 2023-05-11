@@ -6,15 +6,16 @@ interface GButtonProps {
     onPress: () => void;
     icon?: ImageSourcePropType,
     backgroundColor?: string,
+    iconTint?: boolean,
 }
 ;
-export const GButton = ({ title, onPress, icon, backgroundColor = Colors.darkGray }: GButtonProps) => {
+export const GButton = ({ title, onPress, icon, backgroundColor = Colors.darkGray, iconTint = true }: GButtonProps) => {
     const defaultHitSlop: Insets = { top: 5, left: 5, bottom: 5, right: 5 };
 
     return (
         <TouchableOpacity onPress={onPress} hitSlop={defaultHitSlop}>
             <View style={[styles.container, { backgroundColor: backgroundColor, }]}>
-                {icon && <Image source={icon} style={styles.icon}></Image>}
+                {icon && <Image source={icon} style={[styles.icon, iconTint && { tintColor: Colors.lightGray }]}></Image>}
                 <Text style={styles.text}>
                     {title}
                 </Text>
@@ -38,7 +39,6 @@ const styles = StyleSheet.create({
     icon: {
         width: 20,
         height: 20,
-        tintColor: Colors.lightGray,
         marginRight: 10,
     },
     text: {

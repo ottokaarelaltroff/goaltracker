@@ -35,7 +35,7 @@ const useAuth = () => {
         if (jwt) {
             setUser({
                 id: jwt,
-                userName: "user"
+                userName: "Ottokaarel"
             } as User);
         }
     }

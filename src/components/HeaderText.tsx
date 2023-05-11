@@ -3,13 +3,14 @@ import { GText } from "./GText";
 
 interface HeaderTextProps {
     title: string,
-    style?: any
+    style?: any,
+    size?: number
 };
 
-export const HeaderText = ({ title, style }: HeaderTextProps) => {
+export const HeaderText = ({ title, style, size = 32 }: HeaderTextProps) => {
 
     return (
-        <GText style={[styles.text, style]}>
+        <GText style={[styles.text, style]} size={size}>
             {title}
         </GText>
     );
@@ -17,7 +18,6 @@ export const HeaderText = ({ title, style }: HeaderTextProps) => {
 
 const styles = StyleSheet.create({
     text: {
-        fontSize: 32,
         fontWeight: "600",
     }
 });
