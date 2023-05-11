@@ -67,8 +67,6 @@ export default function useAccountModal() {
     const { Modal, openModal, closeModal, isOpened } = useModal({
         headerText: "My Account",
         content: accountForm,
-        onSave: () => { },
-        canSave: true,
     });
 
 

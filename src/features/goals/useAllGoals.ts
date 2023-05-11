@@ -13,6 +13,7 @@ export default function useAllGoals() {
         isLoading: value.isLoading,
         isError: value.isError,
         selectedGoal: value.selectedGoal,
-        setSelectedGoal: value.setSelectedGoal
+        setSelectedGoal: value.setSelectedGoal,
+        reset: value.reset
     };
 }

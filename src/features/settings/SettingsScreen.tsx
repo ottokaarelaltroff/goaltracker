@@ -26,8 +26,8 @@ export const SettingsScreen = ({ navigation }) => {
                     <View style={styles.accountInfo} >
                         <TouchableOpacity onPress={openModal} activeOpacity={1} style={styles.touchable}>
                             <Icon source={require("../../assets/chicken.png")} size={110} style={styles.profilePicture} />
-                            <HeaderText title={user.userName} size={28} style={styles.username}></HeaderText>
-                            <GText size={16} style={styles.username}>{user.userName}</GText>
+                            <HeaderText title={user?.userName} size={28} style={styles.username}></HeaderText>
+                            <GText size={16} style={styles.username}>{user?.userName}</GText>
                         </TouchableOpacity>
                         <View style={styles.buttons}>
                             <GButton title={'Account'} onPress={openModal} icon={require('../../assets/settings.png')}></GButton>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     menu: {
         flex: 1,
         width: '100%',
-        marginTop: 20,
+        marginTop: 30,
     },
     profilePicture: {
         marginBottom: 20,

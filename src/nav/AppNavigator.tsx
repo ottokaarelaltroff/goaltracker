@@ -34,6 +34,8 @@ const Root = ({ user }: RootProps) => (
     {user && user.id
       ? <RootStack.Screen name="App" component={Drawer} />
       : <RootStack.Screen name="Auth" component={AuthStackScreen} />}
+    {/* ? <RootStack.Screen name="Auth" component={AuthStackScreen} />
+      : <RootStack.Screen name="App" component={Drawer} />} */}
   </RootStack.Navigator>
 )
 

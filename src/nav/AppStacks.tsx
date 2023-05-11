@@ -1,5 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { AuthScreen } from "../features/auth/AuthScreen";
+import { LandingScreen } from "../features/auth/LandingScreen";
 import { CreateAccountScreen } from "../features/auth/CreateAccountScreen";
 import { LoginScreen } from "../features/auth/LoginScreen";
 import { AllGoalsScreen } from "../features/goals/AllGoalsScreen";
@@ -15,7 +15,7 @@ const GoalsStack = createStackNavigator();
 const SettingsStack = createStackNavigator();
 
 const authStackOptions = {
-  headerShown: true,
+  headerShown: false,
   headerTintColor: Colors.orange,
   headerStyle: {
     backgroundColor: Colors.secondary
@@ -44,7 +44,7 @@ const defaultScreenOptions = {
 
 export const AuthStackScreen = () => (
   <AuthStack.Navigator screenOptions={authStackOptions}>
-    <AuthStack.Screen name="Welcome" component={AuthScreen} options={{ title: "GoalTracker", headerShown: false }} />
+    <AuthStack.Screen name="Welcome" component={LandingScreen} options={{ title: "GoalTracker", headerShown: false }} />
     <AuthStack.Screen name="SignIn" component={LoginScreen} options={{ title: "Sign In" }} />
     <AuthStack.Screen name="CreateAccount" component={CreateAccountScreen} options={{ title: "Create an Account" }} />
   </AuthStack.Navigator>

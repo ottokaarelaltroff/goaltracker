@@ -14,13 +14,29 @@ interface InputProps {
     onPress?: () => void,
     onChange?: (value: string) => void,
     icon?: any,
+    buttonIcon?: any,
     numeric?: boolean,
     small?: boolean,
+    isSecret?: boolean,
     color?: string,
     charLimit?: number,
 };
 
-export const Input = ({ label, initialValue, placeHolder, style, onPress, onChange, icon, numeric = false, color, charLimit = undefined, small = false }: InputProps) => {
+export const Input = ({
+    label,
+    initialValue,
+    placeHolder,
+    style,
+    onPress,
+    onChange,
+    icon,
+    buttonIcon,
+    numeric = false,
+    color,
+    charLimit = undefined,
+    small = false,
+    isSecret = false
+}: InputProps) => {
 
     const [error, setError] = useState<boolean>(false);
 
@@ -36,7 +52,7 @@ export const Input = ({ label, initialValue, placeHolder, style, onPress, onChan
             ? <Icon source={require("../assets/warning.png")} size={20} style={styles.warningIcon} />
             : <View style={styles.warningContainer}>
                 <Icon source={require("../assets/warning.png")} size={20} style={styles.warningIcon} />
-                <WarningText title={"Field limit is exceeded!"} />
+                <WarningText>{"Field limit is exceeded!"}</WarningText>
             </View>)
 
     return (
@@ -46,7 +62,16 @@ export const Input = ({ label, initialValue, placeHolder, style, onPress, onChan
                 {error && renderError()}
             </View>
 
-            <InputField initialValue={initialValue} placeHolder={placeHolder} icon={icon} onPress={onPress} onChange={onTextChange} numeric={numeric} color={color}></InputField>
+            <InputField
+                initialValue={initialValue}
+                placeHolder={placeHolder}
+                icon={icon}
+                buttonIcon={buttonIcon}
+                onPress={onPress}
+                onChange={onTextChange}
+                numeric={numeric}
+                color={color}
+                isSecret={isSecret} />
         </View>
     );
 };

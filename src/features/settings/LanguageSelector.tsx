@@ -41,7 +41,7 @@ export const LanguageSelector = () => {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.touchable} onPress={toggleModal}>
-                <GText size={20} style={styles.selectedLanguage}>{selectedLanguage}</GText>
+                <GText size={16} style={styles.selectedLanguage}>{selectedLanguage}</GText>
                 <Icon source={require("../../assets/caret-down.png")} light size={24} />
             </TouchableOpacity>
             <Modal visible={isOpened} transparent={true}>

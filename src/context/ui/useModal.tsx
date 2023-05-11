@@ -15,13 +15,13 @@ type ModalizeRef = {
 type ModalProps = {
   headerText: string
   content: any,
-  canSave: boolean,
+  canSave?: boolean,
   onSave?: () => void;
   onClose?: () => void;
   onDelete?: () => void;
 };
 
-export default function useModal({ headerText, content, onSave, onClose, onDelete, canSave }: ModalProps) {
+export default function useModal({ headerText, content, onSave, onClose, onDelete, canSave = true }: ModalProps) {
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const modalRef = useRef<ModalizeRef>(null);
 

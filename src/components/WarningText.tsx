@@ -3,15 +3,15 @@ import { Colors } from "../util/Colors";
 import { GText } from "./GText";
 
 interface WarningTextProps {
-    title: string,
+    children: any,
     style?: any
 };
 
-export const WarningText = ({ title, style }: WarningTextProps) => {
+export const WarningText = ({ children, style }: WarningTextProps) => {
 
     return (
         <GText style={[styles.text, style]} size={14}>
-            {title}
+            {children}
         </GText>
     );
 };

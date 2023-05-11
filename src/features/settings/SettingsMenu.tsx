@@ -37,7 +37,7 @@ export const SettingsMenu = () => {
             <Divider />
             <View style={styles.row}>
                 <GText size={20}>{"App Version"}</GText>
-                <GText size={20}>{"v1.0.0"}</GText>
+                <GText size={18}>{"v1.0.0"}</GText>
             </View>
         </View>
     );
@@ -53,9 +53,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 10,
-        // borderWidth: 2,
-        // flex: 1
+        marginBottom: 15,
+        alignItems: 'center',
     },
     username: {
         marginBottom: 15,

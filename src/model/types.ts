@@ -8,6 +8,12 @@ export type LoginRequest = {
     password: string,
 }
 
+export type RegisterRequest = {
+    email: string,
+    userName: string,
+    password: string,
+}
+
 export type LoginResponse = {
     token: string,
     firstName: string,

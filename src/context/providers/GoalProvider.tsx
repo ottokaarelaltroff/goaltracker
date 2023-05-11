@@ -7,6 +7,7 @@ import useAppQuery from '../api/useAppQuery';
 interface GoalContext {
     allGoals: Goal[] | undefined;
     fetchAllGoals: () => void;
+    reset: () => void;
     isLoading: boolean;
     isError: boolean;
     selectedGoal?: Goal | undefined;
@@ -20,7 +21,7 @@ interface GoalProviderProps {
 export const GoalContext = createContext<GoalContext | undefined>(undefined);
 
 const GoalProvider = ({ children }: GoalProviderProps) => {
-    const { data: allGoals, refetch, isError, isLoading } = useAppQuery(['allGoals'], {
+    const { data: allGoals, refetch, isError, isLoading, remove } = useAppQuery(['allGoals'], {
         queryFn: () => api.findAllGoals() as Promise<Goal[]>,
         enabled: true,
     });
@@ -36,7 +37,8 @@ const GoalProvider = ({ children }: GoalProviderProps) => {
         isLoading,
         isError,
         selectedGoal,
-        setSelectedGoal
+        setSelectedGoal,
+        reset: remove
     };
     return <GoalContext.Provider value={value}>{children}</GoalContext.Provider>;
 };

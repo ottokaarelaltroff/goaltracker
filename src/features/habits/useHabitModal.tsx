@@ -195,6 +195,7 @@ export default function useHabitModal() {
                     <GText style={styles.label}>{"Notification to work on the habit"}</GText>
                 </View>
                 <View style={styles.toggleContainer}>
+                    <Icon source={require("../../assets/bell.png")} />
                     <Switch
                         trackColor={{ false: Colors.darkGreen, true: Colors.neonGreen }}
                         thumbColor={Colors.light}
@@ -321,10 +322,12 @@ const styles = StyleSheet.create({
     },
     reminderLabelColumn: {
         display: 'flex',
-        flex: 4
+        flex: 3
     },
     toggleContainer: {
-        alignItems: 'flex-end',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
         flex: 1,
     },
     subHeader: {

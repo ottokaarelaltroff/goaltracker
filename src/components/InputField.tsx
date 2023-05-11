@@ -8,13 +8,26 @@ interface InputFieldProps {
     placeHolder?: string,
     style?: any,
     icon?: any,
+    buttonIcon?: any,
     onPress?: () => void,
     onChange?: (value: string) => void,
     numeric?: boolean,
+    isSecret?: boolean,
     color?: string,
 };
 
-export const InputField = ({ initialValue, placeHolder, style, icon, onPress, onChange, numeric = false, color = Colors.darkGray }: InputFieldProps) => {
+export const InputField = ({
+    initialValue,
+    placeHolder,
+    style,
+    icon,
+    buttonIcon,
+    onPress,
+    onChange,
+    numeric = false,
+    color = Colors.darkGray,
+    isSecret = false
+}: InputFieldProps) => {
 
     const [value, setValue] = useState<string>(initialValue || '');
 
@@ -35,10 +48,11 @@ export const InputField = ({ initialValue, placeHolder, style, icon, onPress, on
                 onChangeText={onChangeText}
                 value={value}
                 keyboardType={numeric ? 'numeric' : 'default'}
+                secureTextEntry={isSecret}
             />
             {onPress &&
                 (<TouchableOpacity onPress={onPress}>
-                    <Icon source={require("../assets/caret-down.png")} style={styles.caret} onPress={onPress} ></Icon>
+                    <Icon source={buttonIcon ? buttonIcon : require("../assets/caret-down.png")} style={styles.caret} onPress={onPress} />
                 </TouchableOpacity>)}
         </View>
     );
@@ -63,7 +77,7 @@ const styles = StyleSheet.create({
         // borderWidth: 2,
     },
     icon: {
-        tintColor: Colors.lightGray,
+        tintColor: Colors.grayAlpha(0.5),
         marginLeft: 15,
     },
     caret: {
