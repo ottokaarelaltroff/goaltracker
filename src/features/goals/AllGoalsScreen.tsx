@@ -14,8 +14,8 @@ import useGoalModal from "./useGoalModal";
 
 export const AllGoalsScreen = ({ navigation }) => {
 
-    const { allGoals, fetchAllGoals, isLoading, isError, setSelectedGoal } = useAllGoals();
-    const { GoalModal: AddGoalModal, openModal, isOpened } = useGoalModal({ goal: undefined, title: 'Add Goal', navigation: navigation });
+    const { allGoals, fetchAllGoals, isLoading, isError, selectedGoal, setSelectedGoal } = useAllGoals();
+    const { GoalModal: AddGoalModal, openModal, isOpened } = useGoalModal({ goal: undefined, navigation: navigation });
 
     const onGoalSelect = (goal: Goal) => {
         setSelectedGoal(goal)

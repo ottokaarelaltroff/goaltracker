@@ -17,11 +17,10 @@ import { EditCategories } from '../categories/EditCategories';
 
 interface EditGoalModalProps {
     goal: Goal;
-    title: string;
     navigation: any
 };
 
-export default function useGoalModal({ goal, title, navigation }: EditGoalModalProps) {
+export default function useGoalModal({ goal, navigation }: EditGoalModalProps) {
 
     const { saveGoal, updateGoal, deleteGoal } = useGoal(goal?.id)
 
@@ -159,7 +158,7 @@ export default function useGoalModal({ goal, title, navigation }: EditGoalModalP
         selectedDate && !!selectedUnit?.value
 
     const { Modal, openModal, closeModal, isOpened } = useModal({
-        headerText: title,
+        headerText: goal ? "Edit Goal" : "Add Goal",
         content: editGoalForm,
         onSave: onSave,
         onDelete: onDelete,

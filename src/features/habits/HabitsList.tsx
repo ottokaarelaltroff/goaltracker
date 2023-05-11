@@ -8,9 +8,9 @@ import { GText } from "../../components/GText";
 import { Habit } from "../../model/types";
 
 type HabitsListProps = {
-    openEditHabitModal: (habit: Habit) => void
+    openModal: (habit: Habit) => void
 }
-export const HabitsList = ({ openEditHabitModal }: HabitsListProps) => {
+export const HabitsList = ({ openModal }: HabitsListProps) => {
 
     const { goalHabits, fetchGoalHabits } = useHabits();
 
@@ -34,7 +34,7 @@ export const HabitsList = ({ openEditHabitModal }: HabitsListProps) => {
     }
 
     const openModalHandler = (habit: Habit) => {
-        openEditHabitModal(habit);
+        openModal(habit);
     }
 
     const hasReminder = (habit: Habit) => {

@@ -133,6 +133,10 @@ const Api = () => {
         return await fetchApi('POST', `/goalhabits`, habit)
     };
 
+    const deleteGoalHabit = async (goalHabitId: string) => {
+        return await fetchApi('DELETE', `/goalhabits/${goalHabitId}`)
+    };
+
 
 
     return {
@@ -158,8 +162,8 @@ const Api = () => {
         saveHabit,
         deleteHabit,
         saveGoalHabit,
-        findAllHabits
-
+        findAllHabits,
+        deleteGoalHabit,
     };
 };
 

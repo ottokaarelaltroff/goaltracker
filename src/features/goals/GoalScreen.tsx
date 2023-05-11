@@ -37,13 +37,13 @@ interface GoalScreenProps {
 
 export const GoalScreen = ({ navigation }: GoalScreenProps) => {
 
-    const { selectedGoal } = useAllGoals();
+    const { selectedGoal, setSelectedGoal } = useAllGoals();
     const { goal, setGoalData } = useGoal(selectedGoal?.id);
-    const { allCategories, goalCategories } = useCategories(selectedGoal?.id);
+    const { goalCategories } = useCategories(selectedGoal?.id);
     const { EditCategoryDialog, openEditDialog } = useEditCategoryDialog({ goalId: selectedGoal?.id });
     const scrollViewRef = useRef<ScrollView>(null);
-    const { EditHabitModal, openEditHabitModal, isOpened } = useHabitModal();
-    const { GoalModal: EditGoalModal, openModal } = useGoalModal({ goal: goal, title: 'Edit Goal', navigation: navigation });
+    const { EditHabitModal, openHabitModal } = useHabitModal();
+    const { GoalModal: EditGoalModal, openModal } = useGoalModal({ goal: goal, navigation: navigation });
 
     const handleScrollTo = () => {
         if (scrollViewRef.current) {
@@ -55,7 +55,9 @@ export const GoalScreen = ({ navigation }: GoalScreenProps) => {
     useFocusEffect(
         useCallback(() => {
             const unsubscribe = navigation.addListener('blur', () => {
-                // setSelectedGoal(undefined);
+                // setTimeout(() => {
+                //     setSelectedGoal(undefined);
+                // }, 500)
             });
             return unsubscribe;
         }, [navigation])
@@ -146,7 +148,7 @@ export const GoalScreen = ({ navigation }: GoalScreenProps) => {
                         <StepsList />
                     </CollapsibleDropdown>
                     <CollapsibleDropdown title={"Habits I need to follow"} handleScroll={handleScrollTo}>
-                        <HabitsList openEditHabitModal={openEditHabitModal} />
+                        <HabitsList openModal={openHabitModal} />
                     </CollapsibleDropdown>
                     {/* <CollapsibleDropdown title={"Dear Diary..."} handleScroll={handleScrollTo}>
                         <DiaryList items={mockData.diaryEntries} />

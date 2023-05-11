@@ -100,6 +100,22 @@ export const useHabits = () => {
     };
 
 
+    // DELETE GOALHABIT
+    const fetchDeleteGoalHabit = async (goalHabitId: string) => {
+        return await api.deleteGoalHabit(goalHabitId);
+    }
+
+    const deleteGoalHabit = useMutation(fetchDeleteGoalHabit, {
+        onSuccess: () => {
+            fetchGoalHabits();
+        },
+    });
+
+    const deleteGoalHabitHandler = (goalHabitId: string) => {
+        deleteGoalHabit.mutate(goalHabitId);
+    };
+
+
     return {
         allHabits,
         goalHabits,
@@ -110,6 +126,7 @@ export const useHabits = () => {
         saveHabit: saveHabitHandler,
         updateHabit: updateHabitHandler,
         deleteHabit: deleteHabitHandler,
+        deleteGoalHabit: deleteGoalHabitHandler,
         saveGoalHabit: saveGoalHabitHandler,
         isLoadingAllHabits,
         isErrorAllHabits

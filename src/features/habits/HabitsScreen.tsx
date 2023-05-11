@@ -13,11 +13,11 @@ import { useHabits } from "./useHabits";
 export const HabitsScreen = ({ navigation }) => {
 
     const { allHabits, isLoadingAllHabits, fetchAllHabits, isErrorAllHabits } = useHabits();
-    const { EditHabitModal, openEditHabitModal } = useHabitModal();
+    const { EditHabitModal, openHabitModal } = useHabitModal();
 
     const renderItem = ({ item, index }) => {
         return (
-            <TouchableOpacity onPress={() => openEditHabitModal(item)}>
+            <TouchableOpacity onPress={() => openHabitModal(item)}>
                 <HabitPreview habit={item} key={index} />
             </TouchableOpacity>
         );
@@ -30,7 +30,7 @@ export const HabitsScreen = ({ navigation }) => {
                 <Icon
                     light
                     source={require("../../assets/plus.png")}
-                    onPress={() => openEditHabitModal(undefined, false)} />
+                    onPress={() => openHabitModal(undefined, false)} />
             </ScreenHeader>
             <View style={styles.container} >
                 {isLoadingAllHabits ? <Spinner style={styles.spinner} /> :

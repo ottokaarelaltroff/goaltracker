@@ -15,7 +15,17 @@ import { useHabits } from './useHabits';
 
 export default function useHabitModal() {
 
-    const { allHabits, goalHabits, fetchAllHabits, saveHabit, updateHabit, deleteHabit, saveGoalHabit, fetchGoalHabits } = useHabits();
+    const {
+        allHabits,
+        goalHabits,
+        fetchAllHabits,
+        saveHabit,
+        updateHabit,
+        deleteHabit,
+        deleteGoalHabit,
+        saveGoalHabit,
+        fetchGoalHabits
+    } = useHabits();
     const [habit, setHabit] = useState<Habit | undefined>();
     const [title, setTitle] = useState<string | undefined>();
     const [reminderText, setReminderText] = useState<string | undefined>("just do it");
@@ -83,20 +93,28 @@ export default function useHabitModal() {
         reset();
     }
 
-    const deleteHabitConfirmation = (
+    const getDeleteHabitConfirmation = () => (
         <View style={styles.confirmationContainer}>
-            <GText style={styles.confirmation}>{"Are you sure you want to delete this habit?"}</GText>
+            <GText style={styles.confirmation}>{habit?.habitId ?
+                "Are you sure you want to remove this habit from your goal?" :
+                "Are you sure you want to delete this habit permanently?"}</GText>
+            {habit?.habitId && <GText style={styles.confirmation}>{"PS! This will not delete the Habit entirely."}</GText>}
         </View>
 
     );
+
     const { Dialog: DeleteHabitDialog, openDialog } = useDialog(
         {
             onSave: () => {
-                deleteHabit(habit.habitId || habit.id);
+                if (habit?.habitId) {
+                    deleteGoalHabit(habit.id)
+                } else {
+                    deleteHabit(habit.id);
+                }
                 closeModal();
                 reset();
             },
-            content: deleteHabitConfirmation,
+            content: getDeleteHabitConfirmation(),
             bottomButtons: true,
         });
 
@@ -247,7 +265,7 @@ export default function useHabitModal() {
 
     return {
         EditHabitModal: Modal,
-        openEditHabitModal: openModalHandler,
+        openHabitModal: openModalHandler,
         closeModal,
         isOpened
     };
@@ -281,7 +299,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     confirmation: {
-        textAlign: 'center'
+        textAlign: 'center',
+        marginBottom: 10,
     },
     label: {
         marginLeft: 15,

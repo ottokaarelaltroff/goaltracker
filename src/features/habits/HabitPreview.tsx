@@ -31,6 +31,8 @@ export const HabitPreview = ({ habit }: HabitPreviewProps) => {
         switch (frequency) {
             case 7:
                 return "Every Day"
+            case 1:
+                return "Once a week"
             case 0:
                 return "Never"
             default:
