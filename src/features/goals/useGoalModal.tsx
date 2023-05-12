@@ -24,13 +24,13 @@ export default function useGoalModal({ goal, navigation }: EditGoalModalProps) {
 
     const { saveGoal, updateGoal, deleteGoal } = useGoal(goal?.id)
 
-    const { AddUnitDialog, openAddDialog } = useAddUnitDialog({ goalId: goal?.id })
+    const { AddUnitDialog, openAddDialog } = useAddUnitDialog()
     const [selectedUnit, setSelectedUnit] = useState<OptionType<Unit> | undefined>();
     const [titleValue, setTitleValue] = useState<string | undefined>(goal?.title);
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date(goal?.targetDate || new Date()));
     const [currentValue, setCurrentValue] = useState<string | undefined>(goal?.currentValue?.toString());
     const [targetValue, setTargetValue] = useState<string | undefined>(goal?.targetValue?.toString());
-    const { units, getUnitOptions, deleteUnit } = useUnits({ goalId: goal?.id });
+    const { units, deleteUnit, refetchAllUnits } = useUnits();
 
     const onSave = () => {
         if (goal) {
@@ -58,7 +58,21 @@ export default function useGoalModal({ goal, navigation }: EditGoalModalProps) {
         deleteUnit(option.value.id)
     }
 
+    const getUnitOptions = () => {
+        // console.log("OTTO getUnitOptions")
+        if (units !== undefined) {
+            const result = [];
+            units.map((unit) => result.push({ label: unit.name, value: unit }))
+            return result;
+        } else {
+            refetchAllUnits();
+        }
+        return [];
+    }
+
+
     useEffect(() => {
+
         if (goal && goal.unit) {
             setSelectedUnit({ label: goal?.unit?.name, value: goal?.unit })
         }

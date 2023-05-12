@@ -34,7 +34,7 @@ export const HabitsScreen = ({ navigation }) => {
             </ScreenHeader>
             <View style={styles.container} >
                 {isLoadingAllHabits ? <Spinner style={styles.spinner} /> :
-                    allHabits ?
+                    allHabits && allHabits.length > 0 ?
                         <View style={styles.habitList}>
                             <FlatList
                                 data={allHabits}

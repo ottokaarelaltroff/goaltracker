@@ -1,13 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { api } from '../../context/api';
 import useAppQuery from '../../context/api/useAppQuery';
 import { Unit } from '../../model/types';
 
-interface Props {
-    goalId?: string,
-}
-export const useUnits = ({ goalId }: Props) => {
+export const useUnits = () => {
 
     const [goalUnit, setGoalUnit] = useState<Unit | undefined>();
 
@@ -15,21 +12,6 @@ export const useUnits = ({ goalId }: Props) => {
         queryFn: () => api.findAllUnits() as Promise<Unit[]>,
         enabled: false,
     });
-
-    const fetchAllUnits = async () => {
-        await refetchAllUnits();
-    };
-
-    const getUnitOptions = () => {
-        if (units) {
-            const result = [];
-            units.map((unit) => result.push({ label: unit.name, value: unit }))
-            return result;
-        } else {
-            refetchAllUnits();
-        }
-        return [];
-    }
 
     const fetchSaveUnit = async (unit: Unit) => {
         return await api.saveUnit(unit);
@@ -59,14 +41,14 @@ export const useUnits = ({ goalId }: Props) => {
         deleteUnit.mutate(unitId);
     };
 
+    // console.log("7777")
 
     return {
         units,
         goalUnit,
-        fetchAllUnits,
-        getUnitOptions,
         saveUnit: saveUnitHandler,
         deleteUnit: deleteUnitHandler,
+        refetchAllUnits,
         isLoading,
         isError,
     };

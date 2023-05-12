@@ -1,13 +1,14 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { Goal } from '../../model/types';
 import { api } from '../api';
 import useAppQuery from '../api/useAppQuery';
+import useUser from '../../features/auth/useUser';
 
 
 interface GoalContext {
     allGoals: Goal[] | undefined;
     fetchAllGoals: () => void;
-    reset: () => void;
+    remove: () => void;
     isLoading: boolean;
     isError: boolean;
     selectedGoal?: Goal | undefined;
@@ -21,15 +22,13 @@ interface GoalProviderProps {
 export const GoalContext = createContext<GoalContext | undefined>(undefined);
 
 const GoalProvider = ({ children }: GoalProviderProps) => {
-    const { data: allGoals, refetch, isError, isLoading, remove } = useAppQuery(['allGoals'], {
+    const { user } = useUser();
+    const { data: allGoals, refetch: fetchAllGoals, isError, isLoading, remove } = useAppQuery(['allGoals'], {
         queryFn: () => api.findAllGoals() as Promise<Goal[]>,
-        enabled: true,
+        enabled: !!user,
     });
     const [selectedGoal, setSelectedGoal] = useState<Goal | undefined>();
 
-    const fetchAllGoals = () => {
-        refetch();
-    };
 
     const value = {
         allGoals,
@@ -38,7 +37,7 @@ const GoalProvider = ({ children }: GoalProviderProps) => {
         isError,
         selectedGoal,
         setSelectedGoal,
-        reset: remove
+        remove
     };
     return <GoalContext.Provider value={value}>{children}</GoalContext.Provider>;
 };

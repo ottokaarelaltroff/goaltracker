@@ -19,7 +19,7 @@ export default function useAddCategoryDialog({ goalId }: Props) {
     const { saveCategory } = useCategories(goalId);
 
     const onSave = () => {
-        saveCategory && saveCategory({ name: name, color: color })
+        saveCategory({ name: name, color: color })
     };
 
     const addCategoryForm = (

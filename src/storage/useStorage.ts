@@ -18,8 +18,17 @@ export default function useStorage() {
         }
     };
 
+    const removeItem = async (key: string) => {
+        try {
+            return await SecureStore.deleteItemAsync(key);
+        } catch (error) {
+            console.log('Error removing data: ', error);
+        }
+    };
+
     return {
         getItem,
-        storeItem
+        storeItem,
+        removeItem
     }
 }

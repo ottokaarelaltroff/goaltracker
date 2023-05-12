@@ -14,6 +14,6 @@ export default function useAllGoals() {
         isError: value.isError,
         selectedGoal: value.selectedGoal,
         setSelectedGoal: value.setSelectedGoal,
-        reset: value.reset
+        remove: value.remove,
     };
 }

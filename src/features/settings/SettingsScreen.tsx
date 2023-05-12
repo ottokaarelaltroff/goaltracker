@@ -27,7 +27,7 @@ export const SettingsScreen = ({ navigation }) => {
                         <TouchableOpacity onPress={openModal} activeOpacity={1} style={styles.touchable}>
                             <Icon source={require("../../assets/chicken.png")} size={110} style={styles.profilePicture} />
                             <HeaderText title={user?.userName} size={28} style={styles.username}></HeaderText>
-                            <GText size={16} style={styles.username}>{user?.userName}</GText>
+                            <GText size={16} style={styles.username}>{user?.email}</GText>
                         </TouchableOpacity>
                         <View style={styles.buttons}>
                             <GButton title={'Account'} onPress={openModal} icon={require('../../assets/settings.png')}></GButton>

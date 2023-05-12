@@ -34,8 +34,6 @@ const Root = ({ user }: RootProps) => (
     {user && user.id
       ? <RootStack.Screen name="App" component={Drawer} />
       : <RootStack.Screen name="Auth" component={AuthStackScreen} />}
-    {/* ? <RootStack.Screen name="Auth" component={AuthStackScreen} />
-      : <RootStack.Screen name="App" component={Drawer} />} */}
   </RootStack.Navigator>
 )
 
@@ -44,7 +42,13 @@ export const AppNavigator = () => {
   const { user } = useUser();
   const { autoLogin } = useAuth();
 
-  autoLogin();
+
+  React.useEffect(() => {
+    if (user === undefined) {
+      autoLogin()
+    }
+
+  }, [user])
 
   return (
     <NavigationContainer>

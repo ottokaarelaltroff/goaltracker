@@ -1,5 +1,6 @@
 export type User = {
     id: string,
+    email: string,
     userName: string,
 }
 
@@ -16,8 +17,8 @@ export type RegisterRequest = {
 
 export type LoginResponse = {
     token: string,
-    firstName: string,
-    lastName: string,
+    email: string,
+    userName: string,
 }
 
 export type Goal = {

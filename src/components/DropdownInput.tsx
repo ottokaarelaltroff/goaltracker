@@ -62,9 +62,9 @@ const DropdownInput = <T extends AllowedDropDownType>({ label, placeholder, opti
             <GText style={styles.unitValue} bold size={18}>
               {value?.label}
             </GText>
-            <View style={styles.caret} >
+            {options && options.length > 0 && <View style={styles.caret} >
               <Icon source={require("../assets/caret-down.png")} size={24} light onPress={toggleModal} ></Icon>
-            </View>
+            </View>}
 
           </TouchableOpacity>
           <View style={styles.plusIcon}>

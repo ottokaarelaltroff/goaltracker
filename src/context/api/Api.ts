@@ -39,6 +39,7 @@ const Api = () => {
     };
 
     const findAllGoals = async () => {
+        console.log("OTTO findAllGoals")
         return await fetchApi('GET', '/goals')
     };
 

@@ -1,2 +1,2 @@
-const SERVER_URL = "https://b234-83-191-199-228.ngrok-free.app"
+const SERVER_URL = "https://9d56-83-191-199-228.ngrok-free.app"
 export const API_URL = SERVER_URL + "/api";

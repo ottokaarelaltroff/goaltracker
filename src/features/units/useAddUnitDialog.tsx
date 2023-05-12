@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Input } from '../../components/Input';
 import useDialog from '../../context/ui/useDialog';
@@ -9,13 +9,13 @@ type Props = {
     goalId?: string,
 }
 
-export default function useAddUnitDialog({ goalId }: Props) {
+export default function useAddUnitDialog() {
 
     const [name, setName] = useState<string>();
-    const { saveUnit } = useUnits({ goalId });
+    const { saveUnit } = useUnits();
 
     const onSave = () => {
-        saveUnit && saveUnit({ name: name })
+        saveUnit({ name: name })
         setName('');
     };
 
@@ -30,6 +30,8 @@ export default function useAddUnitDialog({ goalId }: Props) {
                 onChange={setName} />
         </View>
     )
+
+
 
     const { Dialog, openDialog, closeDialog, isOpened } = useDialog(
         {

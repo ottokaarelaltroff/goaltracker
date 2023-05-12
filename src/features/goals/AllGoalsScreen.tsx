@@ -38,7 +38,7 @@ export const AllGoalsScreen = ({ navigation }) => {
             </ScreenHeader>
             <View style={styles.container} >
                 {isLoading ? <Spinner style={styles.spinner} /> :
-                    allGoals ?
+                    allGoals && allGoals.length > 0 ?
                         <View style={styles.goalList}>
                             <FlatList
                                 data={allGoals}
