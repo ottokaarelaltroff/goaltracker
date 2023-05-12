@@ -17,22 +17,25 @@
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
         }
-      }
+      },
+      "bundleIdentifier": "ios"
     },
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF"
       }
     },
-    "web": {
-
-    },
+    "web": {},
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#0F2125"
-    }
-
-
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c3479fcf-09fe-4378-baf9-1f0fec163b83"
+      }
+    },
+    "owner": "ottokaarel"
   }
 }

@@ -18,6 +18,7 @@ export default function useAddCategoryDialog({ goalId }: Props) {
     const [color, setColor] = useState<string>(Colors.purple);
     const { saveCategory } = useCategories(goalId);
 
+    console.log("OTTO id", goalId)
     const onSave = () => {
         saveCategory({ name: name, color: color })
     };

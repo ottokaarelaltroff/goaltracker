@@ -10,9 +10,14 @@ import { useCategories } from '../categories/useCategories';
 
 export default function useGoal(goalId?: string) {
     const { fetchAllGoals } = useAllGoals();
-    const { goalCategories, fetchGoalCategories } = useCategories(goalId);
+    const { goalCategories, fetchGoalCategories, saveNewGoalCategory, categoriesToSave, setCategoriesToSave } = useCategories(goalId);
     const { goalHabits, fetchGoalHabits } = useHabits();
     const { steps, fetchGoalSteps } = useSteps();
+
+    useEffect(() => {
+
+        console.log("OTTO categoriesToSave", categoriesToSave)
+    }, [categoriesToSave])
 
     const { data: goal, refetch: refetchGoal } = useAppQuery(['goal', goalId], {
         queryFn: () => api.findGoal(goalId) as Promise<Goal>,
@@ -65,7 +70,14 @@ export default function useGoal(goalId?: string) {
     }
 
     const saveGoal = useMutation(fetchSaveGoal, {
-        onSuccess: fetchAllGoals
+        onSuccess: (goal: Goal) => {
+            console.log("OTTO SAVE THESE", categoriesToSave)
+            if (categoriesToSave && categoriesToSave.length > 0) {
+                categoriesToSave.map((category) => saveNewGoalCategory(category.id, goal.id))
+            }
+            setCategoriesToSave(undefined);
+            fetchAllGoals()
+        }
     });
 
     const saveGoalHandler = (goal: Goal) => {

@@ -14,6 +14,7 @@ import useGoal from './useGoal';
 import { useUnits } from '../units/useUnits';
 import useAddUnitDialog from '../units/useAddUnitDialog';
 import { EditCategories } from '../categories/EditCategories';
+import { useCategories } from '../categories/useCategories';
 
 interface EditGoalModalProps {
     goal: Goal;
@@ -23,7 +24,7 @@ interface EditGoalModalProps {
 export default function useGoalModal({ goal, navigation }: EditGoalModalProps) {
 
     const { saveGoal, updateGoal, deleteGoal } = useGoal(goal?.id)
-
+    const { setCategoriesToSave } = useCategories(goal?.id);
     const { AddUnitDialog, openAddDialog } = useAddUnitDialog()
     const [selectedUnit, setSelectedUnit] = useState<OptionType<Unit> | undefined>();
     const [titleValue, setTitleValue] = useState<string | undefined>(goal?.title);
@@ -105,6 +106,9 @@ export default function useGoalModal({ goal, navigation }: EditGoalModalProps) {
         openDialog()
     }
 
+    const onClose = () => {
+        // setCategoriesToSave(undefined)
+    }
 
     const editGoalForm = (
         <View style={styles.container}>
@@ -176,6 +180,7 @@ export default function useGoalModal({ goal, navigation }: EditGoalModalProps) {
         content: editGoalForm,
         onSave: onSave,
         onDelete: onDelete,
+        onClose: onClose,
         canSave: isFormValid
     });
 

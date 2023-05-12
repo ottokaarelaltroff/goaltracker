@@ -2,9 +2,13 @@ import { useMutation } from '@tanstack/react-query';
 import { api } from '../../context/api';
 import useAppQuery from '../../context/api/useAppQuery';
 import { Category } from '../../model/types';
+import { useEffect, useState } from 'react';
 
 
 export const useCategories = (goalId: string) => {
+
+    const [categoriesToSave, setCategoriesToSave] = useState<Category[] | undefined>();
+
 
     const { data: goalCategories, refetch: refetchGoalCategories } = useAppQuery(['goalCategories', goalId], {
         queryFn: () => api.findGoalCategories(goalId) as Promise<Category[]>,
@@ -38,6 +42,23 @@ export const useCategories = (goalId: string) => {
         onSuccess: () => fetchGoalCategories(),
     });
 
+
+
+    const fetchSaveNewGoalCategory = async ({ categoryId, goalId }) => {
+        return await api.saveGoalCategory({ goalId: goalId, categoryId: categoryId });
+    }
+
+
+    const saveNewGoalCategory = useMutation(fetchSaveNewGoalCategory, {
+        onSuccess: () => fetchGoalCategories(),
+    });
+
+    const saveNewGoalCategoryHandler = (categoryId: string, goalId: string) => {
+        saveNewGoalCategory.mutate({ categoryId, goalId });
+    };
+
+
+
     const fetchSaveCategory = async (category: Category) => {
         return await api.saveCategory(category);
     }
@@ -47,6 +68,7 @@ export const useCategories = (goalId: string) => {
             if (goalId) {
                 saveGoalCategory.mutate(result);
             }
+            refetchAllCategories();
         }
     });
 
@@ -109,6 +131,9 @@ export const useCategories = (goalId: string) => {
         updateCategory: updateCategoryHandler,
         deleteCategory: deleteCategoryHandler,
         saveGoalCategory: saveGoalCategoryHandler,
+        saveNewGoalCategory: saveNewGoalCategoryHandler,
         deleteGoalCategory: deleteGoalCategoryHandler,
+        categoriesToSave,
+        setCategoriesToSave
     };
 };

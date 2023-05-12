@@ -17,7 +17,7 @@ type EditCategoriesProps = {
 export const EditCategories = ({ goalId }: EditCategoriesProps) => {
 
     const { goal } = useGoal(goalId);
-    const { goalCategories, allCategories, fetchAllCategories, deleteGoalCategory, saveGoalCategory } = useCategories(goalId);
+    const { goalCategories, allCategories, fetchAllCategories, deleteGoalCategory, saveGoalCategory, categoriesToSave, setCategoriesToSave } = useCategories(goalId);
     const { AddCategoryDialog, openAddDialog } = useAddCategoryDialog({ goalId: goalId });
     const { EditCategoryDialog, openEditDialog } = useEditCategoryDialog({ goalId: goalId });
 
@@ -34,17 +34,27 @@ export const EditCategories = ({ goalId }: EditCategoriesProps) => {
 
 
     const addGoalCategory = (category: Category) => {
-        saveGoalCategory(category);
+
         setSelectedCategories([...selectedCategories || [], category]);
         const updatedCategoriesToAdd = categoriesToAdd.filter(c => c.id !== category.id);
         setCategoriesToAdd(updatedCategoriesToAdd);
+        if (goalId) {
+            saveGoalCategory(category);
+        } else {
+            setCategoriesToSave([...categoriesToSave || [], category]);
+        }
     }
 
     const removeGoalCategory = (category: Category) => {
-        deleteGoalCategory(category);
+
         const updatedSelectedCategories = selectedCategories.filter(c => c.id !== category.id);
         setSelectedCategories(updatedSelectedCategories);
         setCategoriesToAdd([...categoriesToAdd || [], category]);
+        if (goalId) {
+            deleteGoalCategory(category);
+        } else {
+            setCategoriesToSave(updatedSelectedCategories);
+        }
     }
 
     const onCategoryEdit = (category: Category) => {
