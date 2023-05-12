@@ -60,7 +60,7 @@ export default function useGoalModal({ goal, navigation }: EditGoalModalProps) {
 
     const getUnitOptions = () => {
         // console.log("OTTO getUnitOptions")
-        if (units !== undefined) {
+        if (units) {
             const result = [];
             units.map((unit) => result.push({ label: unit.name, value: unit }))
             return result;

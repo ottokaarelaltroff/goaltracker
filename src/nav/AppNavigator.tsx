@@ -47,7 +47,6 @@ export const AppNavigator = () => {
     if (user === undefined) {
       autoLogin()
     }
-
   }, [user])
 
   return (

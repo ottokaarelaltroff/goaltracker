@@ -7,8 +7,11 @@ const Api = () => {
 
     const { getItem } = useStorage();
 
-    const fetchApi = async (method: string, path: string, body?: any) => {
+    const fetchApi = async (method: string, path: string, body?: any, publicEndpoint?: boolean) => {
         const jwtToken = await getItem('token');
+        if (!publicEndpoint && !jwtToken) {
+            return null;
+        }
         const headers = {
             Authorization: 'Bearer ' + jwtToken
         };
@@ -25,13 +28,16 @@ const Api = () => {
 
     // AUTH
     const login = async (loginParams: LoginRequest) => {
-        return await fetchApi('POST', '/account/login', loginParams)
+        return await fetchApi('POST', '/account/login', loginParams, true)
     };
 
     const register = async (registerParams: RegisterRequest) => {
-        return await fetchApi('POST', '/account/register', registerParams)
+        return await fetchApi('POST', '/account/register', registerParams, true)
     };
 
+    const getUserInfo = async (userId: string) => {
+        return await fetchApi('GET', `/account/userinfo/${userId}`, true)
+    };
 
     // GOAL
     const findGoal = async (goalId: string) => {
@@ -170,6 +176,7 @@ const Api = () => {
         saveGoalHabit,
         findAllHabits,
         deleteGoalHabit,
+        getUserInfo
     };
 };
 

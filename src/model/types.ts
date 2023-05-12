@@ -1,5 +1,6 @@
 export type User = {
     id: string,
+    token: string,
     email: string,
     userName: string,
 }
@@ -16,6 +17,7 @@ export type RegisterRequest = {
 }
 
 export type LoginResponse = {
+    id: string,
     token: string,
     email: string,
     userName: string,
